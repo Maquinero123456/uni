@@ -81,9 +81,8 @@ type Segundos = Integer
 descomponer :: TotalSegundos -> (Horas,Minutos,Segundos)
 descomponer x = (horas, minutos, segundos)
     where
-        horas = div x 3600
-        minutos = div (x-horas*3600) 60
-        segundos = x-horas*3600-minutos*60
+        (horas,resto)      = divMod x 3600
+        (minutos, segundos)= divMod resto 60
 
 p_descomponer x = x>=0 ==> h*3600 + m*60 + s == x && entre m (0,59) && entre s (0,59)
     where (h,m,s) = descomponer x
@@ -110,8 +109,12 @@ p2_inversas x = eurosAPesetas (pesetasAEuros x) ~= x
 
 --Ejercicio 10--
 raices :: Double -> Double -> Double -> (Double, Double)
-raices a b c | b^2-4*a*c >= 0 = ((-b+sqrt(b^2-4*a*c))/(2*a),(-b-sqrt(b^2-4*a*c))/(2*a))
-             | otherwise= error "Raices no reales"
+raices a b c
+  | dis < 0     = error "Raíces no reales"
+  | otherwise   = (pos, neg)
+ where  dis     = b^2 - 4*a*c
+        pos = (-b+sqrt(dis))/(2*a)
+        neg = (-b-sqrt(dis))/(2*a)
 
 p1_raices a b c = esRaíz r1 && esRaíz r2
     where
