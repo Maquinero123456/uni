@@ -75,4 +75,4 @@ fib' n = fibAc n 0 1
 --Add fib=fib'--
 
 binet :: Integer -> Integer
-binet x = undefined
+binet x = sqrt (toDouble 5)
