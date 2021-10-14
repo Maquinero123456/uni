@@ -70,9 +70,18 @@ llamadasFib x | x<0 = error "Argumento negativo"
 fib' :: Integer -> Integer
 fib' n = fibAc n 0 1
     where
-        fibAc = undefined
+        fibAc n x y | n == 1 = y 
+                    | otherwise = fibAc (n-1) (y) (x+y)
 
---Add fib=fib'--
+p_fib x = x>0 && x<=30 ==> fib x == fib' x
 
 binet :: Integer -> Integer
-binet x = sqrt (toDouble 5)
+binet 0 = 0
+binet 1 = 1
+binet x | x < 0 = error "Argumento negativo"
+binet x = round ((razon^x-(1-razon)^2)/(sqrt 5))
+    where
+        razon = (1+sqrt 5)/2
+
+    
+p_binet x = x>0 ==> binet x == fib' x
