@@ -1,4 +1,6 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 import Test.QuickCheck
+import Data.Time.LocalTime (TimeZone(timeZoneSummerOnly))
 --Ejercicio 1--
 {-data Direction = North | South | East | West deriving (Eq, Ord, Enum, Show)
 
@@ -49,7 +51,7 @@ replicate' x y = [ y | j <- [1..x]]
 
 p_replicate' n x = n >= 0 && n <= 1000 ==>
                                 length (filter (==x) xs) == n
-                                && length (filter (/=x) xs) ==0
+                                && null (filter (/=x) xs)
                                     where xs = replicate' n x
 
 --Ejercicio 6--
@@ -69,13 +71,13 @@ divisores' x = [ y | y <- [(-a)..a], y/=0, divideA y a]
 intersect :: Eq a => [a] -> [a] -> [a]
 intersect [] _ = []
 intersect _ [] = []
-intersect (x:xs) ys | elem x ys = x : intersect xs ys
+intersect (x:xs) ys | x `elem` ys = x : intersect xs ys
                     | otherwise = intersect xs ys
 
 mcd :: Integer -> Integer -> Integer
-mcd x y = maximum (intersect (divisores x) (divisores y))
+mcd x y = maximum ((divisores x) `intersect` (divisores y))
 
-p_mcd x y z = x/=0 && y/=0 && z/=0 ==> mcd (z*x) (z*y) == (abs z)*mcd x y
+p_mcd x y z = x/=0 && y/=0 && z/=0 ==> mcd (z*x) (z*y) == abs z*mcd x y
 
 mcm :: Integer -> Integer -> Integer
 mcm x y = div (x*y) (mcd x y)
@@ -99,7 +101,7 @@ pares :: Integer -> [(Integer, Integer)]
 pares x | x>2 && even x = [ (y,z) | y <- [1..x], z <- [1..x] , esPrimo y && esPrimo z, z>=y ,z+y==x]
         | otherwise = []
 
-goldbach :: Integer -> Bool 
+goldbach :: Integer -> Bool
 goldbach x | null (pares x) = False
            | otherwise = True
 
@@ -110,8 +112,137 @@ goldbachDebilHasta :: Integer -> Bool
 goldbachDebilHasta x = and [goldbach x | x <- [1..x], x>5 && x-3>2, odd x && even(x-3)]
 
 --Ejercicio 10--
-esPerfecto :: Integer -> Bool 
+esPerfecto :: Integer -> Bool
 esPerfecto x = sum [ y | y <- [1..x], divideA y x, y<x] == x
 
 perfectosMenoresQue :: Integer -> [Integer]
 perfectosMenoresQue x = [ x | x <- [1..x], esPerfecto x]
+
+--Ejercicio 11--
+take' :: Int -> [a] -> [a]
+take' n xs = [ x | (p,x) <- zip [0..(n-1)] xs]
+
+drop' :: Int -> [a] -> [a]
+drop' n xs = [ x | (p,x) <- zip [0..length xs] xs, p>=n]
+
+p_take_drop n xs = n>=0 ==> take' n xs ++ drop' n xs == xs
+
+--Ejercicio 12--
+concat' :: [[a]] -> [a]
+concat' = foldr (++) []
+
+concat'' :: [[a]] -> [a]
+concat'' xs = [ x | x <- [], y <- []]
+
+--Ejercicio 13--
+desconocida :: (Ord a) => [a] -> Bool
+desconocida xs = and [ x<=y | (x,y) <- zip xs (tail xs)]
+--Comprueba si el primer valor es menor o igual que el resto de la lista
+
+--Ejercicio 14--
+inserta :: (Ord a) => a -> [a] -> [a]
+inserta x [] = [x]
+inserta x ys = takeWhile (<x) ys ++ [x] ++ dropWhile (<x) ys
+
+inserta' :: (Ord a) => a -> [a] -> [a]
+inserta' x [] = [x]
+inserta' x (y:ys) | y<=x = y : inserta' x ys
+                  | otherwise = x : (y:ys)
+
+p1_inserta x xs = desconocida xs ==> desconocida (inserta x xs)
+
+ordena :: (Ord a) => [a] -> [a]
+ordena [] = []
+ordena xs = foldr inserta [] xs
+
+sorted :: (Ord a) => [a] -> Bool
+sorted [] = True
+sorted [_] = True
+sorted (x:y:zs) = x<=y && sorted (y:zs)
+
+p_ordena xs = sorted (ordena xs)
+
+--Ejercicio 15--
+geometrica :: Integer -> Integer -> [Integer]
+geometrica x y = iterate (*y) x
+
+p1_geometrica x r = x>0 && r>0 ==>
+                            and [ div z y == r | (y,z) <- zip xs (tail xs)]
+                                where xs = take 100 (geometrica x r)
+
+multiplosDe :: Integer -> [Integer]
+multiplosDe x | x>0 = iterate (+x) 0
+              | otherwise = error "Tiene que ser mayor que 0"
+
+potenciasDe :: Integer -> [Integer]
+potenciasDe x = iterate (*x) 1
+
+--Ejercicio 16--
+primeroComun :: Ord a => [a] -> [a] -> a
+primeroComun xs [] = error "No hay comun"
+primeroComun [] ys = error "No hay comun"
+primeroComun (x:xs) (y:ys) | x<y = primeroComun xs (y:ys)
+                           | x>y = primeroComun (x:xs) ys
+                           | otherwise = x
+
+mcm' :: Integer -> Integer -> Integer
+mcm' x y | x==0 || y==0 = 0
+         | x>0 && y>0 = primeroComun (drop 1 (multiplosDe x)) (drop 1 (multiplosDe y))
+         | otherwise = error "Los dos numeros deben ser naturales"
+
+p_mcm x y = x>=0 && y>=0 ==> mcm' x y == lcm x y
+
+--Ejercicio 17--
+primeroComunDeTres :: Ord a => [a] -> [a] -> [a] -> a
+primeroComunDeTres (x:xs) (y:ys) (z:zs) | x > y = primeroComunDeTres (x:xs) ys (z:zs)
+                                        | y > z = primeroComunDeTres (x:xs) (y:ys) zs
+                                        | z > x = primeroComunDeTres xs (y:ys) (z:zs)
+                                        | otherwise = x
+
+--Ejercicio 18--
+factPrimos :: Integer -> [Integer]
+factPrimos x = fp x 2
+    where
+        fp x d
+         | x' < d = [x]
+         | r == 0 = d : fp x' d
+         | otherwise = fp x (d+1)
+         where (x' , r) = divMod x d
+
+factPrimos' :: Integer -> [Integer]
+factPrimos' x = fp x 2
+    where
+        fp x d
+         | d>2 && even d = fp x (d+1)
+         | x' < d = [x]
+         | r == 0 = d : fp x' d
+         | otherwise = fp x (d+1)
+         where (x' , r) = divMod x d
+
+p_factores x = product (factPrimos' x) == x
+
+--Ejercicio 19--
+mezcla :: [Integer] -> [Integer] -> [Integer]
+mezcla [] ys = ys
+mezcla xs [] = xs
+mezcla (x:xs) (y:ys) | x==y = x : mezcla xs ys
+                     | x<y = x : mezcla xs (y:ys)
+                     | otherwise = y : mezcla (x:xs) ys
+
+mcm'' :: Integer -> Integer -> Integer
+mcm'' x y | x>=0 && y>=0 = product (mezcla (factPrimos' x) (factPrimos' y))
+          | otherwise = error "Los dos numeros deben ser naturales"
+
+p_mcm' x y = x>=0 && y>=0 ==> mcm'' x y == lcm x y
+
+mezc' :: [Integer] -> [Integer] -> [Integer]
+mezc' [] ys = []
+mezc' xs [] = []
+mezc' (x:xs) (y:ys) | x==y = x : mezc' xs ys
+                    | x<y = mezc' xs (y:ys)
+                    | otherwise = mezc' (x:xs) ys
+
+mcd'' :: Integer -> Integer -> Integer
+mcd'' x y = product (mezc' (factPrimos x) (factPrimos y))
+
+p_mcd'' x y = x>0 && y>0 ==> mcd'' x y == gcd x y
