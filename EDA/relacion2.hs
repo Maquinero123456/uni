@@ -1,6 +1,5 @@
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 import Test.QuickCheck
-import Data.Time.LocalTime (TimeZone(timeZoneSummerOnly))
+import Data.List (nub)
 --Ejercicio 1--
 {-data Direction = North | South | East | West deriving (Eq, Ord, Enum, Show)
 
@@ -235,6 +234,7 @@ mcm'' x y | x>=0 && y>=0 = product (mezcla (factPrimos' x) (factPrimos' y))
 
 p_mcm' x y = x>=0 && y>=0 ==> mcm'' x y == lcm x y
 
+--Ejercicio 20--
 mezc' :: [Integer] -> [Integer] -> [Integer]
 mezc' [] ys = []
 mezc' xs [] = []
@@ -246,3 +246,36 @@ mcd'' :: Integer -> Integer -> Integer
 mcd'' x y = product (mezc' (factPrimos x) (factPrimos y))
 
 p_mcd'' x y = x>0 && y>0 ==> mcd'' x y == gcd x y
+
+--Ejercicio 21--
+nub' :: (Eq a) => [a] -> [a]
+nub' [] = []
+nub' (x:xs) = x:nub' [ j | (p,j) <- zip [0..length xs] xs, x/=j]
+
+p_nub' xs = nub xs == nub' xs
+
+p_sinRepes xs = distintos (nub' xs)
+
+todosEn :: (Eq a) => [a] -> [a] -> Bool 
+ys `todosEn` xs = all (`elem` xs) ys
+
+p_sinRepes' xs = todosEn xs (nub' xs)
+
+--Ejercicio 22--
+binarios :: Integer -> [String]
+binarios 0 = [""]
+binarios x = sumarBinarios ([a | a <- [1..(div (2^x) 2)], let a = "0"] ++ [b | b <- [1..(div (2^x) 2)], let b = "1"]) (binarios (x-1))
+
+sumarBinarios :: [String] -> [String] -> [String]
+sumarBinarios [] _ = []
+sumarBinarios x [] = x
+sumarBinarios (x:xs) (y:ys) = (x++y) : sumarBinarios xs (ys++[y])
+
+p_binarios n = n>=0 && n<=10 ==>
+                            long xss == 2^n
+                            && distintos xss
+                            && all (`todosEn` "01") xss
+                where xss = binarios n
+
+long :: [a] -> Integer
+long xs = fromIntegral (length xs)

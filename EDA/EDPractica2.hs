@@ -77,8 +77,8 @@ type Epsilon = Double
 type Función = Double -> Double
 biparticion :: Función -> Izdo -> Dcho -> Epsilon -> Double
 
-biparticion f a b epsilon
-  | long < epsilon    = undefined
+biparticion f a b epsilon | long < epsilon    = undefined
+                          | b <= epsilon = long
 -- sigue aqui
   where
       long = b - a
