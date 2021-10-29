@@ -26,6 +26,8 @@
 	str r5, [r4, #GPFSEL1]
 	ldr r0, =STBASE
 	ldr r5, [r4, #GPLEV0]
+	ldr r1, =0
+	ldr r5, =0b00000000000000000000000000000000
 /* guia bits            xx999888777666555444333222111000*/
 tes:	ldr r5, [r4, #GPLEV0]
 /* guia bits      xx999888777666555444333222111000*/
@@ -33,26 +35,22 @@ tes:	ldr r5, [r4, #GPLEV0]
 	beq enc_der
 	ands	r6, r5, #0b00000000000000000000000000001000
 	beq enc_izq	
+bucle:	bl espera
+	str r5, [r4, #GPSET0]
+	bl espera
+	str r5, [r4, #GPCLR0]
 	b tes
 /* guia bits       xx999888777666555444333222111000*/
 enc_der:ldr r5, =0b00000000000000000000001000000000
 	str r5, [r4, #GPSET0]
 	ldr r5, =0b00000000000000000000000000010000
 	ldr r1, =1908
-bucle_b: bl espera
-	str r5, [r4, #GPSET0]
-	bl espera
-	str r5, [r4, #GPCLR0]
-	b bucle_b
+	b bucle
 enc_izq:ldr r5, =0b00000000000000100000000000000000
 	str r5, [r4, #GPSET0]
 	ldr r5, =0b00000000000000000000000000010000
 	ldr r1, =1278
-bucle_a:bl espera
-	str r5, [r4, #GPSET0]
-	bl espera
-	str r5, [r4, #GPCLR0]
-	b bucle_a
+	b bucle
 espera: push {r4, r5}
 	ldr r4, [r0, #STCLO]
 	add r4, r1
