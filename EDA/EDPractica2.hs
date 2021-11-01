@@ -79,7 +79,9 @@ p_ordena xs = sorted (ordena xs)
 -------------------------------------------------------------------------------
 binarios :: Integer -> [String]
 binarios 0 = [""]
-binarios x = sumarBinarios ([a | a <- [1..(div (2^x) 2)], let a = "0"] ++ [b | b <- [1..(div (2^x) 2)], let b = "1"]) (binarios (x-1))
+binarios 1 = ["0", "1"]
+binarios x = map ("0"++) (binarios (x-1)) ++ map ("1"++) (binarios (x-1))
+--binarios x = sumarBinarios ([a | a <- [1..(div (2^x) 2)], let a = "0"] ++ [b | b <- [1..(div (2^x) 2)], let b = "1"]) (binarios (x-1))
 
 sumarBinarios :: [String] -> [String] -> [String]
 sumarBinarios [] _ = []
@@ -95,7 +97,7 @@ p_binarios n = n>=0 && n<=10 ==>
 long :: [a] -> Integer
 long xs = fromIntegral (length xs)
 
-todosEn :: (Eq a) => [a] -> [a] -> Bool 
+todosEn :: (Eq a) => [a] -> [a] -> Bool
 ys `todosEn` xs = all (`elem` xs) ys
 -------------------------------------------------------------------------------
 -- Ejercicio 34
@@ -107,10 +109,10 @@ type Epsilon = Double
 type Función = Double -> Double
 
 biparticion :: Función -> Izdo -> Dcho -> Epsilon -> Double
-biparticion f a b epsilon | (f a)<0 && (f b)<0 || (f a)>0 && (f b)>0 = error "No hay cambio de signo"
+biparticion f a b epsilon | f a<0 && f b<0 || f a>0 && f b>0 = error "No hay cambio de signo"
                           | long <= epsilon = c
-                          | f c <= epsilon = c
-                          | (f a)<0 && (f c)>0 || (f a)>0 && (f c)<0= biparticion f a c epsilon
+                          | abs(f c) <= epsilon = c
+                          | f a<0 && f c>0 || f a>0 && f c<0= biparticion f a c epsilon
                           | otherwise = biparticion f c b epsilon
   where
       long = b - a
@@ -131,10 +133,9 @@ p_empareja xs ys = empareja xs ys == zip xs ys
 emparejaCon :: (a -> b -> c) -> [a] -> [b] -> [c]
 emparejaCon f [] _ = []
 emparejaCon f _ [] = []
-emparejaCon f (x:xs) (y:ys) = (f x y) : emparejaCon f xs ys
+emparejaCon f (x:xs) (y:ys) = f x y : emparejaCon f xs ys
 
-p_emparejaCon :: (Eq c) => (a -> b -> c) -> [a] -> [b] -> Bool
-p_emparejaCon f xs ys = emparejaCon f xs ys == zipWith f xs ys
+p_emparejaCon f xs ys = emparejaCon (+) xs ys == zipWith (+) xs ys
 
 cotizacion :: [(String, Double)]
 cotizacion = [("apple", 116), ("intel", 35), ("google", 824), ("nvidia", 67)]

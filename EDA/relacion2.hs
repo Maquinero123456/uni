@@ -256,7 +256,7 @@ p_nub' xs = nub xs == nub' xs
 
 p_sinRepes xs = distintos (nub' xs)
 
-todosEn :: (Eq a) => [a] -> [a] -> Bool 
+todosEn :: (Eq a) => [a] -> [a] -> Bool
 ys `todosEn` xs = all (`elem` xs) ys
 
 p_sinRepes' xs = todosEn xs (nub' xs)
@@ -264,7 +264,9 @@ p_sinRepes' xs = todosEn xs (nub' xs)
 --Ejercicio 22--
 binarios :: Integer -> [String]
 binarios 0 = [""]
-binarios x = sumarBinarios ([a | a <- [1..(div (2^x) 2)], let a = "0"] ++ [b | b <- [1..(div (2^x) 2)], let b = "1"]) (binarios (x-1))
+binarios 1 = ["0","1"]
+binarios x = map ("0"++) (binarios (x-1)) ++ map ("1"++) (binarios (x-1))
+--binarios x = sumarBinarios ([a | a <- [1..(div (2^x) 2)], let a = "0"] ++ [b | b <- [1..(div (2^x) 2)], let b = "1"]) (binarios (x-1))
 
 sumarBinarios :: [String] -> [String] -> [String]
 sumarBinarios [] _ = []
@@ -279,3 +281,40 @@ p_binarios n = n>=0 && n<=10 ==>
 
 long :: [a] -> Integer
 long xs = fromIntegral (length xs)
+
+--Ejercicio 23--
+varRep :: Integer -> String -> [String]
+varRep _ "" = [""]
+varRep 0 _ = [""]
+varRep x xs = [ x:y | x <- xs, y <- siguiente]
+    where siguiente = varRep (x-1) xs
+
+p_varRep m xs = m>=0 && m<=5 && n<=5 && distintos xs ==>
+                    long vss == n^m
+                    && distintos vss
+                    && all (`todosEn` xs) vss
+        where vss = varRep m xs
+              n   = long xs
+
+--Ejercicio 24--
+var :: Integer -> String -> [String]
+var _ "" = [""]
+var 0 _ = [""]
+var x xs = [ x:y | y <- siguiente, x <- xs, notElem x y]
+    where siguiente = var (x-1) xs
+
+p_var m xs = n<=5 && distintos xs && m>=0 && m<=n ==>
+             long vss == fact n `div` fact (n-m)
+             && distintos vss
+             && all distintos vss
+             && all (`todosEn` xs) vss
+    where
+        vss = var m xs
+        n = long xs
+        fact :: Integer -> Integer
+        fact x = product [1..x]
+
+--Ejercicio 25--
+intercala :: Integer -> [Integer] -> [[Integer]]
+intercala x [] = [[x]]
+intercala x xs = [ y | y <- [xs]]
