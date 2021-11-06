@@ -7,6 +7,11 @@ public class WellBalanced {
         ArrayStack<Character> stack = new ArrayStack<>();
         String a = "ff(h([sds)sds]ss)hags";
         System.out.println(wellBalanced(a, stack));
+        if(wellBalanced(a, stack)){
+            System.out.println(a+" esta balanceado");
+        }else{
+            System.out.println(a+" no esta balanceado");
+        }
     }
     public static boolean wellBalanced(String exp, Stack<Character> stack) {
         for (int i = 0; i < exp.length(); i++){
