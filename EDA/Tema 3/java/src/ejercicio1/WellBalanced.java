@@ -1,4 +1,4 @@
-package ejercicios;
+package ejercicio1;
 import dataStructures.stack.*;
 public class WellBalanced {
     private final static String OPEN_PARENTHESES ="{[(";
