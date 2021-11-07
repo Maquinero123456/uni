@@ -1,6 +1,6 @@
-package ejercicio2;
+package ejercicio5;
 
-public abstract class Operation extends Item{
+public abstract class Operation extends Item {
 
     @Override
     public boolean isOperation( ) {

@@ -1,6 +1,6 @@
 package ejercicio3;
 
-public class Add extends Operation {
+public class Add extends Operation{
 
     public Add(){
 

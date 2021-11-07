@@ -1,4 +1,4 @@
-package ejercicio2;
+package ejercicio3;
 
 import dataStructures.stack.ArrayStack;
 

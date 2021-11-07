@@ -1,6 +1,6 @@
-package ejercicio2;
+package ejercicio5;
 
-public class Mul extends Operation{
+public class Mul extends Operation {
 
     public Mul(){
 

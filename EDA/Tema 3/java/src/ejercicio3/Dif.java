@@ -1,6 +1,6 @@
 package ejercicio3;
 
-public class Dif extends Operation {
+public class Dif extends Operation{
     public Dif(){
 
     }

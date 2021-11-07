@@ -1,6 +1,6 @@
-package ejercicio2;
+package ejercicio5;
 
-public class Data extends Item{
+public class Data extends Item {
 
     private int valor;
 
