@@ -1,32 +1,39 @@
-package ejercicio10;
-
-import dataStructures.set.Set;
-import ejercicio12.LinkedNodeBag;
+package ejercicio12;
 
 import java.util.Iterator;
 
-public class LinkedNodeSet<T extends Comparable<T>> implements Set<T> {
+public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
 
     static private class Node<T> {
         T elem;
+        int num;
         Node<T> next;
 
-        public Node(T x, Node<T> node) {
+        public Node(T x, int y, Node<T> node) {
             elem=x;
+            num=y;
             next= node;
         }
 
         @Override
         public String toString() {
-            return "Node( "+elem+", "+next+")";
+            return "Node( "+elem+", "+num+", "+next+")";
+        }
+
+        public void aumentar(){
+            num++;
+        }
+
+        public void disminuir(){
+            num--;
         }
     }
 
     private Node<T> top;
     private int numElements;
 
-    public LinkedNodeSet(){
-        top=new Node<>(null, null);
+    public LinkedNodeBag(){
+        top=new Node<>(null, 0, null);
         numElements=0;
     }
 
@@ -42,27 +49,35 @@ public class LinkedNodeSet<T extends Comparable<T>> implements Set<T> {
 
     @Override
     public void insert(T x) {
-        if(isEmpty()){
+        if(top.elem==null || top.elem==x){
             top.elem=x;
-            numElements++;
-        }else if(!isElem(x)){
+            top.aumentar();
+            if(top.num==1){
+                numElements++;
+            }
+        }else{
             Node<T> aux = top;
             boolean aux2= false;
             while(aux.next!=null && !aux2){
-                if(x.compareTo(aux.elem)<0){
-                    aux.next = new Node<>(aux.elem, aux.next);
+                if(aux.elem==x){
+                    aux.aumentar();
+                    aux2= true;
+                }else if(x.compareTo(aux.elem)<0){
+                    aux.next = new Node<>(aux.elem, aux.num, aux.next);
                     aux.elem = x;
+                    aux.num = 1;
                     numElements++;
                     aux2=true;
                 }
                 aux= aux.next;
             }
             if(!aux2 && x.compareTo(aux.elem)<0){
-                aux.next = new Node<>(aux.elem, aux.next);
+                aux.next = new Node<>(aux.elem, aux.num, aux.next);
                 aux.elem = x;
+                aux.num = 1;
                 numElements++;
             }else if(!aux2){
-                aux.next= new Node<>(x, null);
+                aux.next= new Node<>(x,1, null);
                 numElements++;
             }
         }
@@ -83,36 +98,31 @@ public class LinkedNodeSet<T extends Comparable<T>> implements Set<T> {
     @Override
     public void delete(T x) {
         if(!isEmpty() && isElem(x)){
-            Node<T> aux= top;
+            Node<T> aux = top;
             boolean borrado = false;
             while(aux.next!=null && !borrado){
-                if(x.compareTo(aux.elem)==0){
-                    aux.elem= aux.next.elem;
-                    aux.next= aux.next.next;
+                if(aux.elem==x){
+                    aux.disminuir();
                     borrado = true;
+                }else{
+                    aux= aux.next;
                 }
-                aux= aux.next;
             }
-            if(aux.next==null){
-                aux.elem=null;
+            if(!borrado && aux.elem==x){
+                aux.disminuir();
+                borrado = true;
             }
-            numElements--;
+            if(borrado && aux.num==0){
+                if(aux.next==null){
+                    aux=null;
+                }else{
+                    aux.elem= aux.next.elem;
+                    aux.num= aux.next.num;
+                    aux.next= aux.next.next;
+                }
+                numElements--;
+            }
         }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        Node<T> aux = top;
-        for(int i=0; i<numElements; i++){
-            str.append(aux.elem);
-            aux= aux.next;
-            if(i+1<numElements){
-                str.append(", ");
-            }
-
-        }
-        return "LinkedNodeSet("+ str.toString() +")";
     }
 
     @Override
@@ -120,14 +130,32 @@ public class LinkedNodeSet<T extends Comparable<T>> implements Set<T> {
         return null;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        Node<T> aux = top;
+        for(int i=0; i<numElements; i++){
+            str.append(aux.elem).append(":").append(aux.num);
+            aux= aux.next;
+            if(i+1<numElements){
+                str.append(", ");
+            }
+        }
+        return "LinkedNodeBag("+str.toString()+")";
+    }
+
     public static void main(String[] args) {
-        LinkedNodeSet<Integer> a = new LinkedNodeSet<>();
+        LinkedNodeBag<Integer> a = new LinkedNodeBag<>();
         a.insert(1);
         a.insert(2);
+        a.insert(1);
         a.insert(4);
+        a.insert(5);
         a.insert(3);
-        System.out.println(a);
-        a.delete(4);
+        a.insert(3);
+        a.insert(4);
+        a.delete(3);
+        a.delete(3);
         System.out.println(a);
     }
 }
