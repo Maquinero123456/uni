@@ -1,6 +1,7 @@
-package ejercicio12;
+package Bag;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
 
@@ -127,7 +128,38 @@ public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedNodeBagIterator();
+    }
+
+    private class LinkedNodeBagIterator implements Iterator<T> {
+        Node<T> current;
+        int num;
+
+       public LinkedNodeBagIterator(){
+            current= top;
+            num = top.num;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current!=null;
+        }
+
+        @Override
+        public T next() {
+           if(!hasNext()){
+               throw new NoSuchElementException();
+           }
+           T x = current.elem;
+           num--;
+            if(num==0){
+                current= current.next;
+                if(current!=null){
+                    num= current.num;
+                }
+            }
+           return x;
+        }
     }
 
     @Override
@@ -145,7 +177,7 @@ public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
     }
 
     public static void main(String[] args) {
-        LinkedNodeBag<Integer> a = new LinkedNodeBag<>();
+        LinkedNodeBag<Integer> a = new LinkedNodeBag<Integer>();
         a.insert(1);
         a.insert(2);
         a.insert(1);
@@ -157,5 +189,9 @@ public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
         a.delete(3);
         a.delete(3);
         System.out.println(a);
+        Iterator b = a.iterator();
+        while(b.hasNext()){
+            System.out.println(b.next());
+        }
     }
 }
