@@ -1,4 +1,4 @@
-package Bag;
+package ejercicio12;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -189,7 +189,7 @@ public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
         a.delete(3);
         a.delete(3);
         System.out.println(a);
-        Iterator b = a.iterator();
+        Iterator<Integer> b = a.iterator();
         while(b.hasNext()){
             System.out.println(b.next());
         }
