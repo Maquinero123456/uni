@@ -1,0 +1,32 @@
+true
+SortedArrayBag(( , 111) (,, 17) (-, 1) (., 1) (A, 1) (D, 1) (H, 1) (I, 1) (L, 1) (S, 1) (T, 1) (W, 1) (a, 27) (b, 5) (c, 7) (d, 13) (e, 69) (f, 19) (g, 13) (h, 27) (i, 44) (k, 2) (l, 11) (m, 5) (n, 22) (o, 44) (p, 10) (r, 27) (s, 41) (t, 47) (u, 5) (v, 5) (w, 20) (y, 4) )
+a occurrs 27 times
+e occurrs 69 times
+i occurrs 44 times
+o occurrs 44 times
+u occurrs 5 times
+SortedArrayBag(( , 104) (,, 17) (-, 1) (., 1) (A, 1) (D, 1) (H, 1) (I, 1) (L, 1) (S, 1) (T, 1) (W, 1) (a, 22) (b, 5) (c, 3) (d, 12) (e, 66) (f, 19) (g, 12) (h, 26) (i, 43) (k, 1) (l, 11) (m, 4) (n, 21) (o, 43) (p, 10) (r, 27) (s, 41) (t, 47) (u, 1) (v, 4) (w, 20) (y, 3) )
+a occurrs 22 times
+e occurrs 66 times
+i occurrs 43 times
+o occurrs 43 times
+u occurrs 1 times
+SortedArrayBag((A, 1) (D, 1) (H, 1) (I, 1) (L, 1) (S, 1) (T, 1) (W, 1) (a, 22) (b, 5) (c, 3) (d, 12) (e, 66) (f, 19) (g, 12) (h, 26) (i, 43) (k, 1) (l, 11) (m, 4) (n, 21) (o, 43) (p, 10) (r, 27) (s, 41) (t, 47) (u, 1) (v, 4) (w, 20) (y, 3) )
+a occurrs 22 times
+e occurrs 66 times
+i occurrs 43 times
+o occurrs 43 times
+u occurrs 1 times
+SortedArrayBag((A, 1) (D, 1) (H, 1) (I, 1) (L, 1) (S, 1) (T, 1) (W, 1) (a, 22) (b, 5) (c, 3) (d, 12) (e, 66) (f, 19) (g, 12) (h, 26) (i, 43) (k, 1) (l, 11) (m, 4) (n, 21) (o, 43) (p, 10) (r, 27) (s, 41) (t, 47) )
+a occurrs 22 times
+e occurrs 66 times
+i occurrs 43 times
+o occurrs 43 times
+u occurrs 0 times
+SortedArrayBag((D, 1) (H, 1) (L, 1) (S, 1) (T, 1) (W, 1) (b, 5) (c, 3) (d, 12) (f, 19) (g, 12) (h, 26) (k, 1) (l, 11) (m, 4) (n, 21) (p, 10) (r, 27) (s, 41) (t, 47) )
+a occurrs 0 times
+e occurrs 0 times
+i occurrs 0 times
+o occurrs 0 times
+u occurrs 0 times
+false
