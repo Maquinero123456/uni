@@ -153,23 +153,4 @@ public class ArrayBag<T extends Comparable<T>> implements Bag<T>{
         }
         return "ArrayBag("+st.toString()+")";
     }
-
-    public static void main(String[] args) {
-        ArrayBag<Integer> a = new ArrayBag<>();
-        a.insert(5);
-        a.insert(5);
-        a.insert(5);
-        a.insert(2);
-        a.insert(7);
-        a.insert(6);
-        a.insert(1);
-        a.insert(6);
-        System.out.println(a);
-        Iterator<Integer> b = a.iterator();
-        while(b.hasNext()){
-            System.out.println(b.next());
-        }
-
-
-    }
 }
