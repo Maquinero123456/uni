@@ -21,6 +21,7 @@
 	ldr r3, =0b00000000000000000000000000000001
 	ldr r0, =STBASE
         ldr r1, [r0, #STCLO]
+	/* Medio segundo */
 	ldr r2, =0x07A120
         add r1, r2 
         str r1, [r0, #STC1]
@@ -35,6 +36,7 @@ irq_handler:
 	push {r0, r1, r2}
 	ldr r1, =onoff
 	ldr r2, [r1]
+	/* Or entre onoff y 1, guardo el resultado en onoff intercambiandolo en cada ejecucion */
 	eors r2, #1
 	str r2, [r1]
 	ldr r0, =GPBASE

@@ -52,10 +52,11 @@ irq_handler:
 	ldr r3, [r2]
 	subs r3, #1
 	moveq r3, #6
+	/* Avanzo por la secuencia*/
 	str r3, [r2]
 	ldr r3, [r2, +r3, LSL #2]
 	str r3, [r1, #GPSET0]
-
+	/*Reinicio la interrupcion por reloj y el comparador */
 	mov r3, #0b0010
 	str r3, [r0, #STCS]
 	ldr r3, [r0, #STCLO]
