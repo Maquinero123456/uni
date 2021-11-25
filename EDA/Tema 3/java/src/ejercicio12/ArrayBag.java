@@ -1,10 +1,8 @@
-package ejercicio12;
+package Bag;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import dataStructures.tuple.Tuple2;
 
 public class ArrayBag<T extends Comparable<T>> implements Bag<T>{
 
@@ -41,7 +39,6 @@ public class ArrayBag<T extends Comparable<T>> implements Bag<T>{
 
     @Override
     public void insert(T x) {
-        //Si esta vacio añado en el primer espacio
         if(isEmpty()){
             elems[0] = new Tuple2<T, Integer>(x,1);
             numElem++;
@@ -102,6 +99,18 @@ public class ArrayBag<T extends Comparable<T>> implements Bag<T>{
     }
 
     @Override
+    public int occurrences(T x) {
+        if(isElem(x)){
+            for(int i = 0; i<numElem; i++){
+                if(elems[i]._1()==x){
+                    return elems[i]._2();
+                }
+            }
+        }
+        return 0;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new ArrayBagIterator();
     }
@@ -152,5 +161,16 @@ public class ArrayBag<T extends Comparable<T>> implements Bag<T>{
             }
         }
         return "ArrayBag("+st.toString()+")";
+    }
+
+    public static void main(String[] args) {
+        ArrayBag<Character> a = new ArrayBag<Character>(1);
+        int aux = 65;
+        for(int i = 1; i<59; i++){
+            a.insert((char)aux);
+            aux++;
+        }
+        a.insert(',');
+        System.out.println(a);
     }
 }

@@ -1,4 +1,4 @@
-package ejercicio12;
+package Bag;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -124,6 +124,20 @@ public class LinkedNodeBag<T extends Comparable<T>> implements Bag<T>{
                 numElements--;
             }
         }
+    }
+
+    @Override
+    public int occurrences(T x) {
+        if(isElem(x)){
+            Node aux = top;
+            while(aux!=null){
+                if(aux.elem==x){
+                    return aux.num;
+                }
+                aux= aux.next;
+            }
+        }
+        return 0;
     }
 
     @Override
