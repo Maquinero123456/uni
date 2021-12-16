@@ -36,8 +36,7 @@ public class SparseVector<T> implements Iterable<T> {
         public Tree<T> set(int sz, int i, T x) {
             if(elem.equals(x)) return this;
             if(sz==1){
-                elem = x;
-                return this;
+                return new Unif<T>(x);
             }else{
                 Node<T> t;
                 if(i<sz/2){
