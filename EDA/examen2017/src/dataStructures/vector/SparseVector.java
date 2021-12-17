@@ -44,6 +44,7 @@ public class SparseVector<T> implements Iterable<T> {
                 }else{
                     t = new Node<>(this, set(sz / 2, i - sz / 2, x));
                 }
+                t.simplify();
                 return t;
             }
         }
