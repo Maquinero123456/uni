@@ -261,7 +261,7 @@ public class SparseVectorTesting {
         System.out.println("DONE!\n");
 
         /*************************************************************************/
-        /*
+
         // Complete SparseVector iterator
 
         System.out.println("testing SparseVector iterator");
@@ -298,7 +298,7 @@ public class SparseVectorTesting {
             check(!iter.hasNext(), "iterator should be exhausted");
         }
 
-        System.out.println("DONE!\n");*/
+        System.out.println("DONE!\n");
     }
 
     /**

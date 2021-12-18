@@ -7,6 +7,7 @@
 package dataStructures.vector;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SparseVector<T> implements Iterable<T> {
 
@@ -42,9 +43,8 @@ public class SparseVector<T> implements Iterable<T> {
                 if(i<sz/2){
                     t = new Node<>(set(sz / 2, i, x), this);
                 }else{
-                    t = new Node<>(this, set(sz / 2, i - sz / 2, x));
+                    t = new Node<>(this, set(sz / 2, i - (sz / 2), x));
                 }
-                t.simplify();
                 return t;
             }
         }
@@ -128,13 +128,36 @@ public class SparseVector<T> implements Iterable<T> {
         if(i<0 || i+1>size){
             throw new VectorException("Indice erroneo");
         }
-        root.set(size, i, x);
+        root = root.set(size, i, x);
     }
 
     @Override
     public Iterator<T> iterator() {
-        // TODO
-        return null;
+        return new SparceVectorIterator();
+    }
+
+    private class SparceVectorIterator implements Iterator<T>{
+
+        int i;
+
+        public SparceVectorIterator(){
+            i=0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return i<size;
+        }
+
+        @Override
+        public T next() {
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+            T a = root.get(size, i);
+            i++;
+            return a;
+        }
     }
 
     @Override
