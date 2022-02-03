@@ -127,8 +127,11 @@ AVLDictionary('a'->1,'b'->2,'c'->3,'d'->4,'e'->5)
 
 -- 3.b
 prefixWith :: Ord a => b -> D.Dictionary a [b] -> D.Dictionary a [b]
-prefixWith x y = foldl (\ d (e,[f]) -> D.insert e (x:[f]) d) D.empty (D.keysValues y)
-{-
+prefixWith x y = foldl funcionRandom y (D.keysValues y)
+  where funcionRandom d (e,z:zs) = D.insert e (x:(z:zs)) d
+        funcionRandom d (e, []) = D.insert e [x] d
+
+{-    
 
 > prefixWith 0 (D.insert 'a' [0,0,1] $ D.insert 'b' [1,0,0] $ D.empty)
 AVLDictionary('a'->[0,0,0,1],'b'->[0,1,0,0])
@@ -140,7 +143,8 @@ AVLDictionary(1->"hasta",2->"hecho")
 
 -- 3.c
 huffmanCode :: WLeafTree Char -> D.Dictionary Char [Integer]
-huffmanCode = undefined
+huffmanCode (WLeaf x _) = D.insert x [] D.empty
+huffmanCode (WNode x y z) = joinDics (prefixWith 0 (huffmanCode x)) (prefixWith 1 (huffmanCode y))
 
 {-
 
