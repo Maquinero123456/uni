@@ -66,7 +66,7 @@ public class HuffmanTest {
         System.out.println("\nExercise 3.b - prefix with:");
         System.out.println("prefix d1 with 0: " + Huffman.prefixWith(0, d1));
         System.out.println("prefix d2 with 1: " + Huffman.prefixWith(1, d2));
-
+        
         // Exercise 4
 
         System.out.println("\nExercise 4 - encode:");
@@ -74,7 +74,8 @@ public class HuffmanTest {
         System.out.println("using the huffman tree built with one priority queue:");
         WLeafTree<Character> ht = Huffman.huffmanTree(msg);
         Dictionary<Character, List<Integer>> hc = Huffman.huffmanCode(ht);
-        List<Integer> codedMsg = Huffman.encode(msg, hc);
+        System.out.println(hc);
+        /*List<Integer> codedMsg = Huffman.encode(msg, hc);
         System.out.println(codedMsg);
 
 
@@ -89,6 +90,6 @@ public class HuffmanTest {
             System.out.println("decoding OK!");
         } else {
             System.out.println("***** decoding WRONG!");
-        }
+        }*/
     }
 }
