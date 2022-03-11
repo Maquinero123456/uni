@@ -1,0 +1,16 @@
+pre { color: maroon }
+
+.parpadear { text-decoration: blink;}
+.subrayado { text-decoration: underline;}
+.sobrerayado { text-decoration: overline;}
+.tachado { text-decoration: line-through;}
+.mover {
+	left:100px;
+	top:20px; 
+	position:static;
+	width:100px;
+	height:100px;
+	border: solid red;
+	background-color: blue;
+	z-index:0; 
+} 

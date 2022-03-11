@@ -1,0 +1,54 @@
+p {/*cambiamos apariencia de los párrafos*/
+	font-size: 12pt;
+	font-family: arial, helvetica;
+	font-weight: normal;
+}
+h1 {/*cambiamos la apariencia de los encabezados de primer nivel*/
+	font-size: 36pt;
+	font-family: verdana, arial;
+	text-decoration: underline;
+	text-align: center;
+	background-color: Teal;
+}
+
+ul > li {/*cambiamos la apariencia de los elementos de las listas desordenadas*/
+	font-size: 10pt;
+	font-family: verdana, arial;
+	background-color: #666666;
+}
+
+body/*cambiamos la apariencia de todo el cuerpo*/ {
+	background-color: #001600;
+	font-family: arial;
+	color: White;
+}
+p.especial {/*clase que se aplica solo a los párrafos*/
+	font-size: 16pt;
+}
+#enorme {/* mediante identificador*/
+	font-size: 28pt;
+}
+.borde {/*clase para bordes*/
+	border-top: solid 2px #A00000;
+	border-bottom: outset 3px #00FF00;
+	border-left: dotted 2px #A00000;
+	border-right: dashed 2px #0000FF;
+}
+A:link {/*pseudoclase para los enlaces*/
+	text-decoration: none;
+	color: #0000cc;
+}
+A:visited {
+	text-decoration: none;
+	color: #ffcc33;
+}
+A:hover {
+	text-decoration: underline;
+	color: #999999;
+	font-weight: bold
+}
+A:active {
+	text-decoration: none;
+	color: #ff0000;
+}
+
