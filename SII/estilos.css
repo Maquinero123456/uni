@@ -1,0 +1,39 @@
+body {
+	background-color: #F6F4F0;
+	font-family: sans-serif;
+}
+h1{
+	color:green;
+	text-align: center;
+}
+
+table{
+	border-collapse: collapse;
+	background-color: white;
+}
+
+th{
+	background-color: green;
+	color: #F6F4F0;
+	text-align: left;
+	font-weight: normal;
+}
+
+th, td {
+	border: 1px solid green;
+	padding: 4px;
+  }
+
+  tr:nth-child(even) {background-color: #dfd;}
+  td:last-child{
+	text-align: center; 
+  } 
+  a {
+	  color: green;
+	  text-decoration: none;
+	}
+
+h2{
+	text-align: center;
+	color:green;
+}
