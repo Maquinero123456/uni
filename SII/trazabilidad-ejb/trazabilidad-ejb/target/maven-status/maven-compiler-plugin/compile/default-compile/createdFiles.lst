@@ -1,0 +1,9 @@
+es\uma\informatica\sii\ejb\practica\ejb\exceptions\ProductoNoEncontradoException.class
+es\uma\informatica\sii\ejb\practica\ejb\ProductosEJB.class
+es\uma\informatica\sii\ejb\practica\ejb\exceptions\IngredientesIncorrectosException.class
+es\uma\informatica\sii\ejb\practica\ejb\GestionLotes.class
+es\uma\informatica\sii\ejb\practica\ejb\exceptions\LoteNoEncontradoException.class
+es\uma\informatica\sii\ejb\practica\ejb\GestionProductos.class
+es\uma\informatica\sii\ejb\practica\ejb\exceptions\LoteExistenteException.class
+es\uma\informatica\sii\ejb\practica\ejb\exceptions\TrazabilidadException.class
+es\uma\informatica\sii\ejb\practica\ejb\LotesEJB.class
