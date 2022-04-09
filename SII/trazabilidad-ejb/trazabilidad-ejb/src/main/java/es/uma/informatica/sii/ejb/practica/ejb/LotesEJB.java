@@ -16,6 +16,7 @@ import es.uma.informatica.sii.ejb.practica.ejb.exceptions.LoteNoEncontradoExcept
 import es.uma.informatica.sii.ejb.practica.ejb.exceptions.ProductoNoEncontradoException;
 import es.uma.informatica.sii.ejb.practica.entidades.Lote;
 import es.uma.informatica.sii.ejb.practica.entidades.Producto;
+import es.uma.informatica.sii.ejb.practica.entidades.Lote.LoteId;
 
 /**
  * Session Bean implementation class Sample
@@ -65,19 +66,18 @@ public class LotesEJB implements GestionLotes {
 			throw new ProductoNoEncontradoException();
 		}
 
-		Lote loteEntity = em.find(Lote.class, lote.getCodigo());
+		Lote loteEntity = em.find(Lote.class, new Lote.LoteId(lote.getCodigo(), producto));
 		if (loteEntity == null){
 			throw new LoteNoEncontradoException();
 		}
 
-		if (!productoEntity.getIngredientes().equals(loteEntity.getLoteIngredientes().keySet())) {
+		if (!productoEntity.getIngredientes().equals(lote.getLoteIngredientes().keySet())) {
 			throw new IngredientesIncorrectosException();
 		}
 
 		loteEntity.setFechaFabricacion(lote.getFechaFabricacion());
 		loteEntity.setCantidad(lote.getCantidad());
 		loteEntity.setLoteIngredientes(lote.getLoteIngredientes());
-		em.
 	}
 
 	@Override
@@ -88,11 +88,10 @@ public class LotesEJB implements GestionLotes {
 			throw new ProductoNoEncontradoException();
 		}
 
-		Lote loteEntity = em.find(Lote.class, lote.getCodigo());
+		Lote loteEntity = em.find(Lote.class, new Lote.LoteId(lote.getCodigo(), producto));
 		if (loteEntity == null){
 			throw new LoteNoEncontradoException();
 		}
-		productoEntity.getLotes().remove(loteEntity);
 		em.remove(loteEntity);
 	}
 
@@ -102,7 +101,6 @@ public class LotesEJB implements GestionLotes {
 		if (productoEntity == null) {
 			throw new ProductoNoEncontradoException();
 		}
-
 		productoEntity.getLotes().clear();
 	}
 
