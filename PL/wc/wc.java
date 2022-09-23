@@ -16,8 +16,6 @@ public class wc {
                 Yytoken yytoken = null;
 		while (  (yytoken = lex.yylex()) != null  ) {
                     if (yytoken.getToken() == Yytoken.word)  {
-
-                        System.out.println(yytoken.toString());
                        word++;
                        letter+=yytoken.getLetras();
                     } else if (yytoken.getToken() == Yytoken.EOLN){
