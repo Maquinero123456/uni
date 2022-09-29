@@ -19,7 +19,4 @@
                 return new Yytoken(Yytoken.D, yytext());
            }
 \n         {}
-,          {}
-;          {}
-\.         {}
 .          {} 

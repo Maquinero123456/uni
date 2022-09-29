@@ -93,11 +93,11 @@ class Yylex {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\1\2\3\1\4\1\1"+
-    "\2\5\1\4";
+    "\1\0\1\1\1\2\1\3\1\1\2\3\1\4\1\5"+
+    "\1\4";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[12];
+    int [] result = new int[10];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -122,11 +122,11 @@ class Yylex {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\4\0\4\0\10\0\14\0\20\0\24\0\30"+
-    "\0\34\0\4\0\30\0\20";
+    "\0\0\0\4\0\4\0\10\0\14\0\20\0\24\0\4"+
+    "\0\20\0\20";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[12];
+    int [] result = new int[10];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -150,12 +150,11 @@ class Yylex {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\4\0\1\2\1\0\1\6"+
-    "\1\5\1\2\1\0\1\7\1\5\1\2\1\0\1\10"+
-    "\1\11\1\2\1\0\1\10\1\5\1\12\1\0\1\10"+
-    "\1\13\1\2\1\0\1\14\1\11";
+    "\1\5\1\2\1\0\1\7\1\5\1\10\1\0\1\11"+
+    "\1\12\1\2\1\0\1\11\1\5";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[32];
+    int [] result = new int[24];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -198,10 +197,10 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\6\1\1\11\2\1";
+    "\1\0\2\11\4\1\1\11\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[12];
+    int [] result = new int[10];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -632,12 +631,12 @@ class Yylex {
             // fall through
           case 8: break;
           case 4:
-            { return new Yytoken(Yytoken.A, yytext());
+            { return new Yytoken(Yytoken.C, yytext());
             }
             // fall through
           case 9: break;
           case 5:
-            { return new Yytoken(Yytoken.C, yytext());
+            { return new Yytoken(Yytoken.A, yytext());
             }
             // fall through
           case 10: break;
