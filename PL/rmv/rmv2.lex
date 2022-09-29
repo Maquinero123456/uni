@@ -1,5 +1,7 @@
 %%
 
+%unicode
+
 %{   
      TablaSimbolos tb = new TablaSimbolos();
      StringBuffer string = new StringBuffer();

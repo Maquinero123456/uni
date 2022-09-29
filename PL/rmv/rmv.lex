@@ -1,5 +1,8 @@
 %%
 
+%unicode
+%standalone
+
 %{   
     TablaSimbolos tb = new TablaSimbolos();
     StringBuffer string = new StringBuffer();
@@ -36,7 +39,7 @@
 }
 
 <STRING> {
-    [a-zA-Z0-9+=* ]+ {
+    ([a-zA-Z0-9+=* ]|(\\;))+ {
         string2.append(yytext());
     }
 
@@ -61,14 +64,14 @@
     }
     
     \" {
-        tb.put(string.toString(), "\""+string2.toString()+"\"");
+        tb.put(string.toString(), string2.toString());
         string.setLength(0);
         yybegin(YYINITIAL);
     }
  }
 
 <ECHO> {
-    ([a-zA-Z0-9;+=* ]|(\\\")|(\\\$))+ {
+    ([a-zA-Z0-9;+=*, ]|(\\\")|(\\\$))+ {
         string2.append(yytext());
     }
 
