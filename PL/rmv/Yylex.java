@@ -16,6 +16,8 @@ class Yylex {
   // Lexical states.
   public static final int YYINITIAL = 0;
   public static final int STRING = 2;
+  public static final int COMILLAS = 4;
+  public static final int ECHO = 6;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -24,7 +26,7 @@ class Yylex {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = {
-     0,  0,  1, 1
+     0,  0,  1,  1,  2,  2,  3, 3
   };
 
   /**
@@ -33,7 +35,7 @@ class Yylex {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
+    "\1\0\u10ff\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -61,14 +63,14 @@ class Yylex {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\12\0\1\1\3\2\22\0\1\3\1\0\1\4\1\0"+
-    "\1\5\7\0\1\6\3\0\12\7\1\0\1\1\1\0"+
-    "\1\10\3\0\32\11\1\12\1\13\2\12\1\14\1\12"+
-    "\2\11\1\15\1\11\1\16\2\11\1\17\6\11\1\20"+
-    "\13\11\12\0\1\2\u01a2\0\2\2\326\0\u0100\2";
+    "\12\0\1\1\25\0\1\2\1\0\1\3\1\0\1\4"+
+    "\5\0\2\2\4\0\12\5\1\0\1\6\1\0\1\7"+
+    "\3\0\32\10\1\0\1\11\2\0\1\12\1\0\2\10"+
+    "\1\13\1\10\1\14\2\10\1\15\6\10\1\16\13\10"+
+    "\u0185\0";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[1024];
+    int [] result = new int[512];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -92,12 +94,12 @@ class Yylex {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\1\3\2\1\1\4\1\5\2\1"+
-    "\1\3\1\0\1\6\1\0\1\7\3\0\1\10\2\0"+
-    "\1\11";
+    "\4\0\1\1\1\2\2\3\1\4\1\5\1\1\1\5"+
+    "\1\6\1\1\1\7\2\5\1\1\1\10\1\3\1\11"+
+    "\2\0\1\3\1\12";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[23];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -122,12 +124,13 @@ class Yylex {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\21\0\42\0\42\0\63\0\104\0\125\0\42"+
-    "\0\146\0\167\0\210\0\42\0\104\0\42\0\231\0\167"+
-    "\0\252\0\273\0\314\0\104\0\335\0\356\0\42";
+    "\0\0\0\17\0\36\0\55\0\74\0\113\0\132\0\151"+
+    "\0\170\0\207\0\226\0\245\0\74\0\264\0\74\0\303"+
+    "\0\74\0\322\0\74\0\341\0\226\0\264\0\322\0\360"+
+    "\0\132";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[23];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -150,17 +153,19 @@ class Yylex {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\0\1\4\4\3\1\5\1\6\2\3"+
-    "\2\6\1\7\2\6\1\3\1\10\1\0\1\11\1\10"+
-    "\1\12\1\11\2\3\1\11\1\3\1\13\1\3\4\11"+
-    "\25\0\1\14\23\0\1\15\1\16\1\15\2\0\5\15"+
-    "\7\0\1\15\1\16\1\15\2\0\1\15\1\17\3\15"+
-    "\3\0\1\11\2\0\1\11\2\0\1\11\3\0\4\11"+
-    "\7\0\1\20\1\0\10\20\4\0\1\21\23\0\1\15"+
-    "\1\16\1\15\2\0\3\15\1\22\1\15\5\0\1\23"+
-    "\22\0\1\15\1\16\1\15\2\0\4\15\1\24\7\0"+
-    "\1\25\1\0\1\25\2\0\5\25\7\0\1\25\1\0"+
-    "\1\25\1\0\1\26\5\25\4\0\1\27\14\0";
+    "\7\5\1\6\1\7\1\5\2\7\1\10\2\7\1\5"+
+    "\1\11\1\12\1\11\1\13\1\12\1\11\2\12\2\5"+
+    "\4\12\1\5\2\14\1\15\1\13\4\14\1\16\1\5"+
+    "\4\14\1\5\1\17\1\20\1\21\1\13\4\20\1\22"+
+    "\1\5\4\20\22\0\1\23\20\0\1\7\2\0\1\7"+
+    "\1\0\5\7\5\0\1\7\2\0\1\7\1\0\1\7"+
+    "\1\24\3\7\1\0\1\11\1\0\1\11\2\0\1\11"+
+    "\12\0\1\12\2\0\1\12\1\0\2\12\2\0\4\12"+
+    "\5\0\1\25\2\0\1\25\1\0\5\25\1\0\2\14"+
+    "\2\0\4\14\1\26\1\0\4\14\3\0\2\14\14\0"+
+    "\1\20\2\0\4\20\1\27\1\0\4\20\3\0\2\20"+
+    "\17\0\1\7\2\0\1\7\1\0\3\7\1\30\1\7"+
+    "\5\0\1\7\2\0\1\7\1\0\4\7\1\31";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[255];
@@ -206,11 +211,11 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\3\1\1\11\3\1\1\11\1\0\1\11"+
-    "\1\0\1\1\3\0\1\1\2\0\1\11";
+    "\4\0\1\11\7\1\1\11\1\1\1\11\1\1\1\11"+
+    "\1\1\1\11\2\1\2\0\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[23];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -290,9 +295,9 @@ class Yylex {
   private boolean zzEOFDone;
 
   /* user code: */
-     TablaSimbolos tb = new TablaSimbolos();
-     StringBuffer string = new StringBuffer();
-     StringBuffer string2 = new StringBuffer();
+    TablaSimbolos tb = new TablaSimbolos();
+    StringBuffer string = new StringBuffer();
+    StringBuffer string2 = new StringBuffer();
 
 
   /**
@@ -634,54 +639,59 @@ class Yylex {
             { 
             }
             // fall through
-          case 10: break;
-          case 2:
-            { tb.put(string.toString(), string2.toString());
-          string.setLength(0);
-            }
-            // fall through
           case 11: break;
-          case 3:
-            { string2.setLength(0); yybegin(STRING);
+          case 2:
+            { string2.setLength(0); 
+        yybegin(STRING);
             }
             // fall through
           case 12: break;
-          case 4:
-            { tb.put(string.toString(), string2.toString());
-          string.setLength(0);
-          yybegin(YYINITIAL);
+          case 3:
+            { string.append(yytext());
             }
             // fall through
           case 13: break;
+          case 4:
+            { tb.put(string.toString(), string2.toString());
+        string.setLength(0);
+        yybegin(YYINITIAL);
+            }
+            // fall through
+          case 14: break;
           case 5:
             { string2.append(yytext());
             }
             // fall through
-          case 14: break;
-          case 6:
-            // lookahead expression with fixed lookahead length
-            zzMarkedPos = Character.offsetByCodePoints
-                (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -1);
-            { string.append(yytext());
-            }
-            // fall through
           case 15: break;
-          case 7:
-            { string2.append(tb.get(yytext()));
+          case 6:
+            { tb.put(string.toString(), "\""+string2.toString()+"\"");
+        string.setLength(0);
+        yybegin(YYINITIAL);
             }
             // fall through
           case 16: break;
-          case 8:
-            { string.append(yytext()); string2.setLength(0); yybegin(STRING);
+          case 7:
+            { System.out.println("echo"+string2.toString());
             }
             // fall through
           case 17: break;
-          case 9:
-            { System.out.println(yytext());
-          string2.append(yytext());
+          case 8:
+            { string2.setLength(0); 
+        yybegin(COMILLAS);
             }
             // fall through
           case 18: break;
+          case 9:
+            { string2.append(tb.get(yytext()));
+            }
+            // fall through
+          case 19: break;
+          case 10:
+            { string2.setLength(0);
+        yybegin(ECHO);
+            }
+            // fall through
+          case 20: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

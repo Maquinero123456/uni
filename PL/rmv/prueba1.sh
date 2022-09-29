@@ -1,3 +1,2 @@
 nombre=Ricardo
 echo $nombre
-
