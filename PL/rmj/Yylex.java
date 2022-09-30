@@ -100,13 +100,13 @@ class Yylex {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\2\0\1\2\1\0\1\3\1\4\1\3"+
-    "\1\5\4\6\1\3\1\7\1\10\1\11\1\12\1\13"+
-    "\1\14\1\15\2\3\1\16\1\17\1\20\1\21\1\14"+
-    "\1\22\1\3\3\0\4\6\1\4\1\12\1\0\1\23"+
-    "\1\20\2\0\4\6\1\23\1\0\4\6\1\0\4\6"+
-    "\1\0\1\24\1\6\1\0\1\6\2\0\1\25\21\0"+
-    "\1\26\3\0\1\27\23\0\1\30";
+    "\7\0\1\1\1\2\1\1\1\3\4\4\1\1\1\5"+
+    "\1\6\1\7\1\10\1\11\1\12\1\13\2\1\1\14"+
+    "\1\15\1\16\1\17\1\12\1\20\1\1\3\0\4\4"+
+    "\1\2\1\10\1\0\1\21\1\16\2\0\4\4\1\21"+
+    "\1\0\4\4\1\0\4\4\1\0\1\22\1\4\1\0"+
+    "\1\4\2\0\1\23\21\0\1\24\3\0\1\25\23\0"+
+    "\1\26";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[111];
@@ -273,12 +273,11 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\1\1\2\0\1\1\1\0\1\11\2\1\1\11"+
-    "\5\1\1\11\1\1\1\11\3\1\1\11\3\1\1\11"+
-    "\3\1\1\11\1\1\3\0\4\1\2\11\1\0\1\1"+
-    "\1\11\2\0\4\1\1\11\1\0\4\1\1\0\4\1"+
-    "\1\0\2\1\1\0\1\1\2\0\1\1\21\0\1\1"+
-    "\3\0\1\11\23\0\1\11";
+    "\7\0\1\11\2\1\1\11\5\1\1\11\1\1\1\11"+
+    "\3\1\1\11\3\1\1\11\3\1\1\11\1\1\3\0"+
+    "\4\1\2\11\1\0\1\1\1\11\2\0\4\1\1\11"+
+    "\1\0\4\1\1\0\4\1\1\0\2\1\1\0\1\1"+
+    "\2\0\1\1\21\0\1\1\3\0\1\11\23\0\1\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[111];
@@ -705,73 +704,63 @@ class Yylex {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { tb.put(string.toString(), "");
-            }
-            // fall through
-          case 25: break;
-          case 2:
-            { string2.append("");
-            }
-            // fall through
-          case 26: break;
-          case 3:
             { 
             }
             // fall through
-          case 27: break;
-          case 4:
+          case 23: break;
+          case 2:
             { System.out.print(yytext());
             }
             // fall through
-          case 28: break;
-          case 5:
+          case 24: break;
+          case 3:
             { string2.setLength(0);
         yybegin(VARIABLE);
             }
             // fall through
-          case 29: break;
-          case 6:
+          case 25: break;
+          case 4:
             { string.setLength(0);
         string2.setLength(0);
         string.append(yytext());
         yybegin(ASIGNACION);
             }
             // fall through
-          case 30: break;
-          case 7:
+          case 26: break;
+          case 5:
             { tb.put(string.toString(), "");
         yybegin(VALOR);
             }
             // fall through
-          case 31: break;
-          case 8:
+          case 27: break;
+          case 6:
             { string.append(yytext());
             }
             // fall through
-          case 32: break;
-          case 9:
+          case 28: break;
+          case 7:
             { string2.setLength(0);
         yybegin(COMILLAS);
             }
             // fall through
-          case 33: break;
-          case 10:
+          case 29: break;
+          case 8:
             { string.setLength(0);
         yybegin(YYINITIAL);
             }
             // fall through
-          case 34: break;
-          case 11:
+          case 30: break;
+          case 9:
             { tb.put(string.toString(), tb.get(string.toString())+tb.get(yytext()));
             }
             // fall through
-          case 35: break;
-          case 12:
+          case 31: break;
+          case 10:
             { string2.append(yytext());
             }
             // fall through
-          case 36: break;
-          case 13:
+          case 32: break;
+          case 11:
             { tb.put(string.toString(), tb.get(string.toString())+string2.toString());
         if(string.toString().equals("print")){
             yybegin(PRINT);
@@ -780,72 +769,72 @@ class Yylex {
         }
             }
             // fall through
-          case 37: break;
-          case 14:
+          case 33: break;
+          case 12:
             { tb.put("print", tb.get("print")+tb.get(yytext()));
             }
             // fall through
-          case 38: break;
-          case 15:
+          case 34: break;
+          case 13:
             { yybegin(COMILLAS2);
             }
             // fall through
-          case 39: break;
-          case 16:
+          case 35: break;
+          case 14:
             { tb.put(string.toString(), string2.toString());
         string.setLength(0);
         yybegin(YYINITIAL);
             }
             // fall through
-          case 40: break;
-          case 17:
+          case 36: break;
+          case 15:
             { string2.append(tb.get(yytext()));
             }
             // fall through
-          case 41: break;
-          case 18:
+          case 37: break;
+          case 16:
             { yybegin(ASIGNACION);
             }
             // fall through
-          case 42: break;
-          case 19:
+          case 38: break;
+          case 17:
             { System.out.println("System.out.print"+tb.get("print")+"\");");
         yybegin(YYINITIAL);
             }
             // fall through
-          case 43: break;
-          case 20:
+          case 39: break;
+          case 18:
             { string.setLength(0);
         yybegin(VARIABLE);
             }
             // fall through
-          case 44: break;
-          case 21:
+          case 40: break;
+          case 19:
             { System.out.print(yytext()+"_rmj");
             }
             // fall through
-          case 45: break;
-          case 22:
+          case 41: break;
+          case 20:
             { string.setLength(0);
         string.append("print");
         tb.put("print", "(\"");
         yybegin(PRINT);
             }
             // fall through
-          case 46: break;
-          case 23:
+          case 42: break;
+          case 21:
             { string.setLength(0);
         string.append("print");
         tb.put("print", "ln(\"");
         yybegin(PRINT);
             }
             // fall through
-          case 47: break;
-          case 24:
+          case 43: break;
+          case 22:
             { System.out.println(yytext());
             }
             // fall through
-          case 48: break;
+          case 44: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

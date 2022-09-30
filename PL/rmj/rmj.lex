@@ -103,11 +103,6 @@
 
     }
 
-
-    "" {
-        tb.put(string.toString(), "");
-    }
-
     \" {
         string2.setLength(0);
         yybegin(COMILLAS);
@@ -131,11 +126,6 @@
 
     = {
 
-    }
-
-
-    "" {
-        string2.append("");
     }
 
     \" {
