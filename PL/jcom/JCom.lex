@@ -9,7 +9,7 @@
 
 %%
 <YYINITIAL> {
-    \"[_a-zA-Z0-9*/ ]+\" {
+    \".+\" {
 
     }
 
@@ -30,7 +30,7 @@
  }
 
 <LINE> {
-    [^\t \n] {
+    [^\t\s\n\r] {
         JCom.linea++;
     }
 
@@ -58,7 +58,7 @@
     }
 
 
-    "*"?[^\t\s\n\r] {
+    [^\t\s\n\r] {
         JCom.dobleAsterisco++;
     }
  }
