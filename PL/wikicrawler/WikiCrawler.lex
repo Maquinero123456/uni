@@ -14,8 +14,9 @@
 
 %%
 <YYINITIAL> {
-    a {
-
+    "https://commons.wikimedia.org/wiki/File:"[a-zA-Z.:0-9%_;-]+\.[fvpsnjeigFVPSNJEIG]+ {
+        WikiCrawler.nImg++;
+        WikiCrawler.enlacesImagenes.add(yytext());
     }
 }
 
@@ -35,7 +36,7 @@
 
 <ECHO> {
     a {
-        
+
     }
 
  }
