@@ -27,10 +27,6 @@
         
         yybegin(DAST);
     }
-
-    \n {
-
-    }
  }
 
 <LINE> {
@@ -50,16 +46,8 @@
         yybegin(YYINITIAL);
     }
 
-    [^\t \n] {
+    [^\t\s\n\r] {
         JCom.lineaMultiple++;
-    }
-
-    \n {
-
-    }
-
-    . {
-        
     }
  }
 
@@ -70,22 +58,8 @@
     }
 
 
-    "*"?[^\t \n] {
+    "*"?[^\t\s\n\r] {
         JCom.dobleAsterisco++;
-    }
-    
-    
-
-    \t {
-
-    }
-
-    \n {
-
-    }
-
-    . {
-        
     }
  }
 
