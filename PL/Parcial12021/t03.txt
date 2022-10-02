@@ -1,0 +1,4 @@
+- manzanas		12uds		0.23
+ - limones		10uds		0.01
+  - fresas		20uds		0.17
+ 

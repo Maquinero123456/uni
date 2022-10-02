@@ -1,0 +1,4 @@
+manzanas		x12		0.23
+limones		x10		0.01
+fresas		x20		0.17
+ 
