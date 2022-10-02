@@ -2,12 +2,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JCom {
-	// Uno
+	// hola
 	public static int linea = 0;
 	public static int lineaMultiple = 0;
 	public static int dobleAsterisco = 0;
 	
     public static void main(String arg[]) {
+		String hola = "pito";
 		Yylex lex = null;
 		try {
 			lex = new Yylex(new FileReader(arg[0]));
