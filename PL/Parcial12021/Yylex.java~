@@ -674,8 +674,7 @@ class Yylex {
             // fall through
           case 15: break;
           case 7:
-            { System.out.println(yytext());
-        Ticket.numItemsDistintos++;
+            { Ticket.numItemsDistintos++;
             }
             // fall through
           case 16: break;

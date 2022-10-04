@@ -648,14 +648,12 @@ class Yylex {
             // fall through
           case 12: break;
           case 4:
-            { System.out.println(yytext());
-        cant = Integer.parseInt(yytext());
+            { cant = Integer.parseInt(yytext());
             }
             // fall through
           case 13: break;
           case 5:
-            { System.out.println(yytext());
-        if(cant==0){
+            { if(cant==0){
             cant=1;
         }
         Ticket.numItems+=cant;
@@ -682,8 +680,7 @@ class Yylex {
             // lookahead expression with fixed lookahead length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -2);
-            { System.out.println(yytext());
-        if(cant==0){
+            { if(cant==0){
             cant=1;
         }
         Ticket.numItems+=cant;

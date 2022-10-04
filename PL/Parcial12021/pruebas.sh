@@ -5,7 +5,7 @@ javac *.java
 echo ------------------------
 echo "-     EJECUTANDO       -"
 echo ------------------------
-for i in {5..7}
+for i in {0..7}
 do
 	echo
 	echo "-------------------------"
