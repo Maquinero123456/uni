@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.net.*;
 
 public class ServerUDP extends Thread{

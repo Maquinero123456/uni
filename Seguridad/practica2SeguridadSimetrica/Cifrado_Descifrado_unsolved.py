@@ -9,7 +9,6 @@ class AES_CIPHER_CBC:
 
     def __init__(self, key):
         """Inicializa las variables locales"""
-        self.key = key
 
     def cifrar(self, cadena, IV):
         """Cifra el parámetro cadena (de tipo String) con una IV específica, y 
