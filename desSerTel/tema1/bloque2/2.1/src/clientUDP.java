@@ -42,27 +42,30 @@ public class clientUDP {
                 }else{
                     //Cargo el archivo
                     File archivo = new File(aux[1]);
-                    System.out.println(mensaje);
                     //Mando WRQ
                     DatagramPacket dp = packet.createWRQ(aux[1], serveAddress, servPort);
-                    System.out.println(mensaje);
                     socket.send(dp);
                     socket.setSoTimeout(500);
 
                     DatagramPacket receivePacket = new DatagramPacket(new byte[4], 4);
                     socket.receive(receivePacket);
+                    System.out.println("ACK "+packet.compACK(receivePacket.getData()));
                     if(packet.compACK(receivePacket.getData())==0){
                         byte[] bytesToSend = new byte[512];
                         FileInputStream fi = new FileInputStream(archivo);
+                        System.out.println("Tam del archivo: "+fi.available());
                         int bloque=1, tam=512;
                         while(fi.available()>0){
+                            System.out.println("Queda por enviar: "+fi.available());
                             if(fi.available()<512){
                                 tam=fi.available();
                             }
                             fi.read(bytesToSend, 0, tam);
+                            System.out.println("Tamaño a enviar:"+bytesToSend.length);
                             DatagramPacket send = packet.dataPacket(bytesToSend, bloque, serveAddress, servPort);
                             socket.send(send);
                             socket.receive(receivePacket);
+                            System.out.println("ACK "+packet.compACK(receivePacket.getData()));
                             if(packet.compACK(receivePacket.getData())==bloque){
                                 fi.skip(tam);
                                 bloque++;
