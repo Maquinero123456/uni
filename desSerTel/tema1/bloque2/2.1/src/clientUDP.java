@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.concurrent.TimeoutException;
 
 import extra.packet;
 import extra.packet.*;
@@ -24,7 +26,7 @@ public class clientUDP {
             if(mensaje.contains("connect")){
                 String[] aux = mensaje.split(" ");
                 if(aux.length<2){
-                    System.out.println("Para conectarte a un servidor usa: connect <Server> [<Port>]");
+                    System.out.println("Para conectarte a un servidor usa: connect <Server>");
                 }else{
                     servPort = 6789;
                     serveAddress = InetAddress.getByName(aux[1]);
@@ -35,7 +37,6 @@ public class clientUDP {
             }else if(mensaje.contains("get")){
                 System.out.println(mensaje);
             }else if(mensaje.contains("put")){
-                
                 String[] aux = mensaje.split(" ");
                 if(aux.length<2){
                     System.out.println("Para mandar datos al servidor usa: put <fileName>");
@@ -53,22 +54,31 @@ public class clientUDP {
                     if(packet.compACK(receivePacket.getData())==0){
                         byte[] bytesToSend = new byte[512];
                         FileInputStream fi = new FileInputStream(archivo);
-                        System.out.println("Tam del archivo: "+fi.available());
-                        int bloque=1, tam=512;
-                        while(fi.available()>0){
-                            System.out.println("Queda por enviar: "+fi.available());
+                        int bloque=0, tam=512;
+                        boolean terminado = false;
+                        while(!terminado){
                             if(fi.available()<512){
                                 tam=fi.available();
                             }
-                            fi.read(bytesToSend, 0, tam);
-                            System.out.println("Tamaño a enviar:"+bytesToSend.length);
+                            if(packet.compACK(receivePacket.getData())==bloque){
+                                
+                                bloque++;
+                                bytesToSend = new byte[512];
+                                fi.read(bytesToSend, 0, tam);
+                                
+                            }
                             DatagramPacket send = packet.dataPacket(bytesToSend, bloque, serveAddress, servPort);
                             socket.send(send);
-                            socket.receive(receivePacket);
-                            System.out.println("ACK "+packet.compACK(receivePacket.getData()));
-                            if(packet.compACK(receivePacket.getData())==bloque){
-                                fi.skip(tam);
-                                bloque++;
+                            try{
+                                socket.receive(receivePacket);
+                                socket.setSoTimeout(500);
+                                System.out.println("ACK "+packet.compACK(receivePacket.getData()));
+                            } catch (IOException e){
+                                receivePacket = packet.ACK(bloque-1, serveAddress, servPort);
+                            }
+                            
+                            if(packet.compACK(receivePacket.getData())==bloque && fi.available()==0){
+                                terminado = true;
                             }
                         }
 
@@ -77,6 +87,11 @@ public class clientUDP {
 
                     
                 }
+            }else if(mensaje.contains("help")){
+                System.out.println("- Para conectarte a un servidor usa: connect <Server>");
+                System.out.println("- Para recibir un archivo usa: get <Server>");
+                System.out.println("- Para mandar datos al servidor usa: put <fileName>");
+
             }
         }
         System.out.println("Cerrando cliente...");
