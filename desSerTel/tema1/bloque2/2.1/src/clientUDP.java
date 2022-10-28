@@ -4,15 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.concurrent.TimeoutException;
+import java.util.Random;
 
 import extra.packet;
-import extra.packet.*;
 
 public class clientUDP {
-    private static int maxtries = 5;
+    //private static int maxtries = 5;
     private static DatagramSocket socket;
     private static InetAddress serveAddress;
     private static int servPort;
@@ -20,6 +17,7 @@ public class clientUDP {
     public static void main(String[] args) throws IOException {
         String mensaje="";
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Usa \"help\" para ver informacion sobre los comandos");
         while(!mensaje.equals("quit")){
             System.out.print("> ");
             mensaje=stdIn.readLine();
@@ -35,7 +33,37 @@ public class clientUDP {
                     System.out.println("Si quiere conectarse a otro servidor vuelva a usar connect");
                 }
             }else if(mensaje.contains("get")){
-                System.out.println(mensaje);
+                String[] aux = mensaje.split(" ");
+                if(aux.length<2){
+                    System.out.println("Para recibir un archivo usa: get <Server>");
+                }else{
+                    DatagramPacket dp = packet.createRRQ(aux[1], serveAddress, servPort);
+                    socket.send(dp);
+                    socket.setSoTimeout(500);
+                    DatagramPacket paquete = new DatagramPacket(new byte[516], 516);
+                    boolean wrq = true;
+                    while(wrq){
+                        try {
+                            socket.receive(paquete);
+                            Random a = new Random();
+                            if(a.nextDouble(0, 1)>0.1){
+                                if(packet.dataLenght(paquete.getData())<512){
+                                    wrq=false;
+                                    System.out.println("DATA "+packet.getBloque(paquete.getData()) +" \"<"+512+" b\"");
+                                }else{
+                                    System.out.println("DATA "+packet.getBloque(paquete.getData()) +" \""+packet.dataLenght(paquete.getData())+" b\"");
+                                }
+                                
+                                socket.send(packet.ACK(packet.getBloque(paquete.getData()), paquete.getAddress(), paquete.getPort()));
+                            }else{
+                                System.out.println("DATA "+packet.getBloque(paquete.getData()) +" (p)");
+                            }
+                        } catch (IOException e) {
+                            wrq=false;
+                        }
+                    }
+                    System.out.println("Transmision finalizada");
+                }
             }else if(mensaje.contains("put")){
                 String[] aux = mensaje.split(" ");
                 if(aux.length<2){
@@ -46,7 +74,7 @@ public class clientUDP {
                     //Mando WRQ
                     DatagramPacket dp = packet.createWRQ(aux[1], serveAddress, servPort);
                     socket.send(dp);
-                    socket.setSoTimeout(500);
+                    socket.setSoTimeout(10000);
 
                     DatagramPacket receivePacket = new DatagramPacket(new byte[4], 4);
                     socket.receive(receivePacket);
@@ -94,6 +122,5 @@ public class clientUDP {
 
             }
         }
-        System.out.println("Cerrando cliente...");
     }
 }

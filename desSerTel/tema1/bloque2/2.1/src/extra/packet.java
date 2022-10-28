@@ -1,20 +1,16 @@
 package extra;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 public class packet {
     public static DatagramPacket createRRQ(String filename, InetAddress serverAddress, int port){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
-        outputStream.write(Byte.valueOf("01"));
+        outputStream.write(new byte[]{0,1}, 0, 2);
         outputStream.write(filename.getBytes(), 0, filename.getBytes().length);
-        outputStream.write(Byte.valueOf("0"));
-        outputStream.write(Byte.valueOf(Byte.valueOf("00")));
-        outputStream.write(Byte.valueOf("0"));
+        outputStream.write(new byte[]{0,0,0,0}, 0, 4);
         return new DatagramPacket(outputStream.toByteArray(), outputStream.toByteArray().length, serverAddress, port);
     }
 
@@ -68,5 +64,19 @@ public class packet {
         }
 
         return Arrays.copyOfRange(data, 0, data.length-ceros).length;
+    }
+
+    public static String getNameFile(byte[] data){
+        data = Arrays.copyOfRange(data, 2, data.length);
+        int ceros = 0;
+        for(byte e : data){
+            if(e==0){
+                ceros++;
+            }else if(e!=0){
+                ceros=0;
+            }
+        }
+
+        return new String(Arrays.copyOfRange(data, 0, data.length-ceros));
     }
 }
