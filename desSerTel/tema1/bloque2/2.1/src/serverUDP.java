@@ -4,8 +4,6 @@ import extra.packet;
 
 import java.util.Random;
 
-import javax.sound.midi.Receiver;
-
 public class serverUDP {
     public static void main(String[] args) throws IOException {
         @SuppressWarnings("not close")
@@ -24,6 +22,7 @@ public class serverUDP {
                 System.out.println("RRQ");
                 InetAddress serveAddress = paquete.getAddress();
                 int servPort = paquete.getPort();
+                System.out.println(packet.getNameFile(paquete.getData()));
                 File archivo = new File(packet.getNameFile(paquete.getData()));
                 DatagramPacket receivePacket = packet.ACK(0, paquete.getAddress(), paquete.getPort());
                 System.out.println("ACK "+packet.compACK(receivePacket.getData()));
