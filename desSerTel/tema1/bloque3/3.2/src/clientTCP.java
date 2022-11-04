@@ -3,13 +3,16 @@
 import java.io.*; // envía datos y recibe eco cuando envía . Fin de la
 import java.net.*;
 
-public class client {
-    static final int serverPort = 9000;
+public class clientTCP {
 
     public static void main(String[] args) throws IOException {
         InetAddress serverAddr = null;
         try {
-            serverAddr = InetAddress.getLocalHost();
+            if ((args.length < 1) || (args.length > 2)) {
+                throw new IllegalArgumentException("Parameter(s): <Server> [<Port>]");
+            }
+            serverAddr = InetAddress.getByName(args[0]); // IP Servidor
+            int serverPort = (args.length == 2) ? Integer.parseInt(args[1]) : 6789;
             Socket sockfd = new Socket(serverAddr, serverPort);
             System.out.println("Conexión local" + serverAddr);
             BufferedReader in = new BufferedReader(
