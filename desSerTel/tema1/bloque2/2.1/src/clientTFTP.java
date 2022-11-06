@@ -8,8 +8,8 @@ import java.util.Random;
 
 import extra.packet;
 
-public class clientUDP {
-    //private static int maxtries = 5;
+public class clientTFTP {
+    private static int maxtries = 5;
     private static DatagramSocket socket;
     private static InetAddress serveAddress;
     private static int servPort;
@@ -74,7 +74,7 @@ public class clientUDP {
                     //Mando WRQ
                     DatagramPacket dp = packet.createWRQ(aux[1], serveAddress, servPort);
                     socket.send(dp);
-                    socket.setSoTimeout(10000);
+                    socket.setSoTimeout(1000);
 
                     DatagramPacket receivePacket = new DatagramPacket(new byte[4], 4);
                     socket.receive(receivePacket);

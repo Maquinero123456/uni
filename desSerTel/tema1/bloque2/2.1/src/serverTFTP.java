@@ -4,7 +4,7 @@ import extra.packet;
 
 import java.util.Random;
 
-public class serverUDP {
+public class serverTFTP {
     public static void main(String[] args) throws IOException {
         @SuppressWarnings("not close")
         DatagramSocket socket = new DatagramSocket(6789);
@@ -13,12 +13,12 @@ public class serverUDP {
         System.out.println("Servidor iniciado");
         System.out.println("----------------------------------------------------------------");
         while (true) {
+            paquete = new DatagramPacket(new byte[516], 516);
             System.out.println("Esperando entrada");
             System.out.println("----------------------------------------------------------------");
             socket.receive(paquete); // Recibe un datagrama del cliente
             int mode = packet.getMode(paquete.getData());
             if(mode==1){
-                System.out.println("----------------------------------------------------------------");
                 System.out.println("RRQ");
                 InetAddress serveAddress = paquete.getAddress();
                 int servPort = paquete.getPort();
@@ -62,7 +62,6 @@ public class serverUDP {
                 socket.setSoTimeout(0);
                 System.out.println("----------------------------------------------------------------");
             }else if(mode==2){
-                System.out.println("----------------------------------------------------------------");
                 System.out.println("WRQ");
                 socket.send(packet.ACK(0, paquete.getAddress(), paquete.getPort()));
                 boolean wrq = true;
