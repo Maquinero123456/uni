@@ -39,29 +39,35 @@ public class clientUDP {
             //Lo enviamos y le damos un valor al timeout
             socket.send(sendPacket);
             socket.setSoTimeout(500);
-            //En caso de recibir el paquete
-            try {
-                //Creamos el datagramPacket para recibir la respuesta y lo esperamos
-                DatagramPacket receivePacket = //Datagrama a recibir
-                new DatagramPacket(new byte[bytesToSend.length], bytesToSend.length);
-                socket.receive(receivePacket); // Podria no llegar nunca el datagrama de ECO
-                //Si el mensaje recibido es de la direccion ip correcta, lo mostramos por pantalla
-                if(receivePacket.getAddress().equals(serverAddress)){
-                    System.out.println("ECO:"+ new String(receivePacket.getData()));
-                }
-            //En caso de timeout
-            }catch(SocketTimeoutException e) {
-                //Aumentamos el numero de intentos
-                tries++;
-                System.out.println("Intento "+tries+" de "+maxtries);
-                //Si el numero de intentos llega al maximo, salimos del bucle y cerramos la conexion
-                if(tries==maxtries){
-                    System.out.println("Maximo numero de intentos alcanzado");
-                    System.out.println("Cerrando conexion...");
-                    break;
+            boolean recibido = false;
+            while(!recibido){
+                //En caso de recibir el paquete
+                try {
+                    //Creamos el datagramPacket para recibir la respuesta y lo esperamos
+                    DatagramPacket receivePacket = //Datagrama a recibir
+                    new DatagramPacket(new byte[bytesToSend.length], bytesToSend.length);
+                    socket.receive(receivePacket); // Podria no llegar nunca el datagrama de ECO
+                    //Si el mensaje recibido es de la direccion ip correcta, lo mostramos por pantalla
+                    if(receivePacket.getAddress().equals(serverAddress)){
+                        recibido = true;
+                        System.out.println("ECO:"+ new String(receivePacket.getData()));
+                    }
+                //En caso de timeout
+                }catch(SocketTimeoutException e) {
+                    //Aumentamos el numero de intentos
+                    tries++;
+                    System.out.println("Intento "+tries+" de "+maxtries);
+                    //Si el numero de intentos llega al maximo, salimos del bucle y cerramos la conexion
+                    if(tries==maxtries){
+                        System.out.println("Maximo numero de intentos alcanzado");
+                        System.out.println("Cerrando conexion...");
+                        break;
+                    }
                 }
             }
-            
+            if(!recibido){
+                break;
+            }
         }
         //Cerramos el socket
         socket.close();
