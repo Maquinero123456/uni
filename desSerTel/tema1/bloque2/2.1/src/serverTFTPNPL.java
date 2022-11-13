@@ -4,7 +4,7 @@ import extra.packet;
 
 import java.util.Random;
 
-public class serverTFTP {
+public class serverTFTPNPL {
     public static void main(String[] args) throws IOException {
         //Creamos el socket y el datagrama para recibir los paquetes
         DatagramSocket socket = new DatagramSocket(6789);
@@ -94,8 +94,8 @@ public class serverTFTP {
                         socket.receive(paquete);
                         Random a = new Random();
                         paquetesTotales++;
-                        //Si el numero aleatorio es mayor a 0.05 hemos recibido el paquete
-                        if(a.nextDouble(0, 1)>0.05){
+                        //Siempre se recibe
+                        if(a.nextDouble(0, 1)>-1){
                             //Si es menor a 512 bytes hemos terminado
                             if(packet.dataLenght(paquete.getData())<512){
                                 wrq=false;
@@ -117,8 +117,7 @@ public class serverTFTP {
                 }
                 //Si hemos recibido algun paquete, mostramos las estadisticas
                 if(paquetesTotales>0){
-                    System.out.println("%"+Integer.toString((paquetesPerdidos*100)/paquetesTotales)+":paquetes perdidos; %"
-                    +Integer.toString((100-(paquetesPerdidos*100)/paquetesTotales))+": paquetes retransmitidos");
+                    System.out.println("%"+Integer.toString((paquetesPerdidos*100)/paquetesTotales)+":paquetes perdidos; %"+Integer.toString((100-(paquetesPerdidos*100)/paquetesTotales))+": paquetes retransmitidos");
                 }
                 System.out.println("Transmision finalizada");
                 System.out.println("----------------------------------------------------------------");
