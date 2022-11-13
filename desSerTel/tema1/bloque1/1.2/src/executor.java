@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class executor {
     public static void main(String[] args) throws IOException {
-        // Crea un socket pasivo
+        // Creamos un socket pasivo, un logger y un objeto de la clase Executor
         ServerSocket servSock = new ServerSocket(7890);
         Logger logger = Logger.getLogger("servidorDST-C3");
         Executor service = Executors.newCachedThreadPool();

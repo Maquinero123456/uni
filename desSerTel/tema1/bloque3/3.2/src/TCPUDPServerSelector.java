@@ -13,7 +13,6 @@ public class TCPUDPServerSelector {
     public static void main(String[] args) throws IOException {
         //Creo el selector y un buffer
         Selector selector = Selector.open();
-        ByteBuffer buffer = ByteBuffer.allocate(512);
         //Creo canal de TCP
         ServerSocketChannel tcp = ServerSocketChannel.open();
         tcp.socket().bind(new InetSocketAddress(9000));
@@ -27,8 +26,8 @@ public class TCPUDPServerSelector {
         //Itero sobre todas las keys del selector
         for (;;) {
             selector.select();
-            Set keys = selector.selectedKeys();
-            for(Iterator i = keys.iterator(); i.hasNext();) {
+            Set<SelectionKey> keys = selector.selectedKeys();
+            for(Iterator<SelectionKey> i = keys.iterator(); i.hasNext();) {
                 SelectionKey key = (SelectionKey) i.next();
                 i.remove();
                 //Si recibo una conexcion TCP entro aqui
@@ -38,7 +37,7 @@ public class TCPUDPServerSelector {
                         SocketChannel client = tcp.accept();
                         client.configureBlocking(false);
                         System.out.println("Conexion TCP aceptada");
-                        SelectionKey clientKey = client.register(selector, SelectionKey.OP_READ, ByteBuffer.allocate(1024));
+                        client.register(selector, SelectionKey.OP_READ, ByteBuffer.allocate(1024));
                     //Si no la rechazo
                     }else {
                         System.out.println("Conexion TCP no aceptada");
@@ -68,6 +67,7 @@ public class TCPUDPServerSelector {
                         if(bs!=0){
                             key.interestOps(SelectionKey.OP_READ);
                         }
+                        cr.buffer.compact();
                     }
                 //Entro aqui si recibo un mensaje TCP lo leo
                 }else if(key.isReadable()){

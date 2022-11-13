@@ -1,46 +1,50 @@
 import java.io.*;
 import java.net.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EchoProtocol implements Runnable {
-    private static final int BUFSIZE = 32; // Tamaño buffer de E/S
     private Socket clntSock; // Socket de datos
     private Logger logger; // Logger del servidor
 
+    //Contructor del objeto al que le pasamos el socket del cliente y el servidor
     public EchoProtocol(Socket clntSock, Logger logger) {
         this.clntSock = clntSock;
         this.logger = logger;
     }
 
+    //Metodo principal
     public static void handleEchoClient(Socket clntSock, Logger logger) {
+        //Creamos un String que almacena los mensajes
         String line;
         try {
-            ServerSocket sockfd = new ServerSocket(6543);
-            System.out.println("Inicio servidor " + sockfd);
-            while (true) {
-                Socket newsockfd = sockfd.accept();
-                System.out.println("Nuevo cliente, socket " + newsockfd);
-                BufferedReader in = new BufferedReader(new InputStreamReader(newsockfd.getInputStream()));
-                PrintWriter out = new PrintWriter(
-                        new BufferedWriter(new OutputStreamWriter(newsockfd.getOutputStream())), true);
-                boolean salir = false;
-                while (!salir) {
-                    line = in.readLine(); // lectura socket cliente
-                    if (line != null) {
-                        out.println(line);
-                    } // escritura socket cliente
-                    else {
-                        salir = true;
-                    } // cierre socket cliente
+            System.out.println("Nuevo cliente, socket " + clntSock);
+            //Creamos los objetos que se encargan de recibir los mensajes y de enviarlos
+            BufferedReader in = new BufferedReader(new InputStreamReader(clntSock.getInputStream()));
+            PrintWriter out = new PrintWriter(
+                    new BufferedWriter(new OutputStreamWriter(clntSock.getOutputStream())), true);
+            //Mientras sea falso, nos quedamos en el bucle
+            boolean salir = false;
+            while (!salir) {
+                line = in.readLine(); // lectura socket cliente
+                //Si la lectura es nula, es momento de salir del bucle
+                if(line==null) {
+                   System.out.println("Cerrando conexion");
+                    salir = true;
+                //Si no es nula, mostramos por pantalla el mensaje recibido y mandamos el mensaje de vuelta
+                }else{
+                    System.out.println("Nuevo mensaje: "+line);
+                    out.println(line);
                 }
-                newsockfd.close();
             }
+            //Tras salir del bucle, cerramos el socket
+            clntSock.close();
+            //Tras esto la hebra se cerrara tambien
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
+    //Iniciamos la hebra y lanzamos el metodo que se encarga del protocolo
     public void run() {
         handleEchoClient(clntSock, logger);
     }
