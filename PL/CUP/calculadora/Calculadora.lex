@@ -10,7 +10,7 @@ import java_cup.runtime.*;
 \/ {return new Symbol(sym.DIVIDE);}
 \( {return new Symbol(sym.LPAREN);}
 \) {return new Symbol(sym.RPAREN);}
-[0-9]+ {return new Symbol(sym.NUMERO, new Integer(yytext()));}
+[0-9]+ {return new Symbol(sym.NUMERO, yytext());}
 \r|\n {return new Symbol(sym.EOLN);}
 \ |\t {}
 [^] {throw new RuntimeException("Caracter no valido "+yytext());}

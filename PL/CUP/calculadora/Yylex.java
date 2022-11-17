@@ -670,7 +670,7 @@ class Yylex implements java_cup.runtime.Scanner {
             // fall through
           case 19: break;
           case 10:
-            { return new Symbol(sym.NUMERO, new Integer(yytext()));
+            { return new Symbol(sym.NUMERO, yytext());
             }
             // fall through
           case 20: break;
