@@ -1,0 +1,27 @@
+import java_cup.runtime.*;
+
+terminal PLUS, MINUS, TIMES, DIVIDE;
+terminal EOLN;
+terminal UMINUS, LPAREN, RPAREN;
+terminal Integer NUMERO;
+
+non terminal listaExp, linea;
+non terminal Integer exp;
+
+precedence left PLUS,MINUS;
+precedence left TIMES,DIVIDE;
+precedence left UMINUS;
+
+listaExp ::= listaExp linea
+           | linea;
+
+linea ::= exp:e  {: Calculadora.out.println(e.intValue()); :} EOLN
+        |EOLN;
+
+exp ::= exp:e1 PLUS exp:e2 {: RESULT = new Integer(e1.intValue()+e2.intValue());:}
+        | exp:e1 MINUS exp:e2 {: RESULT = new Integer(e1.intValue()-e2.intValue());:}
+        | exp:e1 TIMES exp:e2 {: RESULT = e1.intValue()*e2.intValue();:}
+        | exp:e1 DIVIDE exp:e2 {: RESULT = e1.intValue()/e2.intValue();:}
+        | MINUS exp:e1 {: RESULT = new Integer(0-e1.intValue());:} %prec UMINUS
+        | LPAREN exp:e1 RPAREN {: RESULT = e1;:}
+        | NUMERO:n {: RESULT = n;:};
