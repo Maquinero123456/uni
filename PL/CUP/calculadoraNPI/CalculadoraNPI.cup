@@ -1,0 +1,27 @@
+import java_cup.runtime.*;
+
+terminal PLUS, MINUS, TIMES, DIVIDE;
+terminal EOLN;
+terminal UMINUS, LPAREN, RPAREN;
+terminal String NUMERO;
+
+non terminal listaExp, linea;
+non terminal String exp;
+
+precedence left PLUS,MINUS;
+precedence left TIMES,DIVIDE;
+precedence left UMINUS;
+
+listaExp ::= listaExp linea
+           | linea;
+
+linea ::= exp:e  {: CalculadoraNPI.out.println(e); :} EOLN
+        |EOLN;
+
+exp ::= exp:e1 PLUS exp:e2 {: RESULT = e1+" "+e2+" + ";:}
+        | exp:e1 MINUS exp:e2 {: RESULT = e1+" "+e2+" - ";:}
+        | exp:e1 TIMES exp:e2 {: RESULT = e1+" "+e2+" * ";:}
+        | exp:e1 DIVIDE exp:e2 {: RESULT = e1+" "+e2+" / ";:}
+        | MINUS exp:e1 {: RESULT = "0"+" "+e1+" "+" - ";:} %prec UMINUS
+        | LPAREN exp:e1 RPAREN {: RESULT = e1;:}
+        | NUMERO:n {: RESULT = n;:};
