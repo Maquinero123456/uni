@@ -28,6 +28,6 @@ class pa:
         self.socket.cerrar()
         
     def firmar(self, datos):
-        return cr.firmarRSA_PSS(datos, cr.cargar_ECCKey_Privada("privadaAliceRSA.pem", "alice"))
+        return cr.firmarRSA_PSS(datos, cr.cargar_ECCKey_Privada("privadaAlice.pem", "alice"))
         
     

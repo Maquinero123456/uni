@@ -33,4 +33,4 @@ class pb:
         self.socket.cerrar()
         
     def firmar(self, datos):
-        return cr.firmarRSA_PSS(datos, cr.cargar_ECCKey_Privada("privadaBobRSA.pem", "bob"))
+        return cr.firmarRSA_PSS(datos, cr.cargar_ECCKey_Privada("privadaBob.pem", "bob"))
