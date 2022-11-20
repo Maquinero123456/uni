@@ -5,14 +5,15 @@ import random as rand
 import time
 import funciones_aes as aes
 
-def main():
+def bob():
+    print("BOB INICIADO")
     bob = pb()
-    print("---PASO 2---")
-    time.sleep(5)
+    print("BOB: ---PASO 2---")
+    time.sleep(10)
     try:
         bob.conectar("localhost", 3003)
     except:
-        print("Trent no disponible")
+        print("BOB: Trent no disponible")
         exit(-1)
     kbt = aes.crear_AESKey()
     #Ciframos la clave junto a la cadena "bob"
@@ -25,7 +26,7 @@ def main():
     bob.enviar(bytes(enviar.encode("utf-8")))
     bob.cerrar()
     
-    print("---PASO 5---")
+    print("BOB: ---PASO 5---")
     bob.escuchar()
     clave = bob.recibir()
     clave = clave.decode("utf-8")
@@ -51,15 +52,14 @@ def main():
     datosKAB = json.loads(datosKAB)
     
     if(datosKAB[0]=="Alice" and datosKAB[1]==ts):
-        print("Ok")
+        print("BOB: Ok")
     else:
-        print("Not ok")
+        print("BOB: Not ok")
     
-    print("---PASO 6---")
+    print("BOB: ---PASO 6---")
     datosAlice, macAlice, nonceAlice = aes.cifrarAES_GCM(aes.iniciarAES_GCM(kab), json.dumps([ts+1]).encode("utf-8"))
     bob.enviar(bytes(json.dumps([datosAlice.hex(), macAlice.decode("latin-1"), nonceAlice.decode("latin-1")]).encode("utf-8")))
     
     bob.cerrar()
     
-main()
     

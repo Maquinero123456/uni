@@ -5,11 +5,12 @@ import json
 import time
 import funciones_aes as aes
 
-def main():
+def alice():
+    print("ALICE INICIADA")
     alice = pa()
-    print("---PASO 1---")
+    print("ALICE: ---PASO 1---")
     alice.conectar("localhost", 3003)
-    print("Conectado a Trent")
+    print("ALICE: Conectado a Trent")
     #Genero la clave simetrica
     kat = aes.crear_AESKey()
     #Ciframos la clave junto a la cadena "Alice"
@@ -19,19 +20,19 @@ def main():
     #Convertimos en json las cosas a enviar
     enviar = json.dumps([cifrado.hex(), firmado.hex()])
     #Enviamos los datos
-    print("Enviamos el paquete del paso 1")
+    print("ALICE: Enviamos el paquete del paso 1")
     alice.enviar(bytes(enviar.encode("utf-8")))
-    print("Cerramos conexion para dejar paso Bob")
+    print("ALICE: Cerramos conexion para dejar paso Bob")
     alice.cerrar()
     
     #Esperamos que Bob genere su clave
     time.sleep(10)
-    print("---PASO 3---")
+    print("ALICE: ---PASO 3---")
     #Alice se conecta con trent porque quiere hablar con bob
     try:
         alice.conectar("localhost", 3003)
     except:
-        print("Trent no esta disponibe")
+        print("ALICE: Trent no esta disponibe")
         exit(-1)
         
     #Envia mensaje
@@ -48,24 +49,24 @@ def main():
     try:
         descifrar = json.loads(descifrar)
     except:
-        print("Mac no valida")
+        print("ALICE: Mac no valida")
         exit(-1)
     
     
     ts = descifrar[0]
     kab = bytes.fromhex(descifrar[1])
     paraBob = descifrar[2]
-    print("Cerramos conexion con Trent y nos conectamos a Bob")
+    print("ALICE: Cerramos conexion con Trent y nos conectamos a Bob")
     #Cerramos conexion
     alice.cerrar()
-    print("---PASO 5---")
+    print("ALICE: ---PASO 5---")
     alice.conectar("localhost", 3002)
     
     cifrar = aes.iniciarAES_GCM(kab)
     datosCifrados, mac, nonce = aes.cifrarAES_GCM(cifrar, json.dumps(["Alice", ts]).encode("utf-8"))
     enviarABob = json.dumps([paraBob, datosCifrados.hex(), mac.decode("latin-1"), nonce.decode("latin-1")])
     alice.enviar(bytes(enviarABob.encode("utf-8")))
-    print("---PASO 6---")
+    print("ALICE: ---PASO 6---")
     ekab = alice.recibir()
     ekab = ekab.decode("utf-8")
     ekab = json.loads(ekab)
@@ -79,11 +80,9 @@ def main():
     datosEKAB = json.loads(datosEKAB)
     
     if(ts+1 == datosEKAB[0]):
-        print("TS CORRECTO")
+        print("ALICE: TS CORRECTO")
     else:
-        print("TS INCORRECTO")
+        print("ALICE: TS INCORRECTO")
         exit(-1)
     
     
-    
-main()
