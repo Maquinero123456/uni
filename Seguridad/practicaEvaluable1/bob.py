@@ -4,16 +4,16 @@ import Codigo_RSA as cr
 import random as rand
 import time
 import funciones_aes as aes
-
+from termcolor import cprint
 def bob():
-    print("BOB INICIADO")
+    cprint("---BOB INICIADO---", "green")
     bob = pb()
-    print("BOB: ---PASO 2---")
-    time.sleep(10)
+    cprint("BOB: ---PASO 2---", "green")
+    time.sleep(5)
     try:
         bob.conectar("localhost", 3003)
     except:
-        print("BOB: Trent no disponible")
+        cprint("BOB: Trent no disponible", "red")
         exit(-1)
     kbt = aes.crear_AESKey()
     #Ciframos la clave junto a la cadena "bob"
@@ -23,11 +23,14 @@ def bob():
     #Convertimos en json las cosas a enviar
     enviar = json.dumps([cifrado.hex(), firmado.hex()])
     #Enviamos los datos
+    cprint("BOB: Envio Kbt a Trent", "green")
     bob.enviar(bytes(enviar.encode("utf-8")))
     bob.cerrar()
     
-    print("BOB: ---PASO 5---")
+    cprint("BOB: ---PASO 5---", "green")
+    cprint("BOB: Espero conexion de Alice", "green")
     bob.escuchar()
+    cprint("BOB: Recibo Kab y TS de Alice", "green")
     clave = bob.recibir()
     clave = clave.decode("utf-8")
     clave = json.loads(clave)
@@ -52,14 +55,17 @@ def bob():
     datosKAB = json.loads(datosKAB)
     
     if(datosKAB[0]=="Alice" and datosKAB[1]==ts):
-        print("BOB: Ok")
+        cprint("BOB: Mensaje correcto de Alice", "green")
     else:
-        print("BOB: Not ok")
+        cprint("BOB: Mensaje no correcto de Alice", "red")
+        exit(-1)
     
-    print("BOB: ---PASO 6---")
+    cprint("BOB: ---PASO 6---", "green")
+    cprint("BOB: Envio a Alice TS+1", "green")
     datosAlice, macAlice, nonceAlice = aes.cifrarAES_GCM(aes.iniciarAES_GCM(kab), json.dumps([ts+1]).encode("utf-8"))
     bob.enviar(bytes(json.dumps([datosAlice.hex(), macAlice.decode("latin-1"), nonceAlice.decode("latin-1")]).encode("utf-8")))
     
     bob.cerrar()
+    cprint("---BOB FINALIZADO---", "green")
     
     

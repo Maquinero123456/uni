@@ -1,5 +1,6 @@
 from socket_class import SOCKET_SIMPLE_TCP
 import Codigo_RSA as cr
+from termcolor import cprint
 
 class pt:
     def __init__(self) -> None:
