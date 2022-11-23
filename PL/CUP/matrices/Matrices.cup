@@ -1,0 +1,48 @@
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+terminal ALL, CLL, AP, CP, AC, CC;
+terminal COMA, PYC, ASIG, MAS, MENOS, POR, DIV;
+terminal INVERSA, TRANSPUESTA, ADJUNTA, PRINT;
+terminal String IDENT;
+terminal Double NUMERO;
+
+non terminal linea;
+non terminal double[][] comando;
+non terminal double[][] matriz, exp;
+non terminal ArrayList<ArrayList<Double>> procesarMatriz;
+non terminal ArrayList<Double> fila;
+
+precedence left MAS, MENOS;
+precedence left POR, DIV;
+
+linea ::= exp:v PYC | PYC;
+
+exp ::= PRINT AP exp:v {:Matrices.print(v);:} CP 
+      | INVERSA AP exp:v {:RESULT = Matrices.inversa(v);:} CP 
+      | TRANSPUESTA AP exp:v {:RESULT = Matrices.transpuesta(v);:} CP 
+      | ADJUNTA AP exp:v {:RESULT = Matrices.adjunta(v);:} CP 
+      | exp:v1 MAS exp:v2 {:RESULT = Matrices.suma(v1,v2);:}
+      | exp:v1 MENOS exp:v2
+      | exp:v1 POR exp:v2 {:RESULT = Matrices.producto(v1,v2);:}
+      | exp:v1 DIV exp:v2 
+      | IDENT:a ASIG exp:v {:TablaSimbolos.insertar(a, v);Matrices.print(v);:}
+      | IDENT:a {:RESULT = TablaSimbolos.buscar(a);:}
+      | matriz:v {:RESULT = v;:};
+
+
+matriz ::= AC procesarMatriz:v CC {:try{
+                                          double[][] a = Matrices.toArray(v);
+                                          RESULT=a;
+                                    }catch (IndexOutOfBoundsException e){
+                                          System.out.println(Matrices.ERROR_FILAS);
+                                          System.exit(-1);
+                                    }
+                                    :};
+            
+
+procesarMatriz ::= fila:v PYC procesarMatriz:m {:ArrayList<ArrayList<Double>> aux = new ArrayList<>(); aux.add(v);aux.addAll(m); RESULT = aux;:}
+                 | fila:v {:ArrayList<ArrayList<Double>> aux = new ArrayList<>(); aux.add(v); RESULT = aux;:} ;
+
+fila ::= NUMERO:a COMA fila:v {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); aux.addAll(v); RESULT=aux;:}
+       | NUMERO:a {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); RESULT = aux;:};
