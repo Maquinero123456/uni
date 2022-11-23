@@ -2,7 +2,6 @@ import java_cup.runtime.*;
 
 %%
 %cup
-%debug
 %%
 \{                                                    { return new Symbol(sym.ALL); }
 \}                                                    { return new Symbol(sym.CLL); }
