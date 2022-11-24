@@ -1,0 +1,10 @@
+import java_cup.runtime.*;
+
+terminal String IDENT, NUMERO;
+
+non terminal linea;
+
+linea ::= IDENT:a linea {:System.out.print(" "+a);:}
+        | NUMERO:a linea {:System.out.print(" "+a);:}
+        | IDENT:a {:System.out.print(a);:}
+        | NUMERO:a {:System.out.print(a);:};

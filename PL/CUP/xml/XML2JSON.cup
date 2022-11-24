@@ -1,0 +1,33 @@
+import java_cup.runtime.*;
+
+action code {:Boolean list = false;String nombre = "";:};
+
+terminal String OPEN_TAG, CLOSE_TAG, TEXT;
+
+non terminal lineaExp, linea, interior;
+
+lineaExp ::= {:System.out.println("{");:} lineaExp linea {:System.out.println("}");:}| linea;
+
+linea ::= OPEN_TAG:o {:if(o.substring(o.length()-1, o.length())==("s")){
+                        System.out.println(o.substring(o.length()-1, o.length())+":[");
+                        nombre = o.substring(o.length()-1, o.length());
+                        list = true;
+                       }else{
+                        System.out.println(o+":{"));
+                       }:} 
+          interior 
+          CLOSE_TAG {:if(list){
+                        System.out.println("]");
+                        list = false;
+                        nombre = "";
+                       }else{
+                        System.out.println("}");
+                       }:};
+
+interior ::= OPEN_TAG:o{:System.out.println(o+":{");:} interior CLOSE_TAG {:System.out.println("}");:} interior
+           | OPEN_TAG:o TEXT:t CLOSE_TAG:c interior{:if(o.equals(nombre)){
+                                                System.out.println(t+", ");
+                                             }else{
+                                                System.out.println(o+":"+t);
+                                             }:}
+           | TEXT:a {:System.out.println(a);:};

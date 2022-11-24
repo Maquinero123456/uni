@@ -1,0 +1,3 @@
+int x;
+int a,b,c;
+double p,q;

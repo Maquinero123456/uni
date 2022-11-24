@@ -1,0 +1,19 @@
+import java_cup.runtime.*;
+
+terminal INT, DOUBLE, PYC;
+terminal String IDENT;
+
+non terminal linea, exp, restoI, restoD, lineaExp;
+
+lineaExp ::= linea lineaExp | linea;
+
+linea ::= exp PYC | PYC;
+
+exp ::= INT restoI
+      | DOUBLE restoD;
+
+restoI ::= IDENT:a {:System.out.print(a+":int; ");:} restoI
+         | IDENT:a {:System.out.print(a+":int; \n");:};
+
+restoD ::= IDENT:a {:System.out.print(a+":double; ");:} restoD
+         | IDENT:a {:System.out.print(a+":double; \n");:};
