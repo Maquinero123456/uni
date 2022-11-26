@@ -1,0 +1,24 @@
+import java_cup.runtime.*;
+
+action code{:Integer ant=0; 
+             Integer suma=0;:};
+
+terminal Integer NUMERO;
+
+non terminal expList, linea, exp;
+
+
+
+expList ::= linea expList | linea;
+
+linea ::= exp
+        | NUMERO:a NUMERO:b {:if(b==2*a){
+                                System.out.println("SI");
+                            }else{
+                                System.out.println("NO");
+                            }:}
+        | NUMERO:a {:System.out.println("SI");:};
+
+exp ::= NUMERO:a NUMERO:b {:ant = b; suma = a+b;:} exp:c
+      | NUMERO:a {:if(suma==a){suma=ant+b; ant = a;}else{suma=-1;}:} exp:b
+      | NUMERO:a {:if(suma==a){System.out.println("SI");}else{System.out.println("NO");}:};

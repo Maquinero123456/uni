@@ -51,14 +51,14 @@ def descifrarRSA_OAEP(cifrado, key):
 
 def firmarRSA_PSS(texto, key_private):
     h = SHA256.new(texto.encode("utf-8")) # Crea un nuevo objeto SHA 256, pasándole el texto
-    print(h.hexdigest()) # Muestra el hash del texto en hexadecimal (NOTA: prueba a poner print(h.digest()) en la siguiente línea...)
+    # Muestra el hash del texto en hexadecimal (NOTA: prueba a poner print(h.digest()) en la siguiente línea...)
     signature = pss.new(key_private).sign(h)
 
     return signature
 
 def comprobarRSA_PSS(texto, firma, key_public):
     h = SHA256.new(texto.encode("utf-8")) # Crea un nuevo objeto SHA 256, pasándole el texto
-    print(h.hexdigest()) # Muestra el hash del texto en hexadecimal (NOTA: prueba a poner print(h.digest()) en la siguiente línea...)
+    # Muestra el hash del texto en hexadecimal (NOTA: prueba a poner print(h.digest()) en la siguiente línea...)
     verifier = pss.new(key_public)
     try:
         verifier.verify(h, firma)
