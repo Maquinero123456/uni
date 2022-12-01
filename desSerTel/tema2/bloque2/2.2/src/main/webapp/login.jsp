@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
-    <form action="">
-        <label for="username">Usuario: </label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Contraseña: </label><br>
-        <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Submit">
+    <p>Inicia sesion para acceder a la web:</p><br><br>
+    <form action="${pageContext.request.contextPath}/login" method="post">
+        <label for="username">Usuario: </label><br><br>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Contraseña: </label><br><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Submit"><br><br>
     </form>
+    <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a>
 </body>
 </html>
