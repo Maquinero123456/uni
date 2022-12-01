@@ -11,7 +11,7 @@ public class sym {
   public static final int CP = 5;
   public static final int PYC = 9;
   public static final int CONCATENA = 15;
-  public static final int MATRIZ = 20;
+  public static final int MATRIZ = 21;
   public static final int ALL = 2;
   public static final int TRANSPUESTA = 17;
   public static final int INVERSA = 16;
@@ -21,7 +21,7 @@ public class sym {
   public static final int AP = 4;
   public static final int COMA = 8;
   public static final int EOF = 0;
-  public static final int VECTOR = 21;
+  public static final int VECTOR = 20;
   public static final int DIV = 14;
   public static final int ADJUNTA = 18;
   public static final int AC = 6;
@@ -51,8 +51,8 @@ public class sym {
   "TRANSPUESTA",
   "ADJUNTA",
   "PRINT",
-  "MATRIZ",
   "VECTOR",
+  "MATRIZ",
   "IDENT",
   "NUMERO"
   };

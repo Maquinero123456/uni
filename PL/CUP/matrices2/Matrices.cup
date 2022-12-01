@@ -4,16 +4,18 @@ import java.util.ArrayList;
 terminal ALL, CLL, AP, CP, AC, CC;
 terminal COMA, PYC, ASIG, MAS, MENOS, POR, DIV;
 terminal CONCATENA,INVERSA, TRANSPUESTA, ADJUNTA, PRINT;
-terminal MATRIZ, VECTOR;
+terminal double[] VECTOR;
+terminal double[][] MATRIZ;
 terminal String IDENT;
 terminal Double NUMERO;
 
 non terminal linea, lineaExp;
-non terminal double[][] matriz, exp;
+non terminal double[][] matriz, expM;
 non terminal ArrayList<ArrayList<Double>> procesarMatriz;
 non terminal ArrayList<Double> fila;
-non terminal double[] vector;
+non terminal double[] vector, expV;
 non terminal ArrayList<Double> procesarVector;
+non terminal Double num;
 
 precedence left MAS, MENOS;
 precedence left POR, DIV;
@@ -21,46 +23,40 @@ precedence left CONCATENA;
 
 lineaExp ::= lineaExp linea | linea;
 
-linea ::= exp:v PYC | PYC;
+linea ::= expM:v PYC | expV:v PYC | PYC;
 
-exp ::= PRINT AP exp:v {:Matrices.print(v);:} CP 
-      | INVERSA AP exp:v {:if(Matrices.filas(v)==Matrices.columnas(v)){
+expM ::= PRINT AP expM:v {:Matrices.print(v);:} CP 
+      | INVERSA AP expM:v {:if(Matrices.filas(v)==Matrices.columnas(v)){
                               RESULT = Matrices.inversa(v);
                            }else{
                               System.out.println(Matrices.ERROR_INVERSA);
                               System.exit(-1);
                            }:} CP 
-      | TRANSPUESTA AP exp:v {:RESULT = Matrices.transpuesta(v);:} CP 
-      | ADJUNTA AP exp:v {:if(Matrices.filas(v)==Matrices.columnas(v)){
+      | TRANSPUESTA AP expM:v {:RESULT = Matrices.transpuesta(v);:} CP 
+      | ADJUNTA AP expM:v {:if(Matrices.filas(v)==Matrices.columnas(v)){
                               RESULT = Matrices.adjunta(v);
                            }else{
                               System.out.println(Matrices.ERROR_ADJUNTA);
                               System.exit(-1);
                            }:} CP 
-      | exp:v1 MAS exp:v2 {:if((Matrices.columnas(v1)==Matrices.columnas(v2))&&(Matrices.filas(v1)==Matrices.filas(v2))){
+      | expM:v1 MAS expM:v2 {:if((Matrices.columnas(v1)==Matrices.columnas(v2))&&(Matrices.filas(v1)==Matrices.filas(v2))){
                               RESULT = Matrices.suma(v1,v2);
                             }else{
                               System.out.println(Matrices.ERROR_SUMA);
                               System.exit(-1);
                             }:}
-      | exp:v1 MENOS exp:v2
-      | exp:v1 POR exp:v2 {:if(Matrices.columnas(v1)==Matrices.filas(v2)){
+      | expM:v1 POR expM:v2 {:if(Matrices.columnas(v1)==Matrices.filas(v2)){
                               RESULT = Matrices.producto(v1,v2);
                             }else{
                               System.out.println(Matrices.ERROR_PROD);
                               System.exit(-1);
                             };:}
-      | exp:v1 DIV exp:v2 
-      | IDENT:a ASIG exp:v {:TablaSimbolos.insertar(a, v);:}
-      | IDENT:a {:double[][] aux = TablaSimbolos.buscar(a);
-                  if(aux==null){
-                        System.out.println(TablaSimbolos.ERROR_NOEXISTE);
-                        System.exit(-1);
-                  }
-                  RESULT = aux;:}
-      | AP exp:v CP {:RESULT=v;:}
+      
+      | expV:v1 POR expV:v2 {:RESULT=Matrices.producto(v1, v2);:}
+      | IDENT:a ASIG expM:v {:TablaSimbolos.insertar(a, v);:}
+      | AP expM:v CP {:RESULT=v;:}
       | matriz:v {:RESULT = v;:}
-      | vector:v {:RESULT = v:};
+      | MATRIZ:v {:RESULT = v;:};
 
 
 
@@ -80,7 +76,20 @@ procesarMatriz ::= ALL fila:v CLL COMA procesarMatriz:m {:ArrayList<ArrayList<Do
 fila ::= NUMERO:a COMA fila:v {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); aux.addAll(v); RESULT=aux;:}
        | NUMERO:a {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); RESULT = aux;:};
 
-vector ::= ALL procesarVector:a CLL {:double[][] aux = Matrices.toVector(a); RESULT=aux;:};
+
+expV ::= PRINT AP expV:v {:Matrices.print(v);:} CP
+        | expV:v1 MAS expV:v2 {:RESULT=Matrices.suma(v1, v2);:}
+        | expV:v1 CONCATENA expV:v2 {:RESULT=Matrices.concatena(v1, v2);:}
+        | num:v1 CONCATENA expV:v2 {:RESULT=Matrices.concatena(v1, v2);:}
+        | expV:v1 CONCATENA num:v2 {:RESULT=Matrices.concatena(v1, v2);:}
+        | IDENT:a ASIG expV:v {:TablaSimbolos.insertarVector(a, v);:}
+        | vector:v {:RESULT = v;:}
+        | VECTOR:v {:RESULT = v;:};
+
+vector ::= ALL procesarVector:a CLL {:double[] aux = Matrices.toVector(a); RESULT=aux;:};
 
 procesarVector::= NUMERO:a COMA procesarVector:v {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); aux.addAll(v); RESULT=aux;:}
                 | NUMERO:a {:ArrayList<Double> aux = new ArrayList<>(); aux.add(a); RESULT=aux;:};
+
+num ::= MENOS NUMERO:a {:RESULT=0-a;:}
+      | NUMERO:a {:RESULT=a;:};

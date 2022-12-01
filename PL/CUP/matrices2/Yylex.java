@@ -742,13 +742,13 @@ class Yylex implements java_cup.runtime.Scanner {
           case 14:
             { String st = yytext();
                                                         if (TablaSimbolos.buscar(st)!=null) {
-                                                           // System.out.println("MATRIZ:"+st);
+                                                            System.out.println("MATRIZ:"+st);
                                                            return new Symbol(sym.MATRIZ, TablaSimbolos.buscar(st));
                                                         } else if (TablaSimbolos.buscarVector(st)!=null) {
-                                                           // System.out.println("VECTOR:"+st);
+                                                            System.out.println("VECTOR:"+st);
                                                            return new Symbol(sym.VECTOR, TablaSimbolos.buscarVector(st));
                                                         } else {
-                                                           // System.out.println("IDENT:"+st);
+                                                            System.out.println("IDENT:"+st);
                                                            return new Symbol(sym.IDENT, st);
                                                         }
             }
