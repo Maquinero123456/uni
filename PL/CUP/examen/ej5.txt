@@ -1,0 +1,7 @@
+a = "Hola";
+b = " Pepe ";
+c = "Perez";
+d = a + b + c;
+print( d );
+print( a.substr( 1, 2 ) );
+

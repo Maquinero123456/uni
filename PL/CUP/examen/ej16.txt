@@ -1,0 +1,7 @@
+a = "Pajaro";
+b = "Vuela";
+c = "Alto";
+d = a + b + c;
+print( d );
+e = d.substr( a.size(), d.size() - c.size() - a.size() );
+print( e );

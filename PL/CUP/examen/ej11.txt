@@ -1,0 +1,6 @@
+a = "Piedra.";
+b = "Papel.";
+c = "Tijeras.";
+d = a + (b + c);
+print( d );
+

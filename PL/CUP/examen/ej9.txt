@@ -1,0 +1,5 @@
+a = "Hola";
+b = "aPepes";
+c = a + " " + b.substr( 1, 2 ) + "dro";
+print( c );
+

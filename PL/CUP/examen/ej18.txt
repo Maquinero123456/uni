@@ -1,0 +1,7 @@
+a = "Aqui";
+b = "y";
+c = "alli";
+d = a + (" " + b + " ") + c;
+print( d );
+e = (d + "otro").substr( a.size() + b.size() + 1, c.size() );
+print( e );

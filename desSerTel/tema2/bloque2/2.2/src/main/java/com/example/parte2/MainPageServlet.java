@@ -5,7 +5,7 @@ import java.io.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-@WebServlet(name = "MainPage", value = "/MainPage")
+@WebServlet(name = "MainPage", value = "")
 public class MainPageServlet extends HttpServlet{
 
     public void init() {

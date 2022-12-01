@@ -1,0 +1,10 @@
+a = "hola";
+b = "Adios";
+c = a + b;
+print( c );
+a = c.substr( 1, 4 );
+print( a );
+c = c + "Tio";
+b = c.substr(4,8) + "s";
+print(b);
+print( a + c );

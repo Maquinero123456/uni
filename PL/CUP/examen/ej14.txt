@@ -1,0 +1,6 @@
+a = "Perro";
+b = "Salta";
+c = "Valla";
+print( a + (b + c ) );
+print( (a + (b + c )).substr( 5, 5 ) );
+

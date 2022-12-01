@@ -1,0 +1,2 @@
+print( "Prueba".substr( 2, 3 ) );
+

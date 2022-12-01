@@ -1,0 +1,8 @@
+a = "Aqui";
+b = "y";
+c = "alli";
+d = a + ("." + b + ".") + c;
+print( d );
+print( d.substr( 0, 6 ) );
+print( (d.substr( 0, 6 ) + "otro") );
+print( (d.substr( 0, 6 ) + "otro").substr( 4 + 1 - b.size(), 3 ) );

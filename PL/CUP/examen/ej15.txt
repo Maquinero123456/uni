@@ -1,0 +1,6 @@
+a = "a + b";
+b = "Salta";
+c = a + b;
+print( c );
+d = c.substr( a.size(), b.size() - 2 );
+print( d );

@@ -1,0 +1,40 @@
+import java_cup.runtime.*;
+import java.util.HashMap;
+
+action code{:HashMap<String, String> variables = new HashMap<>();:};
+
+terminal MAS, MENOS, IGUAL, AP, CP;
+terminal PYC, PUNTO, COMA, PRINT, SUBSTR, SIZE;
+terminal String CADENA, ID;
+terminal Integer NUMERO;
+
+non terminal listaExp, linea;
+non terminal String exp;
+non terminal Integer expN;
+
+precedence left MAS, MENOS;
+
+
+listaExp ::= listaExp linea | linea;
+
+linea ::= exp PYC | PYC;
+
+exp ::= ID:i IGUAL exp:v {:if(variables.containsKey(i)){
+                            variables.replace(i, v);
+                           }else{
+                            variables.put(i, v);}:}
+        | PRINT AP exp:v CP {:System.out.println(v);:}
+        | ID:i PUNTO SUBSTR AP expN:a1 COMA expN:a2 CP {:RESULT=variables.get(i).substring(a1, a1+a2);:}
+        | CADENA:v PUNTO SUBSTR AP expN:a1 COMA expN:a2 CP {:RESULT=v.substring(a1, a1+a2);:}
+        | AP exp:v CP PUNTO SUBSTR AP expN:a1 COMA expN:a2 CP {:RESULT=v.substring(a1, a1+a2);:}
+        | ID:i {:RESULT=variables.get(i);:}
+        | exp:v1 MAS exp:v2 {:RESULT=v1+v2;:}
+        | AP exp:v CP {:RESULT=v;:}
+        | CADENA:a {:RESULT=a;:};
+
+expN ::= expN:v1 MENOS expN:v2 {:RESULT=v1-v2;:}
+        | expN:v1 MAS expN:v2 {:RESULT=v1+v2;:}
+        | NUMERO:n {:RESULT=n;:}
+        | ID:i PUNTO SIZE AP CP {:RESULT=variables.get(i).length();:}
+        | AP exp:v CP SIZE AP CP {:RESULT=v.length();:}
+        | CADENA:v SIZE AP CP {:RESULT=v.length();:};

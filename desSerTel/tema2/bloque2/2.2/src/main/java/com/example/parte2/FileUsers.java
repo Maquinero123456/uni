@@ -3,7 +3,7 @@ package com.example.parte2;
 import java.io.*;
 
 public class FileUsers {
-    private static final String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\java\\com\\example\\parte2\\users.txt";
+    private static final String path = "src/main/webapp/users.txt";
 
     public static boolean searchUser(String username){
         try {

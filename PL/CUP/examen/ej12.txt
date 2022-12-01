@@ -1,0 +1,6 @@
+a = "Piedra";
+b = "Papel.";
+c = "Tijeras.";
+d = (a + "." + b + c).substr( 6, 7 );
+print( d );
+
