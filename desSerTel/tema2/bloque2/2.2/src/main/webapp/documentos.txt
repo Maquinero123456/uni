@@ -1,0 +1,9 @@
+Titulo1
+Juan Pinto
+titulo1.txt
+resumen1blalblalblalbal
+
+Titulo2
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
