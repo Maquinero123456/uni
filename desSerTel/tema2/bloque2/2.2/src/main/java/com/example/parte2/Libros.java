@@ -42,4 +42,13 @@ public class Libros {
         this.resumen = resumen;
     }
 
+    @Override
+    public String toString() {
+        return "Libros{" +
+                "titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", enlace='" + enlace + '\'' +
+                ", resumen='" + resumen + '\'' +
+                '}';
+    }
 }

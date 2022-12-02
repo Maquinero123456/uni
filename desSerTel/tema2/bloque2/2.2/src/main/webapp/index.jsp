@@ -1,5 +1,7 @@
+<%@ page import="com.example.parte2.controlLibros" %>
+<%@ page import="com.example.parte2.Libros" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,9 +9,6 @@
     </head>
     <body>
         <p>User: ${loginName}</p><a href="${pageContext.request.contextPath}/logout">Logout</a><br>
-        <% private ArrayList<Libros> libros = controlLibros.listaLibros;
-           private int pag = 1;
-            %>
         <table>
             <tr>
                 <th>Titulo</th>
@@ -18,18 +17,27 @@
                 <th>Resumen</th>
             </tr>
                 
-                <tr>
+
                     <%
-                    for(int i = pag*5-5; i<pag*5; i++){
-                        Libro libro = libros.get(i);
-                %>
-                    <td><%=libto.titulo%></td>
-                    <td><%=libto.autor%></td>
-                    <td><%=libto.enlace%></td>
-                    <td><%=libto.resumen%></td>
+                        ArrayList<Libros> libros = controlLibros.listaLibros();
+                        int pag = 1;
+                        int limit = 0;
+                        if(libros.size()>pag*5){
+                            limit=pag*5;
+                        }else{
+                            limit=libros.size();
+                        }
+                    for(int i = pag*5-5; i<limit; i++){
+                        Libros libro = libros.get(i);
+                %><tr>
+                    <td><%=libro.getTitulo()%></td>
+                    <td><%=libro.getAutor()%></td>
+                    <td><%=libro.getEnlace()%></td>
+                    <td><%=libro.getResumen()%></td>
+        </tr>
                     <%}
                     %>
-                </tr>
+
         </table>
         <button>Anterior</button><button>Siguiente</button>
     </body>

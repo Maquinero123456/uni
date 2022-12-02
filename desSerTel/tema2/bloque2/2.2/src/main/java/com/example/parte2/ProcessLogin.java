@@ -13,7 +13,7 @@ public class ProcessLogin extends HttpServlet {
         String loginName = request.getParameter("username");
         String password = request.getParameter("password");
         LoginManager.login(request, loginName.trim(), password);
-        response.sendRedirect(request.getContextPath()+"\\MainPage");
+        response.sendRedirect(request.getContextPath()+"");
 
     }
 }
