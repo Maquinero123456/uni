@@ -1,9 +1,59 @@
 Titulo1
 Juan Pinto
-titulo1.txt
+titulo1.pdf
 resumen1blalblalblalbal
 
 Titulo2
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo3
+Juan Pinto
+titulo1.pdf
+resumen1blalblalblalbal
+
+Titulo4
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo5
+Juan Pinto
+titulo1.pdf
+resumen1blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
+Laura Pinilla
+titulo2.pdf
+resumen2blalblalblalbal
+
+Titulo6
 Laura Pinilla
 titulo2.pdf
 resumen2blalblalblalbal

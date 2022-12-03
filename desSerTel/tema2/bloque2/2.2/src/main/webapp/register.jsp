@@ -4,14 +4,15 @@
     <title>Registro</title>
 </head>
 <body>
-    <p>Introduce los datos para registrarte:</p><br><br>
+    <p>Introduce los datos para registrarte:</p>
     <form action="${pageContext.request.contextPath}/register" method="post">
         <label for="username">Usuario: </label><br><br>
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Contraseña: </label><br><br>
         <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" value="Submit"><br><br>
+        <input type="submit" value="Registrarse"><br><br>
     </form>
-    <a href="${pageContext.request.contextPath}/MainPage">Si tienes cuenta, haz login aqui</a>
+    <hr>
+    <a href="${pageContext.request.contextPath}">Si tienes cuenta, haz login aqui</a>
 </body>
 </html>

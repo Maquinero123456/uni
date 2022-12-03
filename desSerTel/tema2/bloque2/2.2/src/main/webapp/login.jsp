@@ -5,14 +5,15 @@
     <title>Login</title>
 </head>
 <body>
-    <p>Inicia sesion para acceder a la web:</p><br><br>
+    <p>Inicia sesion para acceder a la web:</p>
     <form action="${pageContext.request.contextPath}/login" method="post">
         <label for="username">Usuario: </label><br><br>
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Contraseña: </label><br><br>
         <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" value="Submit"><br><br>
+        <input type="submit" value="Iniciar sesion"><br><br>
     </form>
+    <hr>
     <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a>
 </body>
 </html>

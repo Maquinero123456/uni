@@ -8,7 +8,10 @@
         <title>JSP - Hello World</title>
     </head>
     <body>
-        <p>User: ${loginName}</p><a href="${pageContext.request.contextPath}/logout">Logout</a><br>
+        <%if((String)session.getAttribute("loginName")!=null){%>
+        <pre>User: ${loginName}        <a href="${pageContext.request.contextPath}/logout">Logout</a></pre>
+        <hr>
+        <%}%>
         <table>
             <tr>
                 <th>Titulo</th>
@@ -19,8 +22,16 @@
                 
 
                     <%
-                        ArrayList<Libros> libros = controlLibros.listaLibros();
                         int pag = 1;
+                        try{
+                            pag = Integer.parseInt(request.getParameter("pag"));
+                        }catch(NumberFormatException e){}
+
+                        String autor = request.getParameter("autor");
+                        String titulo = request.getParameter("titulo");
+                        System.out.println(autor);
+                        System.out.println(titulo);
+                        ArrayList<Libros> libros = controlLibros.busquedaLibros(titulo, autor);
                         int limit = 0;
                         if(libros.size()>pag*5){
                             limit=pag*5;
@@ -32,13 +43,36 @@
                 %><tr>
                     <td><%=libro.getTitulo()%></td>
                     <td><%=libro.getAutor()%></td>
+                    <%if((String)session.getAttribute("loginName")==null){%>
+                    <td><a href="${pageContext.request.contextPath}">Inicia sesion para poder descargar</a></td>
+                    <%}else{%>
                     <td><%=libro.getEnlace()%></td>
+                    <%}%>
                     <td><%=libro.getResumen()%></td>
         </tr>
                     <%}
                     %>
 
         </table>
-        <button>Anterior</button><button>Siguiente</button>
+        <hr>
+        <%if(pag>1){%>
+        <button onclick="window.location.href='index.jsp?pag=<%=pag-1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Anterior</button>
+        <%}else{%>
+        <button disabled="disabled">Anterior</button>
+        <%}%>
+        <%if(pag*5>libros.size()){%>
+        <button disabled="disabled">Siguiente</button>
+        <%}else{%>
+        <button onclick="window.location.href='index.jsp?pag=<%=pag+1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Siguiente</button>
+        <%}%>
+        <hr>
+        <form action="index.jsp?pag=1">
+            <label for="titulo">Titulo: </label>
+            <input type="text" id="titulo" name="titulo">
+            <label for="autor">Autor: </label>
+            <input type="text" id="autor" name="autor">
+            <input type="submit" value="Buscar">
+        </form>
+        <hr>
     </body>
 </html>

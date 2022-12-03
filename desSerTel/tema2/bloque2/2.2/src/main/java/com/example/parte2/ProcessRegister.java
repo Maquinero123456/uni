@@ -15,7 +15,7 @@ public class ProcessRegister extends HttpServlet {
         String loginName = request.getParameter("username");
         String password = request.getParameter("password");
         FileUsers.addUser(loginName, password);
-        response.sendRedirect(request.getContextPath()+"/MainPage");
+        response.sendRedirect(request.getContextPath()+"");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

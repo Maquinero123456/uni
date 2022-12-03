@@ -16,7 +16,7 @@ public class MainPageServlet extends HttpServlet{
         String loginName = LoginManager.getLoginName(request);
         if(loginName!=null){
             request.setAttribute("loginName", loginName);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp?pag=1&titulo=&autor=").forward(request, response);
         }else{
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

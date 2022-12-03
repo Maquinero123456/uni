@@ -13,6 +13,6 @@ public class ProcessLogoutServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         LoginManager.logout(request);
-        response.sendRedirect(request.getContextPath()+"/MainPage");
+        response.sendRedirect(request.getContextPath()+"");
     }
 }
