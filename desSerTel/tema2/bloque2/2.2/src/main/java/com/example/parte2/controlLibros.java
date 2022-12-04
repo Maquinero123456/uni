@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class controlLibros {
-    private static String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\documentos.txt";
+    private static String path = "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/documentos.txt";
+    //private static String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\documentos.txt";
     public static ArrayList<Libros> listaLibros() throws IOException{
         File archivo = new File(path);
         BufferedReader b = new BufferedReader(new FileReader(archivo));
@@ -138,5 +139,12 @@ public class controlLibros {
             return listaLibrosTitulo(titulo);
         }
         return listaLibrosAutorTitulo(autor, titulo);
+    }
+
+    public static void main(String[] args) throws IOException {
+        ArrayList<Libros> libros = listaLibros();
+        for(Libros e:libros){
+            System.out.println(e);
+        }
     }
 }

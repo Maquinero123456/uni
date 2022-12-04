@@ -6,7 +6,7 @@ public class Libros {
     public Libros(String titulo, String autor, String enlace, String resumen){
         this.titulo = titulo;
         this.autor = autor;
-        this.enlace = "<a href=\""+enlace+"\">"+enlace+"</a>";
+        this.enlace = "<a href=\""+enlace+"\">"+enlace.split("/")[enlace.split("/").length-1]+"</a>";
         this.resumen = resumen;
     }
 
