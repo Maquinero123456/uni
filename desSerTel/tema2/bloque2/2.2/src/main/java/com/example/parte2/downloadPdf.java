@@ -3,6 +3,7 @@ package com.example.parte2;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
@@ -21,6 +22,11 @@ public class downloadPdf extends HttpServlet {
         while(fileIn.read(outputByte, 0, 4096) != -1)
         {
             out.write(outputByte, 0, 4096);
+        }
+        try {
+            controlLibros.updateDescargas(request.getParameter("titulo"), request.getParameter("autor"));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         fileIn.close();
         out.flush();

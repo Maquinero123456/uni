@@ -1,6 +1,6 @@
 Titulo1
 Juan Pinto
-C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\ElPrincipito.pdf
+C:\Users\david\Desktop\uni\desSerTel\tema2\bloque2\2.2\src\main\webapp\ElPrincipito.pdf
 resumen1blalblalblalbal
 
 Titulo2

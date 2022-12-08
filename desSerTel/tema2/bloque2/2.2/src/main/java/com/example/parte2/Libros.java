@@ -2,12 +2,22 @@ package com.example.parte2;
 
 public class Libros {
     private String titulo, autor, enlace, resumen;
+    private Long descargas;
 
-    public Libros(String titulo, String autor, String enlace, String resumen){
+    public Libros(String titulo, String autor, String enlace, String resumen, Long descargas){
         this.titulo = titulo;
         this.autor = autor;
         this.enlace = enlace;
         this.resumen = resumen;
+        this.descargas = descargas;
+    }
+
+    public Long getDescargas() {
+        return descargas;
+    }
+
+    public void setDescargas(Long descargas) {
+        this.descargas = descargas;
     }
 
     public String getTitulo() {

@@ -12,12 +12,21 @@
         <pre>User: ${loginName}        <a href="${pageContext.request.contextPath}/logout">Logout</a></pre>
         <hr>
         <%}%>
-        <table>
+        <form action="index.jsp?pag=1">
+            <label for="titulo">Titulo: </label>
+            <input type="text" id="titulo" name="titulo">
+            <label for="autor">Autor: </label>
+            <input type="text" id="autor" name="autor">
+            <input type="submit" value="Buscar">
+        </form>
+        <hr>
+        <table style="text-align: center">
             <tr>
                 <th>Titulo</th>
                 <th>Autor</th>
                 <th>Enlace</th>
                 <th>Resumen</th>
+                <th>Descargas</th>
             </tr>
                 
 
@@ -29,7 +38,7 @@
 
                         String autor = request.getParameter("autor");
                         String titulo = request.getParameter("titulo");
-                        ArrayList<Libros> libros = controlLibros.busquedaLibros(titulo, autor);
+                        ArrayList<Libros> libros = controlLibros.busquedaLibrosjson(titulo, autor);
                         int limit = 0;
                         if(libros.size()>pag*5){
                             limit=pag*5;
@@ -46,10 +55,13 @@
                     <%}else{%>
                     <td><form action="${pageContext.request.contextPath}/descargarPdf" method="get">
                         <input type="hidden" name="enlace" id="enlace" value=<%=libro.getEnlace()%>>
-                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\\\\\")[libro.getEnlace().split("\\\\\\\\").length-1]%>>
+                        <input type="hidden" name="titulo" id="titulo2" value=<%=libro.getTitulo()%>>
+                        <input type="hidden" name="autor" id="autor2" value=<%=libro.getAutor()%>>
+                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\")[libro.getEnlace().split("\\\\").length-1]%>>
                     </form></td>
                     <%}%>
                     <td><%=libro.getResumen()%></td>
+                    <td><%=libro.getDescargas()%></td>
         </tr>
                     <%}
                     %>
@@ -66,14 +78,6 @@
         <%}else{%>
         <button onclick="window.location.href='index.jsp?pag=<%=pag+1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Siguiente</button>
         <%}%>
-        <hr>
-        <form action="index.jsp?pag=1">
-            <label for="titulo">Titulo: </label>
-            <input type="text" id="titulo" name="titulo">
-            <label for="autor">Autor: </label>
-            <input type="text" id="autor" name="autor">
-            <input type="submit" value="Buscar">
-        </form>
         <hr>
     </body>
 </html>
