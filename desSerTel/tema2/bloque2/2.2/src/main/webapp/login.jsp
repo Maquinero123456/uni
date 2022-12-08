@@ -11,9 +11,25 @@
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Contraseña: </label><br><br>
         <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" value="Iniciar sesion"><br><br>
+        <input type="submit" value="Iniciar sesion"><br>
     </form>
+    <%
+        int error = 0;
+        try{
+            error = Integer.parseInt(request.getAttribute("error").toString());
+        }catch(NumberFormatException e){
+
+        }catch (NullPointerException e){}
+        switch(error){
+            case 1:%>
+    <p style="color:red">Nombre de usuario o password incorrecto</p>
+    <%break;
+        case 2:%>
+    <p style="color:red">Nombre de usuario o password demasiado corto</p>
+    <%break;
+        default:}%>
     <hr>
-    <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a>
+    <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a><br><br>
+    <a href="index.jsp?pag=1&titulo=&autor=">Accede sin cuenta</a>
 </body>
 </html>

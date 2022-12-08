@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JSP - Hello World</title>
+        <title>Index</title>
     </head>
     <body>
         <%if((String)session.getAttribute("loginName")!=null){%>
@@ -29,8 +29,6 @@
 
                         String autor = request.getParameter("autor");
                         String titulo = request.getParameter("titulo");
-                        System.out.println(autor);
-                        System.out.println(titulo);
                         ArrayList<Libros> libros = controlLibros.busquedaLibros(titulo, autor);
                         int limit = 0;
                         if(libros.size()>pag*5){
@@ -46,7 +44,10 @@
                     <%if((String)session.getAttribute("loginName")==null){%>
                     <td><a href="${pageContext.request.contextPath}">Inicia sesion para poder descargar</a></td>
                     <%}else{%>
-                    <td><%=libro.getEnlace()%></td>
+                    <td><form action="${pageContext.request.contextPath}/descargarPdf" method="get">
+                        <input type="hidden" name="enlace" id="enlace" value=<%=libro.getEnlace()%>>
+                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\\\\\")[libro.getEnlace().split("\\\\\\\\").length-1]%>>
+                    </form></td>
                     <%}%>
                     <td><%=libro.getResumen()%></td>
         </tr>

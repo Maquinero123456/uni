@@ -11,10 +11,8 @@ public final class LoginManager{
     private LoginManager(){}
 
     public final static void login(HttpServletRequest request, String loginName, String password){
-        if(FileUsers.login(loginName, password)) {
-            HttpSession session = request.getSession(true);
-            session.setAttribute(LOGIN_NAME_ATTRIBUTE, loginName);
-        }
+        HttpSession session = request.getSession(true);
+        session.setAttribute(LOGIN_NAME_ATTRIBUTE, loginName);
     }
 
     public final static void logout(HttpServletRequest request){

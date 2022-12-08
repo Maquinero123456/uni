@@ -1,0 +1,29 @@
+package com.example.parte2;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+import java.io.*;
+
+@WebServlet(name = "Descargar", value = "/descargarPdf")
+public class downloadPdf extends HttpServlet {
+
+    private static final int BYTES_DOWNLOAD = 1024;
+
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response) throws IOException {
+        File file = new File(request.getParameter("enlace"));
+        FileInputStream fileIn = new FileInputStream(file);
+        ServletOutputStream out = response.getOutputStream();
+
+        byte[] outputByte = new byte[4096];
+        while(fileIn.read(outputByte, 0, 4096) != -1)
+        {
+            out.write(outputByte, 0, 4096);
+        }
+        fileIn.close();
+        out.flush();
+        out.close();
+    }
+}

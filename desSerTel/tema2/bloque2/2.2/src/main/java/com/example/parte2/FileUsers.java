@@ -3,8 +3,8 @@ package com.example.parte2;
 import java.io.*;
 
 public class FileUsers {
-    //private static final String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\users.txt";
-    private static final String path = "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/users.txt";
+    private static final String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\users.txt";
+    //private static final String path = "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/users.txt";
 
 
     public static boolean searchUser(String username){
@@ -75,10 +75,6 @@ public class FileUsers {
             File f = new File(path);
             BufferedReader b = new BufferedReader(new FileReader(f));
             String line = "";
-
-            while((line = b.readLine())!=null){
-                System.out.println(line);
-            }
             b.close();
             return false;
         } catch (FileNotFoundException e) {
