@@ -228,6 +228,8 @@ public class controlLibros {
     }
 
     public static void updateDescargas(String titulo, String autor) throws IOException, ParseException {
+        System.out.println(autor);
+        System.out.println(titulo);
         JSONParser parser = new JSONParser();
         Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
@@ -238,6 +240,9 @@ public class controlLibros {
         String salida = "";
         while((aux2=(JSONObject) aux.get("libro"+a))!=null){
             if(((String)aux2.get("autor")).contains(autor) && ((String)aux2.get("titulo")).contains(titulo)){
+
+                System.out.println(aux2.get("autor"));
+                System.out.println(aux2.get("titulo"));
                 aux2.put("nDescargas", ((Long) aux2.get("nDescargas"))+1);
             }
             salida += "\"libro"+a+"\":"+aux2+",";

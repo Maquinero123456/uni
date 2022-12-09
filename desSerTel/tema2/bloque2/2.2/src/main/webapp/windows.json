@@ -4,105 +4,105 @@
       "libro1": {
         "titulo": "El Principito",
         "autor": "Antoine de Saint-Exupéry",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/ElPrincipito.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\ElPrincipito.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro2": {
         "titulo": "Abuelita",
         "autor": "Hans Christian Andersen",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/Abuelita.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\Abuelita.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro3": {
         "titulo": "Alicia en el pais de las maravillas",
         "autor": "Lewis Carroll",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/AliciaEnElPaisDeLasMaravillas.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\AliciaEnElPaisDeLasMaravillas.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro4": {
         "titulo": "Barbanegra",
         "autor": "Daniel Defoe",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/Barbanegra.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\Barbanegra.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro5": {
         "titulo": "Caperuticta Roja",
         "autor": "Charles Perrault",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/CaperucitaRoja.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\CaperucitaRoja.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro6": {
         "titulo": "El abecedario",
         "autor": "Hans Christian Andersen",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/ElAbecedario.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\ElAbecedario.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro7": {
         "titulo": "El ave fenix",
         "autor": "Hans Christian Andersen",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/ElAveFenix.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\ElAveFenix.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro8": {
         "titulo": "El patito feo",
         "autor": "Hans Christian Andersen",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/Elpatitofeo.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\Elpatitofeo.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro9": {
         "titulo": "Hansel y Gretel",
         "autor": "Hermanos Grimm",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/HanselYGretel.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\HanselYGretel.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro10": {
         "titulo": "La Bella y la Bestia",
         "autor": "Gabrielle-Suzanne Barbot de Villeneuve",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/LaBellaYLaBestia.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\LaBellaYLaBestia.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro11": {
         "titulo": "La cenicienta",
         "autor": "Charles Perrault",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/LaCenicienta.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\LaCenicienta.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro12": {
         "titulo": "La sirenita",
         "autor": "Hans Christian Andersen",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/LaSirenita.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\LaSirenita.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro13": {
         "titulo": "Los tres cerditos",
         "autor": "Anonimo",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/LosTresCerditos.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\LosTresCerditos.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro14": {
         "titulo": "Peter Pan",
         "autor": "James Matthew Barrie",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/PeterPan.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\PeterPan.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       },
       "libro15": {
         "titulo": "Rapunzel",
         "autor": "Hermanos Grimm",
-        "enlace": "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/cuentos/Rapunzel.pdf",
+        "enlace": "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\cuentos\\Rapunzel.pdf",
         "resumen": "resumen1blalblalblalbal",
         "nDescargas": 0
       }

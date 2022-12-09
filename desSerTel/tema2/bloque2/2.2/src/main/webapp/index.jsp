@@ -54,9 +54,9 @@
                     <td><a href="${pageContext.request.contextPath}">Inicia sesion para poder descargar</a></td>
                     <%}else{%>
                     <td><form action="${pageContext.request.contextPath}/descargarPdf" method="get">
-                        <input type="hidden" name="enlace" id="enlace" value=<%=libro.getEnlace()%>>
-                        <input type="hidden" name="titulo" id="titulo2" value=<%=libro.getTitulo()%>>
-                        <input type="hidden" name="autor" id="autor2" value=<%=libro.getAutor()%>>
+                        <input type="hidden" name="enlace" id="enlace" value="<%=libro.getEnlace()%>">
+                        <input type="hidden" name="titulo" id="titulo2" value="<%=libro.getTitulo()%>">
+                        <input type="hidden" name="autor" id="autor2" value="<%=libro.getAutor()%>">
                         <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\")[libro.getEnlace().split("\\\\").length-1]%>>
                     </form></td>
                     <%}%>
@@ -73,7 +73,7 @@
         <%}else{%>
         <button disabled="disabled">Anterior</button>
         <%}%>
-        <%if(pag*5>libros.size()){%>
+        <%if(pag*5>libros.size()-1){%>
         <button disabled="disabled">Siguiente</button>
         <%}else{%>
         <button onclick="window.location.href='index.jsp?pag=<%=pag+1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Siguiente</button>
