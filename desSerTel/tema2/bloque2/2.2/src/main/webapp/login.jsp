@@ -30,6 +30,7 @@
         default:}%>
     <hr>
     <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a><br><br>
+    <a href="${pageContext.request.contextPath}/recuperarPassword">Recuperar password</a><br><br>
     <a href="index.jsp?pag=1&titulo=&autor=">Accede sin cuenta</a>
 </body>
 </html>

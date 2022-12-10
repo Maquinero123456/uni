@@ -29,6 +29,7 @@
             default:}%>
     <hr><br>
     <a href="${pageContext.request.contextPath}">Si tienes cuenta, haz login aqui</a><br><br>
+    <a href="${pageContext.request.contextPath}/recuperarPassword">Recuperar password</a><br><br>
     <a href="index.jsp?pag=1&titulo=&autor=">Accede sin cuenta</a>
 </body>
 </html>

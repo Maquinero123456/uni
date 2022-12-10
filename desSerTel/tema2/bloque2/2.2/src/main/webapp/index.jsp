@@ -57,7 +57,7 @@
                         <input type="hidden" name="enlace" id="enlace" value="<%=libro.getEnlace()%>">
                         <input type="hidden" name="titulo" id="titulo2" value="<%=libro.getTitulo()%>">
                         <input type="hidden" name="autor" id="autor2" value="<%=libro.getAutor()%>">
-                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("/")[libro.getEnlace().split("/").length-1]%>>
+                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\")[libro.getEnlace().split("\\\\").length-1]%>>
                     </form></td>
                     <%}%>
                     <td><%=libro.getResumen()%></td>
