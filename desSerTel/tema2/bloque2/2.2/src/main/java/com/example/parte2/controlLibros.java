@@ -12,8 +12,8 @@ import org.json.simple.parser.ParseException;
 import org.json.*;
 
 public class controlLibros {
-    //private static String path = "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/documentos.txt";
-    private static String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\documentos.txt";
+    private static String path = "/home/maqui/uni/desSerTel/tema2/bloque2/2.2/src/main/webapp/libros.json";
+    //private static String path = "C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\documentos.txt";
     /*public static ArrayList<Libros> listaLibros() throws IOException{
         File archivo = new File(path);
         BufferedReader b = new BufferedReader(new FileReader(archivo));
@@ -152,7 +152,7 @@ public class controlLibros {
     public static ArrayList<Libros> listaLibrosjson() throws IOException, ParseException {
         ArrayList<Libros> libros = new ArrayList<>();
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        Reader reader = new FileReader(path);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray array = (JSONArray) jsonObject.get("libros");
         JSONObject aux = (JSONObject) array.get(0) ;
@@ -168,7 +168,7 @@ public class controlLibros {
     public static ArrayList<Libros> listaLibrosAutorjson(String autor) throws IOException, ParseException {
         ArrayList<Libros> libros = new ArrayList<>();
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        Reader reader = new FileReader(path);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray array = (JSONArray) jsonObject.get("libros");
         JSONObject aux = (JSONObject) array.get(0) ;
@@ -185,7 +185,7 @@ public class controlLibros {
     public static ArrayList<Libros> listaLibrosTitulojson(String titulo) throws IOException, ParseException {
         ArrayList<Libros> libros = new ArrayList<>();
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        Reader reader = new FileReader(path);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray array = (JSONArray) jsonObject.get("libros");
         JSONObject aux = (JSONObject) array.get(0) ;
@@ -202,7 +202,7 @@ public class controlLibros {
     public static ArrayList<Libros> listaLibrosAutorTitulojson(String autor, String titulo) throws IOException, ParseException {
         ArrayList<Libros> libros = new ArrayList<>();
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        Reader reader = new FileReader(path);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray array = (JSONArray) jsonObject.get("libros");
         JSONObject aux = (JSONObject) array.get(0) ;
@@ -231,7 +231,7 @@ public class controlLibros {
         System.out.println(autor);
         System.out.println(titulo);
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        Reader reader = new FileReader(path);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray array = (JSONArray) jsonObject.get("libros");
         JSONObject aux = (JSONObject) array.get(0) ;
@@ -253,7 +253,7 @@ public class controlLibros {
         salida = "{\"libros\":[{"+salida+"}]}";
         org.json.JSONObject json = new org.json.JSONObject(salida);
 
-        FileWriter file = new FileWriter("C:\\Users\\david\\Desktop\\uni\\desSerTel\\tema2\\bloque2\\2.2\\src\\main\\webapp\\libros.json");
+        FileWriter file = new FileWriter(path);
         file.write(json.toString());
         file.flush();
         file.close();

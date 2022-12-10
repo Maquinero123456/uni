@@ -22,11 +22,11 @@
         }catch (NullPointerException e){}
         switch(error){
             case 1:%>
-    <p style="color:red">Nombre de usuario o password incorrecto</p>
-    <%break;
-        case 2:%>
-    <p style="color:red">Nombre de usuario o password demasiado corto</p>
-    <%break;
+            <p style="color:red">Nombre de usuario o password incorrecto</p>
+            <%break;
+                case 2:%>
+            <p style="color:red">Nombre de usuario o password demasiado corto</p>
+            <%break;
         default:}%>
     <hr>
     <a href="${pageContext.request.contextPath}/register">Si no tienes cuenta registrate</a><br><br>

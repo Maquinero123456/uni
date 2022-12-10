@@ -57,7 +57,7 @@
                         <input type="hidden" name="enlace" id="enlace" value="<%=libro.getEnlace()%>">
                         <input type="hidden" name="titulo" id="titulo2" value="<%=libro.getTitulo()%>">
                         <input type="hidden" name="autor" id="autor2" value="<%=libro.getAutor()%>">
-                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\")[libro.getEnlace().split("\\\\").length-1]%>>
+                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("/")[libro.getEnlace().split("/").length-1]%>>
                     </form></td>
                     <%}%>
                     <td><%=libro.getResumen()%></td>
@@ -68,16 +68,13 @@
 
         </table>
         <hr>
-        <%if(pag>1){%>
-        <button onclick="window.location.href='index.jsp?pag=<%=pag-1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Anterior</button>
-        <%}else{%>
-        <button disabled="disabled">Anterior</button>
-        <%}%>
-        <%if(pag*5>libros.size()-1){%>
-        <button disabled="disabled">Siguiente</button>
-        <%}else{%>
-        <button onclick="window.location.href='index.jsp?pag=<%=pag+1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Siguiente</button>
-        <%}%>
+        <%for(int j = 1; j<=controlLibros.busquedaLibrosjson(titulo, autor).size()/5; j++){
+            if(pag==j){%>
+            <span><%=pag%></span>
+            <%}else{%>
+            <a href="index.jsp?pag=<%=j%>&titulo=<%=titulo%>&autor=<%=autor%>"><%=j%></a>
+        <%}}
+        %>
         <hr>
     </body>
 </html>
