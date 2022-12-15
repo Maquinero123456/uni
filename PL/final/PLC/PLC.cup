@@ -1,0 +1,131 @@
+import java_cup.runtime.*;
+import java.util.Stack;
+
+action code{:
+    int numVar = 0;
+
+    public String newVar(){
+        numVar++;
+        return "$t"+Integer.toString(numVar);
+    }
+
+
+    int numSaltos = 0;
+
+    public String newSalt(){
+        numSaltos++;
+        return "L"+Integer.toString(numSaltos);
+    }
+
+    public String currentSalt(){
+        return "L"+Integer.toString(numSaltos);
+    }
+
+
+    public class saltosCond{
+        public String sv, sf;
+
+        public saltosCond(String sv, String sf){
+            this.sv = sv;
+            this.sf = sf;
+        }
+    }
+
+    String saltoWhile="";
+    String saltoFor="";
+
+    Stack<String> pila = new Stack<>();
+    Stack<String> pila2 = new Stack<>();
+:};
+
+
+
+terminal MAS, MENOS, POR, DIV, ASIG, UMINUS;
+terminal PYC, AL, CL, AP, CP;
+terminal NEGADO, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, OR, Y, IGUAL, DISTINTO;
+terminal PRINT, FOR, IF, ELSE, WHILE, DO;
+terminal String STRING, NUM;
+
+non terminal listaSent, sent;
+non terminal String expresion;
+non terminal saltosCond condicion;
+
+precedence right ASIG;
+precedence left OR;
+precedence left Y;
+precedence left IGUAL, DISTINTO;
+precedence left MAYOR, MENOR, MAYORIGUAL, MENORIGUAL;
+precedence left MAS, MENOS;
+precedence left POR, DIV;
+precedence right UMINUS;
+precedence left AP, CP;
+
+listaSent ::= listaSent sent | sent ;
+
+sent ::= expresion PYC
+       | IF AP condicion:v1 CP {:PLC.out.println(v1.sv+":");:} sent {:PLC.out.println(v1.sf+":");:}
+       | ELSE {:newSalt();PLC.out.println("\tgoto "+currentSalt()+";");:} sent  {:PLC.out.println(currentSalt()+":");:}
+       | WHILE AP {:pila.push(newSalt());PLC.out.println(pila.peek()+":");:} condicion:v CP sent {:PLC.out.println(v.sv+":"); PLC.out.println("\tgoto "+pila.pop()+";"); PLC.out.println(v.sf+":");:}
+       | DO {:pila.push(newSalt());PLC.out.println(pila.peek()+":");:} sent WHILE AP condicion:v CP PYC {:PLC.out.println(v.sv+":"); PLC.out.println("\tgoto "+pila.pop()); PLC.out.println(v.sf+":");:}
+       | FOR AP expresion PYC {:pila.push(newSalt());PLC.out.println(pila.peek()+":");:} condicion:v PYC 
+         {:pila2.push(newSalt()); PLC.out.println(pila2.peek()+":");:}expresion {:PLC.out.println("\tgoto "+pila.pop()+";");:} CP {:PLC.out.println(v.sv+":");:} sent {:PLC.out.println("\tgoto "+pila2.pop()+";");PLC.out.println(v.sf+":");:}
+       | PRINT AP expresion:v CP PYC {:PLC.out.println("\tprint "+v+";");:}
+       | AL listaSent CL ;
+
+expresion ::= expresion:v1 MAS expresion:v2     {:String var = newVar(); 
+                                                  PLC.out.println("\t"+var+"="+v1+"+"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 MENOS expresion:v2   {:String var = newVar(); 
+                                                  PLC.out.println("\t"+var+"="+v1+"-"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 POR expresion:v2     {:String var = newVar(); 
+                                                  PLC.out.println("\t"+var+"="+v1+"*"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 DIV expresion:v2     {:String var = newVar(); 
+                                                  PLC.out.println("\t"+var+"="+v1+"/"+v2+";");
+                                                  RESULT=var;:}
+            | MENOS expresion:v2                {:String var = newVar(); 
+                                                  PLC.out.println("\t"+var+"=0-"+v2+";");
+                                                  RESULT=var;:} %prec UMINUS 
+            | AP expresion:v CP                 {:RESULT=v;:}
+            | STRING:v1 ASIG expresion:v2       {:PLC.out.println("\t"+v1+"="+v2+";");
+                                                  RESULT=v1;:}
+            | STRING:v                          {:RESULT=v;:}
+            | NUM:v                             {:RESULT=v;:}
+            ;
+
+condicion ::= expresion:v1 IGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+"=="+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 DISTINTO expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+"!="+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+"<"+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+"<="+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+">"+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLC.out.println("\tif("+v1+">="+v2+") goto "+slt.sv+";");
+                                                PLC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | NEGADO condicion:v {:RESULT=new saltosCond(v.sf, v.sv);:}
+            | condicion:v1 Y {:PLC.out.println(v1.sv+":");:}
+              condicion:v2 {:PLC.out.println(v1.sf+":");
+                             PLC.out.println("\tgoto "+v2.sf+";");
+                             RESULT=v2;:}
+            | condicion:v1 OR {:PLC.out.println(v1.sf+":");:}
+              condicion:v2 {:PLC.out.println(v1.sv+":");
+                             PLC.out.println("\tgoto "+v2.sv+";");
+                             RESULT=v2;:}
+            | AP condicion:v CP {:RESULT=v;:}
+            ;

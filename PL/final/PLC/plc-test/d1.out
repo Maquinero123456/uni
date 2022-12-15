@@ -1,0 +1,18 @@
+   if (2 == 2) goto L0;
+   goto L1;
+L0:
+   if (3 == 3) goto L2;
+   goto L3;
+L1:
+   goto L3;
+L2:
+   if (2 == 3) goto L5;
+   goto L4;
+L3:
+   goto L5;
+L4:
+   $t0 = 2 * 3;
+   print $t0;
+   goto L6;
+L5:
+L6:

@@ -1,0 +1,12 @@
+	i=1;
+L1:
+	$t1=suma+i;
+	suma=$t1;
+	$t2=i+1;
+	i=$t2;
+	if(i<10) goto L2;
+	goto L3;
+L2:
+	goto L1
+L3:
+	print suma;
