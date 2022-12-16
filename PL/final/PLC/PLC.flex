@@ -34,6 +34,6 @@ import java_cup.runtime.*;
     [a-zA-Z][a-zA-Z0-9]* {return new Symbol(sym.STRING, yytext());}
     0|[1-9][0-9]*  {return new Symbol(sym.NUM, yytext());}
     \r|\n              {  }   
-    \ |\t\f            {  }  
+    \ |\t|\f            {  }  
     [^]                { throw new Error("Illegal character <"+yytext()+">"); }
     

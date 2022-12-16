@@ -1,0 +1,15 @@
+   f = 1;
+   i = 1;
+L0:
+   if (i < 4) goto L1;
+   goto L2;
+L3:
+   $t0 = i + 1;
+   i = $t0;
+   goto L0;
+L1:
+   $t1 = f * i;
+   f = $t1;
+   goto L3;
+L2:
+   print f;
