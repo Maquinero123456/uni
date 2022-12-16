@@ -1,14 +1,15 @@
 import spotifyWebApi, {getUsersPlaylists} from '../../lib/spotify';
-import { useRouter } from 'next/router'
-
-const router = useRouter();
+import {getSession} from 'next-auth/react';
 
 const handler = async (req, res) => {
-  const accessToken=router.query();
+  const {
+    user: {accessToken},
+  } = await getSession({req});
   spotifyWebApi.setAccessToken(accessToken);
-  spotifyWebApi.getUserPlaylists().then(
+  const result = "";
+  spotifyWebApi.getMe().then(
     async function(data) {
-      return res.send(data.body);
+      return data.body.id;
     },
     function(err) {
       return(err);
