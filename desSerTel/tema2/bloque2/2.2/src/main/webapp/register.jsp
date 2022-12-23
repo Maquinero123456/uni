@@ -5,6 +5,7 @@
 </head>
 <body>
     <p>Introduce los datos para registrarte:</p>
+    <!-- Formulario para registrarse -->
     <form action="${pageContext.request.contextPath}/register" method="post">
         <label for="username">Usuario: </label><br><br>
         <input type="text" id="username" name="username" required><br><br>
@@ -12,6 +13,7 @@
         <input type="password" id="password" name="password" required><br><br>
         <input type="submit" value="Registrarse"><br>
     </form>
+    <!-- Si el servlet devuleve error, lo mostramos -->
     <%
         int error = 0;
         try{
@@ -28,8 +30,11 @@
                 <%break;
             default:}%>
     <hr><br>
+    <!-- Enlace para iniciar sesion -->
     <a href="${pageContext.request.contextPath}">Si tienes cuenta, haz login aqui</a><br><br>
+    <!-- Enlace para recuperar contraseña -->
     <a href="${pageContext.request.contextPath}/recuperarPassword">Recuperar password</a><br><br>
+    <!-- Enlace para acceder sin cuenta -->
     <a href="index.jsp?pag=1&titulo=&autor=">Accede sin cuenta</a>
 </body>
 </html>

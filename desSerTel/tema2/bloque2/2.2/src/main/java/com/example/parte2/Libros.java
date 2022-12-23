@@ -1,5 +1,7 @@
 package com.example.parte2;
 
+//Clase con toda la informacion de un libro
+//Solo contiene getter y setters
 public class Libros {
     private String titulo, autor, enlace, resumen;
     private Long descargas;
