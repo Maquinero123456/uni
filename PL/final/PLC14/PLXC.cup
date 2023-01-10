@@ -1,0 +1,232 @@
+import java_cup.runtime.*;
+import java.util.*;
+
+action code{:
+    int numBloque = 0;
+
+    VariablesTabla tablaS = new VariablesTabla();
+
+    int numVar = 0;
+
+    public String newVar(){
+        numVar++;
+        return "$t"+Integer.toString(numVar);
+    }
+
+
+    int numSaltos = 0;
+
+    public String newSalt(){
+        numSaltos++;
+        return "L"+Integer.toString(numSaltos);
+    }
+
+    public String currentSalt(){
+        return "L"+Integer.toString(numSaltos);
+    }
+
+
+    public class saltosCond{
+        public String sv, sf;
+
+        public saltosCond(String sv, String sf){
+            this.sv = sv;
+            this.sf = sf;
+        }
+    }
+
+    String saltoWhile="";
+    String saltoFor="";
+
+    Stack<String> pila = new Stack<>();
+    Stack<String> pila2 = new Stack<>();
+:};
+
+
+
+terminal MAS, MENOS, POR, DIV, ASIG, UMINUS, MASMAS, MENOSMENOS;
+terminal PYC, COMA, AL, CL, AP, CP;
+terminal NEGADO, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, OR, Y, IGUAL, DISTINTO;
+terminal PRINT, FOR, IF, ELSE, WHILE, DO, INT;
+terminal String STRING, NUM;
+
+non terminal listaSent, sent;
+non terminal String expresion, saltos;
+non terminal saltosCond condicion;
+non terminal elseornot;
+non terminal String tipo;
+non terminal variable;
+non terminal Integer bloque;
+
+precedence right ASIG;
+precedence left OR;
+precedence left Y;
+precedence left IGUAL, DISTINTO;
+precedence left MAYOR, MENOR, MAYORIGUAL, MENORIGUAL;
+precedence left MAS, MENOS;
+precedence left POR, DIV;
+precedence right UMINUS;
+precedence left AP, CP;
+precedence left IF, ELSE;
+
+listaSent ::= listaSent sent | sent ;
+
+sent ::= expresion PYC
+       | variable PYC
+       | IF AP condicion:v1 CP {:PLXC.out.println(v1.sv+":");:} 
+         sent saltos:v2 {:PLXC.out.println("\tgoto "+v2+";");PLXC.out.println(v1.sf+":");:} 
+         elseornot {:PLXC.out.println(v2+":");:}
+       | WHILE AP saltos:v2 {:PLXC.out.println(v2+":");:} condicion:v CP 
+          {:PLXC.out.println(v.sv+":");:} sent {: PLXC.out.println("\tgoto "+v2+";"); PLXC.out.println(v.sf+":");:}
+       | DO saltos:v2 {:PLXC.out.println(v2+":");:} sent WHILE 
+         AP condicion:v CP PYC 
+         {:PLXC.out.println(v.sv+":"); PLXC.out.println("\tgoto "+v2+";"); PLXC.out.println(v.sf+":");:}
+       | FOR AP expresion PYC saltos:v1 {:PLXC.out.println(v1+":");:} 
+         condicion:v PYC saltos:v2{:PLXC.out.println(v2+":");:}
+         expresion {:PLXC.out.println("\tgoto "+v1+";");:} CP {:PLXC.out.println(v.sv+":");:} 
+         sent {:PLXC.out.println("\tgoto "+v2+";");PLXC.out.println(v.sf+":");:}
+       | PRINT AP expresion:v CP PYC {:PLXC.out.println("\tprint "+v+";");:}
+       | AL bloque:a listaSent CL {:tablaS.deleteBloque(a);:}
+       ;
+
+bloque ::= {:numBloque++;RESULT= numBloque;:};
+
+saltos ::= {:RESULT= newSalt();:};
+
+elseornot ::= ELSE sent 
+         | 
+         ;
+
+expresion ::= expresion:v1 MAS expresion:v2     {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"+"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 MENOS expresion:v2   {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"-"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 POR expresion:v2     {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"*"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 DIV expresion:v2     {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"/"+v2+";");
+                                                  RESULT=var;:}
+            | MENOS expresion:v2                {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"=0-"+v2+";");
+                                                  RESULT=var;:} %prec UMINUS 
+            | AP expresion:v CP                 {:RESULT=v;:}
+            | STRING:v                          {:if(tablaS.contiene(v)){
+                                                    RESULT=tablaS.getMayorBloque(v);
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);
+                                                  }:}
+            | STRING:v ASIG expresion:v2         {:if(tablaS.contiene(v)){
+                                                    String variable = tablaS.getMayorBloque(v);
+                                                    System.out.println("\t"+variable+"="+v2+";");
+                                                    RESULT=variable;
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);
+                                                  }:}
+            | STRING:v MASMAS                   {:if(tablaS.contiene(v)){
+                                                    String variable = tablaS.getMayorBloque(v);
+                                                    String variable2 = newVar();
+                                                    PLXC.out.println("\t"+variable2+"="+variable+";");
+                                                    PLXC.out.println("\t"+variable+"="+variable+"+1;");
+                                                    RESULT=variable2;
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);
+                                                  }:}
+            | STRING:v MENOSMENOS               {:if(tablaS.contiene(v)){
+                                                    String variable = tablaS.getMayorBloque(v);
+                                                    String variable2 = newVar();
+                                                    PLXC.out.println("\t"+variable2+"="+variable+";");
+                                                    PLXC.out.println("\t"+variable+"="+variable+"-1;");
+                                                    RESULT=variable2;
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);}:}
+            | MASMAS STRING:v                   {:if(tablaS.contiene(v)){
+                                                    String variable = tablaS.getMayorBloque(v);
+                                                    PLXC.out.println("\t"+variable+"="+variable+"+1;");
+                                                    RESULT=variable;
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);
+                                                  }:}
+            | MENOSMENOS STRING:v               {:if(tablaS.contiene(v)){
+                                                    String variable = tablaS.getMayorBloque(v);
+                                                    PLXC.out.println("\t"+variable+"="+variable+"-1;");
+                                                    RESULT=variable;
+                                                  }else{
+                                                    PLXC.out.println("\t"+"error;");
+                                                    System.exit(1);}:}
+            | NUM:v                             {:RESULT=v;:}
+            ;
+
+variable ::= tipo:t STRING:v1 ASIG expresion:v2 {:if(tablaS.contieneBloque(v1, numBloque)){
+                                                     PLXC.out.println("\t"+"error;");
+                                                     System.exit(1);
+                                                  }else{
+                                                    PLXC.out.println("\t"+v1+"="+v2+";");
+                                                    tablaS.introduceVariable(v1, numBloque);
+                                                  }:}
+           | variable:t COMA STRING:v1 ASIG expresion:v2 {:if(tablaS.contieneBloque(v1, numBloque)){
+                                                     PLXC.out.println("\t"+"error;");
+                                                     System.exit(1);
+                                                  }else{
+                                                    PLXC.out.println("\t"+v1+"="+v2+";");
+                                                    tablaS.introduceVariable(v1, numBloque);
+                                                  }:}
+           | tipo:t STRING:v1                     {:if(tablaS.contieneBloque(v1, numBloque)){
+                                                     PLXC.out.println("\t"+"error;");
+                                                     System.exit(1);
+                                                  }else{
+                                                    tablaS.introduceVariable(v1, numBloque);
+                                                  }:}
+           | variable:t COMA STRING:v1               {:if(tablaS.contieneBloque(v1, numBloque)){
+                                                     PLXC.out.println("\t"+"error;");
+                                                     System.exit(1);
+                                                  }else{
+                                                    tablaS.introduceVariable(v1, numBloque);
+                                                  }:};
+
+
+tipo ::= INT;
+
+
+condicion ::= expresion:v1 IGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"=="+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 DISTINTO expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"!="+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"<"+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v2+"<"+v1+") goto "+slt.sf+";");
+                                                PLXC.out.println("\tgoto "+slt.sv+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v2+"<"+v1+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"<"+v2+") goto "+slt.sf+";");
+                                                PLXC.out.println("\tgoto "+slt.sv+";");
+                                                RESULT=slt;:}
+            | NEGADO condicion:v {:RESULT=new saltosCond(v.sf, v.sv);:}
+            | condicion:v1 Y {:PLXC.out.println(v1.sv+":");:}
+              condicion:v2 {:PLXC.out.println(v1.sf+":");
+                             PLXC.out.println("\tgoto "+v2.sf+";");
+                             RESULT=v2;:}
+            | condicion:v1 OR {:PLXC.out.println(v1.sf+":");:}
+              condicion:v2 {:PLXC.out.println(v1.sv+":");
+                             PLXC.out.println("\tgoto "+v2.sv+";");
+                             RESULT=v2;:}
+            | AP condicion:v CP {:RESULT=v;:}
+            ;
