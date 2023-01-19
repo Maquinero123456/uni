@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.Map.Entry;
+import java.util.ArrayList;
 
 public class VariablesTabla{
 
@@ -13,6 +14,16 @@ public class VariablesTabla{
 
     public boolean contiene(String key){
         return tabla.containsKey(key);
+    }
+
+    public boolean introduceSet(String key, String tipo){
+        if(contiene(key)){
+            return false;
+        }
+
+        tabla.put(key, "set "+tipo);
+
+        return true;
     }
 
     public boolean introduceVariable(String key, String tipo){

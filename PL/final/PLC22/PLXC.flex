@@ -8,6 +8,8 @@ import java_cup.runtime.*;
    
     "=" {return new Symbol(sym.ASIG);}
     ";" {return new Symbol(sym.PYC);}
+    "," {return new Symbol(sym.COMA);}
+    "'" {return new Symbol(sym.APOSTROFE);}
     "print" {return new Symbol(sym.PRINT);}
     "for" {return new Symbol(sym.FOR);}
     "if" {return new Symbol(sym.IF);}

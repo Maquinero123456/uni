@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 
-public class PLC {	   
+public class PLXC {	   
 	public static PrintStream out; 
 	public static void main(String argv[]) {    
     try {

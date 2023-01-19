@@ -1,0 +1,36 @@
+	$t1[0]= 3;
+	$t1[1]= 2;
+	$t1[2]= 1;
+	$c_length=0;
+	$t2=0;
+L1:
+	if ($t2<3) goto L2;
+	goto L3;
+L2:
+	$t3=$t1[$t2];
+	$t4=0;
+L4:
+	if ($t4==$c_length) goto L5;
+	$t5=c[$t4];
+	if ($t5==$t3) goto L6;
+	$t4=$t4+1;
+	goto L4;
+L5:
+	c[$c_length]=$t3;
+	$c_length=$c_length+1;
+L6:
+	$t2=$t2+1;
+	goto L1;
+L3:
+	$t6=0;
+L7:
+	if ($t6<$c_length) goto L8;
+	goto L9;
+L8:
+	$t7=c[$t6];
+	writec $t7;
+	writec 32;
+	$t6=$t6+1;
+goto L7;
+L9:
+	writec 10;
