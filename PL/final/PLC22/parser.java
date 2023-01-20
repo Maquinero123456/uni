@@ -908,11 +908,18 @@ PLXC.out.println(v.sv+":");
                                                     if(v1.substring(0,1)=="$"){
                                                     PLXC.out.println("\t"+v1+"="+v2+";");
                                                   }else{
-                                                    if(variables.contiene(v1) && !variables.getTipo(v1).contains("set")){
-                                                      PLXC.out.println("\t"+v1+"="+v2+";");
+                                                    if(!variables.getTipo(v1).equalsIgnoreCase(variables.getTipo(v2))){
+                                                      System.out.println(variables.getTipo(v1));
+                                                      System.out.println(variables.getTipo(v2));
+                                                      PLXC.out.println("error;");
+                                                      System.exit(1);
                                                     }else{
-                                                      PLXC.out.println("\t$"+v1+"_length=$"+v2+"_length;");
-                                                      PLXC.out.println("\t"+v1+"="+v2+";");
+                                                      if(variables.contiene(v1) && !variables.getTipo(v1).contains("set")){
+                                                        PLXC.out.println("\t"+v1+"="+v2+";");
+                                                      }else{
+                                                        PLXC.out.println("\t$"+v1+"_length=$"+v2+"_length;");
+                                                        PLXC.out.println("\t"+v1+"="+v2+";");
+                                                      }
                                                     }
                                                   }}
                                                   PLXC.out.println("\t"+v1+"="+v2+";");
@@ -931,7 +938,27 @@ PLXC.out.println(v.sv+":");
 		int vsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int vsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		ArrayList<String> vs = (ArrayList<String>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		String varTemp = newVar();
+		Collections.reverse(vs);
+                                                    if(variables.getTipo(v1).contains("int")||variables.getTipo(v1).contains("char")){
+                                                        try{
+                                                          for(int i = 0; i<vs.size();i++){
+                                                            Integer.parseInt(vs.get(i));
+                                                          }
+                                                        }catch(Exception e){
+                                                          PLXC.out.println("\terror;");
+                                                          System.exit(1);
+                                                        }
+                                                      }else{
+                                                          try{
+                                                          for(int i = 0; i<vs.size();i++){
+                                                            Float.parseFloat(vs.get(i));
+                                                          }
+                                                        }catch(Exception e){
+                                                          PLXC.out.println("\terror;");
+                                                          System.exit(1);
+                                                        }
+                                                      }
+                                                    String varTemp = newVar();
                                                     for(int i=0; i<vs.size();i++){
                                                       PLXC.out.println("\t"+varTemp+"["+i+"]= "+vs.get(i)+";");
                                                     }
