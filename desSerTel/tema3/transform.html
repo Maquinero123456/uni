@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="pulgadas-form">
+        <fieldset>
+            <label><input type="radio" name="metrosa" id="metrosa" value="metros" checked>
+            Metros a pies y pulgadas</label>
+            <label><input type="radio" name="metrosa" id="pulgadasa" value="pulgadas">
+            Pies y pulgadas a metros</label>
+        </fieldset>
+        <label for="metros">Metros:</label>
+        <input type="number" name="metros" id="metros" step=".01" value=0>
+        <label for="pies">Pies:</label>
+        <input type="number" name="pies" id="pies" step=".01" value=0>
+        <label for="pulgadas">Pulgadas:</label>
+        <input type="number" name="pulgadas" id="pulgadas" step=".01" value=0>
+        <input type="submit" value="Convertir" name="pulgadas-submit" id="pulgadas-submit">
+    </form>
+    <form action="" id="libras-form">
+        <fieldset>
+            <label><input type="radio" name="gramosa" id="gramosa" value="gramos" checked>
+            Gramos a libras y onzas</label>
+            <label><input type="radio" name="gramosa" id="librasa" value="libras">
+            Libras y onzas a gramos</label>
+        </fieldset>
+        <label for="gramos">Gramos:</label>
+        <input type="number" name="gramos" id="gramos" step=".01" value=0>
+        <label for="libras">Libras:</label>
+        <input type="number" name="libras" id="libras" step=".01" value=0>
+        <label for="onzas">Onzas:</label>
+        <input type="number" name="onzas" id="onzas" step=".01" value=0>
+        <input type="submit" value="Convertir" name="libras-submit" id="libras-submit">
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("pulgadas-form").addEventListener("submit", pulgadas);
+        });
+
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("libras-form").addEventListener("submit", libras);
+        });
+
+        function pulgadas(event){
+            event.preventDefault();
+            var radio = document.querySelector('input[name=metrosa]:checked').value;
+            if(radio=='metros'){
+                var pies = document.getElementById("metros").value*(39.37);
+                document.getElementById("pulgadas").value=(pies-Math.trunc(pies/12)*12).toFixed(2);
+                document.getElementById("pies").value=Math.trunc(pies/12);
+            }else{
+                var inches = (parseInt(document.getElementById("pies").value)*12+parseInt(document.getElementById("pulgadas").value));
+                document.getElementById("metros").value=(inches/39.37).toFixed(2);
+            }
+
+        }
+
+        function libras(event){
+            event.preventDefault();
+            var radio = document.querySelector('input[name=gramosa]:checked').value;
+            if(radio=='gramos'){
+                var gramos= document.getElementById("gramos").value/(453.592);
+                document.getElementById("onzas").value=((gramos-Math.trunc(gramos))*16).toFixed(2);
+                document.getElementById("libras").value=Math.trunc(gramos);
+            }else{
+                var libras = (parseInt(document.getElementById("onzas").value)/16+parseInt(document.getElementById("libras").value));
+                document.getElementById("gramos").value=(libras*453.592).toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>
