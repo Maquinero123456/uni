@@ -9,19 +9,27 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <%if((String)session.getAttribute("loginName")!=null){%>
-        <pre>User: ${loginName}        <a href="${pageContext.request.contextPath}/logout">Logout</a></pre>
+        <script  type="text/javascript" src="index.js"></script>
+        <header>
+            <img src="logo1.png" width="160" height="50" onmouseover="hover(this)" onmouseout="unhover(this)">
+        <nav>
+            <%if((String)session.getAttribute("loginName")!=null){%>
+                <pre>Hola, ${loginName} <a href="${pageContext.request.contextPath}/logout">Logout</a></pre>
+
+            <%}%>
+        </nav>
+        </header>
+        <div class="main">
         <hr>
-        <%}%>
-        <form action="index.jsp?pag=1">
-            <label for="titulo">Titulo: </label>
-            <input type="text" id="titulo" name="titulo">
-            <label for="autor">Autor: </label>
-            <input type="text" id="autor" name="autor">
-            <input type="submit" value="Buscar">
-        </form>
+        <div class="buscar">
+            <form action="index.jsp?pag=1">
+                <input type="text" id="titulo" name="titulo" placeholder="Titulo" class="form-content">
+                <input type="text" id="autor" name="autor" placeholder="Autor"  class="form-content">
+                <button type="submit">Search</button>
+            </form>
+        </div>
         <hr>
-        <table style="text-align: center">
+        <table>
             <tr>
                 <th>Titulo</th>
                 <th>Autor</th>
@@ -58,7 +66,7 @@
                         <input type="hidden" name="enlace" id="enlace" value="<%=libro.getEnlace()%>">
                         <input type="hidden" name="titulo" id="titulo2" value="<%=libro.getTitulo()%>">
                         <input type="hidden" name="autor" id="autor2" value="<%=libro.getAutor()%>">
-                        <input type="submit" name="boton" id="boton" value=<%=libro.getEnlace().split("\\\\")[libro.getEnlace().split("\\\\").length-1]%>>
+                        <button type="submit" name="boton" id="boton"><img src="descargar.png" height="30" width="30.8"></button>
                     </form></td>
                     <%}%>
                     <td><%=libro.getResumen()%></td>
@@ -69,6 +77,17 @@
 
         </table>
         <hr>
+        <div class="pag">
+            <%if(pag>1){%>
+            <button onclick="window.location.href='index.jsp?pag=<%=pag-1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Anterior</button>
+            <%}else{%>
+            <button disabled="disabled">Anterior</button>
+            <%}%>
+            <%if(pag*5>=libros.size()){%>
+            <button disabled="disabled">Siguiente</button>
+            <%}else{%>
+            <button onclick="window.location.href='index.jsp?pag=<%=pag+1%>&titulo=<%=titulo%>&autor=<%=autor%>'">Siguiente</button>
+            <%}%>
         <%for(int j = 1; j<=controlLibros.busquedaLibrosjson(titulo, autor).size()/5; j++){
             if(pag==j){%>
             <span><%=pag%></span>
@@ -76,6 +95,17 @@
             <a href="index.jsp?pag=<%=j%>&titulo=<%=titulo%>&autor=<%=autor%>"><%=j%></a>
         <%}}
         %>
-        <hr>
+        </div>
+            <div style="
+    justify-content: center;
+    align-items: center;
+    text-align: center; padding-top: 5px;">
+                <button onclick="window.print()" >Imprimir</button>
+            </div>
+        </div>
+        <footer class="autor">
+            <p>David Navarro Jimena (Universidad de Malaga)</p>
+            <p>Copyright 2023 Todos los derechos reservados</p>
+        </footer>
     </body>
 </html>
