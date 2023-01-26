@@ -1,0 +1,580 @@
+import java_cup.runtime.*;
+import java.util.*;
+
+action code{:
+
+  VariablesTabla variables = new VariablesTabla();
+
+
+  int numVar = -1;
+
+  public String newVar(){
+      numVar++;
+      return "$t"+Integer.toString(numVar);
+  }
+
+
+  int numSaltos = -1;
+
+  public String newSalt(){
+      numSaltos++;
+      return "L"+Integer.toString(numSaltos);
+  }
+
+  public String currentSalt(){
+      return "L"+Integer.toString(numSaltos);
+  }
+
+
+  public class saltosCond{
+      public String sv, sf;
+
+      public saltosCond(String sv, String sf){
+          this.sv = sv;
+          this.sf = sf;
+      }
+  }
+
+  int tamSet=0;
+
+  public String asignar(String v1, String v2){
+    String var10 = newVar();
+    PLXC.out.println("\t$"+var10+"_length=0;");
+    String var11 = newVar();
+    PLXC.out.println("\t"+var11+"=0;");
+    String salto12 = newSalt(), salto13=newSalt(),salto14=newSalt();
+    PLXC.out.println(salto12+":");
+    PLXC.out.println("\tif ("+var11+"<$"+v1+"_length) goto "+salto13+";");
+    PLXC.out.println("\tgoto "+salto14+";");
+    PLXC.out.println(salto13+" :");
+    String var12 = newVar(), var13= newVar();
+    PLXC.out.println("\t"+var12+"="+v1+"["+var11+"];");
+    PLXC.out.println("\t"+var13+"=0;");
+    String salto15 = newSalt();
+    PLXC.out.println(salto15+":");
+    String salto16 = newSalt(), salto17=newSalt();
+    PLXC.out.println("\tif ("+var13+"==$"+var10+"_length) goto "+salto16+";");
+    String var14 = newVar();
+    PLXC.out.println("\t"+var14+"="+var10+"["+var13+"];");
+    PLXC.out.println("\tif ("+var14+"=="+var12+") goto "+salto17+";");
+    PLXC.out.println("\t"+var13+"="+var13+"+1;");
+    PLXC.out.println("\tgoto "+salto15+";");
+    PLXC.out.println(salto16+":");
+    PLXC.out.println("\t"+var10+"[$"+var10+"_length]="+var12+";");
+    PLXC.out.println("\t$"+var10+"_length=$"+var10+"_length+1;");
+    PLXC.out.println(salto17+":");
+    PLXC.out.println("\t"+var11+"="+var11+"+1;");
+    PLXC.out.println("\tgoto "+salto12+";");
+    PLXC.out.println(salto14+":");
+    String var15 = newVar();
+    PLXC.out.println("\t"+var15+"=0;");
+    String salto18 = newSalt(), salto19=newSalt(),salto20=newSalt();
+    PLXC.out.println(salto18+":");
+    PLXC.out.println("\tif ("+var15+"<$"+v2+"_length) goto "+salto19+";");
+    PLXC.out.println("\tgoto "+salto20+";");
+    PLXC.out.println(salto19+" :");
+    String var16 = newVar(), var17= newVar();
+    PLXC.out.println("\t"+var16+"="+v2+"["+var15+"];");
+    PLXC.out.println("\t"+var17+"=0;");
+    String salto21 = newSalt();
+    PLXC.out.println(salto21+":");
+    String salto22 = newSalt(), salto23=newSalt();
+    PLXC.out.println("\tif ("+var17+"==$"+var10+"_length) goto "+salto22+";");
+    String var18 = newVar();
+    PLXC.out.println("\t"+var18+"="+var10+"["+var17+"];");
+    PLXC.out.println("\tif ("+var18+"=="+var16+") goto "+salto23+";");
+    PLXC.out.println("\t"+var17+"="+var17+"+1;");
+    PLXC.out.println("\tgoto "+salto21+";");
+    PLXC.out.println(salto22+":");
+    PLXC.out.println("\t"+var10+"[$"+var10+"_length]="+var16+";");
+    PLXC.out.println("\t$"+var10+"_length=$"+var10+"_length+1;");
+    PLXC.out.println(salto23+":");
+    PLXC.out.println("\t"+var15+"="+var15+"+1;");
+    PLXC.out.println("\tgoto "+salto18+";");
+    PLXC.out.println(salto20+":");
+    return var10;
+  }
+
+  public String asignarSetSuelto(String v1, String v2, int tam){
+    String var10 = newVar();
+    PLXC.out.println("\t$"+var10+"_length=0;");
+    String var11 = newVar();
+    PLXC.out.println("\t"+var11+"=0;");
+    String salto12 = newSalt(), salto13=newSalt(),salto14=newSalt();
+    PLXC.out.println(salto12+":");
+    PLXC.out.println("\tif ("+var11+"<$"+v1+"_length) goto "+salto13+";");
+    PLXC.out.println("\tgoto "+salto14+";");
+    PLXC.out.println(salto13+" :");
+    String var12 = newVar(), var13= newVar();
+    PLXC.out.println("\t"+var12+"="+v1+"["+var11+"];");
+    PLXC.out.println("\t"+var13+"=0;");
+    String salto15 = newSalt();
+    PLXC.out.println(salto15+":");
+    String salto16 = newSalt(), salto17=newSalt();
+    PLXC.out.println("\tif ("+var13+"==$"+var10+"_length) goto "+salto16+";");
+    String var14 = newVar();
+    PLXC.out.println("\t"+var14+"="+var10+"["+var13+"];");
+    PLXC.out.println("\tif ("+var14+"=="+var12+") goto "+salto17+";");
+    PLXC.out.println("\t"+var13+"="+var13+"+1;");
+    PLXC.out.println("\tgoto "+salto15+";");
+    PLXC.out.println(salto16+":");
+    PLXC.out.println("\t"+var10+"[$"+var10+"_length]="+var12+";");
+    PLXC.out.println("\t$"+var10+"_length=$"+var10+"_length+1;");
+    PLXC.out.println(salto17+":");
+    PLXC.out.println("\t"+var11+"="+var11+"+1;");
+    PLXC.out.println("\tgoto "+salto12+";");
+    PLXC.out.println(salto14+":");
+    String var15 = newVar();
+    PLXC.out.println("\t"+var15+"=0;");
+    String salto18 = newSalt(), salto19=newSalt(),salto20=newSalt();
+    PLXC.out.println(salto18+":");
+    PLXC.out.println("\tif ("+var15+"<"+tam+") goto "+salto19+";");
+    PLXC.out.println("\tgoto "+salto20+";");
+    PLXC.out.println(salto19+" :");
+    String var16 = newVar(), var17= newVar();
+    PLXC.out.println("\t"+var16+"="+v2+"["+var15+"];");
+    PLXC.out.println("\t"+var17+"=0;");
+    String salto21 = newSalt();
+    PLXC.out.println(salto21+":");
+    String salto22 = newSalt(), salto23=newSalt();
+    PLXC.out.println("\tif ("+var17+"==$"+var10+"_length) goto "+salto22+";");
+    String var18 = newVar();
+    PLXC.out.println("\t"+var18+"="+var10+"["+var17+"];");
+    PLXC.out.println("\tif ("+var18+"=="+var16+") goto "+salto23+";");
+    PLXC.out.println("\t"+var17+"="+var17+"+1;");
+    PLXC.out.println("\tgoto "+salto21+";");
+    PLXC.out.println(salto22+":");
+    PLXC.out.println("\t"+var10+"[$"+var10+"_length]="+var16+";");
+    PLXC.out.println("\t$"+var10+"_length=$"+var10+"_length+1;");
+    PLXC.out.println(salto23+":");
+    PLXC.out.println("\t"+var15+"="+var15+"+1;");
+    PLXC.out.println("\tgoto "+salto18+";");
+    PLXC.out.println(salto20+":");
+    return var10;
+  }
+
+
+  public String asignarPor(String v1, String v2, int size){
+    String salto6 = newSalt();
+    String salto11 = newSalt();
+    String var7 = newVar(), var8 = newVar(), var9 = newVar();
+    PLXC.out.println(salto6+":");
+    PLXC.out.println("\tif ("+var7+"==$"+v1+"_length) goto "+salto11+";");
+    PLXC.out.println("\t"+var9+"="+v1+"["+var7+"];");
+    PLXC.out.println("\t"+var8+"=0;");
+    String salto8 = newSalt(), salto9= newSalt(), salto10=newSalt();
+    String var10 = newVar(), var6 = newVar();
+    PLXC.out.println(salto8+":");
+    PLXC.out.println("\tif ("+var8+"=="+size+") goto "+salto10+";");
+    PLXC.out.println("\t"+var10+"="+v2+"["+var8+"];");
+    PLXC.out.println("\tif ("+var9+"=="+var10+") goto "+salto9+";");
+    PLXC.out.println("\t"+var8+"="+var8+"+1;");
+    PLXC.out.println("\tgoto "+salto8+";");
+    PLXC.out.println(salto9+":");
+    PLXC.out.println("\t"+var6+"[$"+var6+"_length]="+var9+";");
+    PLXC.out.println("\t$"+var6+"_length=$"+var6+"_length+1;");
+    PLXC.out.println(salto10+":");
+    PLXC.out.println("\t"+var7+"="+var7+"+1;");
+    PLXC.out.println("\tgoto "+salto6+";");
+    PLXC.out.println(salto11+":");
+    return var6;
+  }
+:};
+
+
+
+terminal MAS, MENOS, POR, DIV, ASIG, UMINUS, INT, CHAR, SET, FLOAT, MIGUAL, PIGUAL, RIGUAL;
+terminal PYC, AL, CL, AP, CP, APOSTROFE, COMA;
+terminal NEGADO, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, OR, Y, IGUAL, DISTINTO;
+terminal PRINT, FOR, IF, ELSE, WHILE, DO;
+terminal String STRING, NUM, DEC, LETRA;
+
+non terminal listaSent, sent;
+non terminal String expresion, saltos, tipo, crearSet;
+non terminal saltosCond condicion;
+non terminal elseornot;
+non terminal ArrayList<String> valoresSet;
+
+
+precedence right ASIG;
+precedence left OR;
+precedence left Y;
+precedence left IGUAL, DISTINTO;
+precedence left MAYOR, MENOR, MAYORIGUAL, MENORIGUAL;
+precedence left MAS, MENOS;
+precedence left POR, DIV;
+precedence right UMINUS;
+precedence left AP, CP;
+precedence left IF, ELSE;
+
+listaSent ::= listaSent sent | sent ;
+
+sent ::= expresion PYC
+       | crearSet PYC
+       | IF AP condicion:v1 CP {:PLXC.out.println(v1.sv+":");:} 
+         sent saltos:v2 {:PLXC.out.println("\tgoto "+v2+";");PLXC.out.println(v1.sf+":");:} 
+         elseornot {:PLXC.out.println(v2+":");:}
+       | WHILE AP saltos:v2 {:PLXC.out.println(v2+":");:} condicion:v CP 
+          {:PLXC.out.println(v.sv+":");:} sent {: PLXC.out.println("\tgoto "+v2+";"); PLXC.out.println(v.sf+":");:}
+       | DO saltos:v2 {:PLXC.out.println(v2+":");:} sent WHILE 
+         AP condicion:v CP PYC 
+         {:PLXC.out.println(v.sv+":"); PLXC.out.println("\tgoto "+v2+";"); PLXC.out.println(v.sf+":");:}
+       | FOR AP expresion PYC saltos:v1 {:PLXC.out.println(v1+":");:} 
+         condicion:v PYC saltos:v2{:PLXC.out.println(v2+":");:}
+         expresion {:PLXC.out.println("\tgoto "+v1+";");:} CP {:PLXC.out.println(v.sv+":");:} 
+         sent {:PLXC.out.println("\tgoto "+v2+";");PLXC.out.println(v.sf+":");:}
+       | PRINT AP expresion:v CP PYC {:try{
+                                          PLXC.out.println("\tprint "+Integer.valueOf(v)+";");
+                                        }catch(Exception e){
+                                          if(v.substring(0,1)=="$"){
+                                          PLXC.out.println("\tprint "+v+";");
+                                        }else{
+                                          if(variables.contiene(v) && !variables.getTipo(v).contains("set")){
+                                            PLXC.out.println("\tprint "+v+";");
+                                          }else{
+                                            String var5 = newVar();
+                                            PLXC.out.println("\t"+var5+"=0;");
+                                            String salto6=newSalt(), salto7=newSalt(), salto8=newSalt();
+                                            PLXC.out.println(salto6+":");
+                                            PLXC.out.println("\tif ("+var5+"<$"+v+"_length) goto "+salto7+";");
+                                            PLXC.out.println("\tgoto "+salto8+";");
+                                            PLXC.out.println(salto7+":");
+                                            String var6 = newVar();
+                                            PLXC.out.println("\t"+var6+"="+v+"["+var5+"];");
+                                            if(variables.getTipo(v).contains("int")||variables.getTipo(v).contains("float")){
+                                              PLXC.out.println("\twrite "+var6+";");
+                                            }else if(variables.getTipo(v).contains("char")){
+                                              PLXC.out.println("\twritec "+var6+";");
+                                            }
+                                            
+                                            PLXC.out.println("\twritec 32;");
+                                            PLXC.out.println("\t"+var5+"="+var5+"+1;");
+                                            PLXC.out.println("\tgoto "+salto6+";");
+                                            PLXC.out.println(salto8+":");
+                                            PLXC.out.println("\twritec 10;");
+                                            
+                                          }
+                                        }
+                                        
+                                        }:}
+       | AL listaSent CL 
+       ;
+
+saltos ::= {:RESULT= newSalt();:};
+
+elseornot ::= ELSE sent 
+         | 
+         ;
+
+
+tipo ::= INT {:RESULT="int";:} | CHAR {:RESULT="char";:}| FLOAT {:RESULT="float";:}|;
+
+crearSet ::= SET tipo:v STRING:a {:variables.introduceSet(a,v);RESULT=v;:}
+            | crearSet:v COMA STRING:a{:variables.introduceSet(a,v);RESULT=v;:};
+
+expresion ::= expresion:v1 MAS expresion:v2     {:if(variables.contiene(v1)&&variables.contiene(v2)&&variables.getTipo(v1).contains("set")&&variables.getTipo(v2).contains("set")&&variables.getTipo(v1).equals(variables.getTipo(v2))){
+                                                    String devolver = asignar(v1,v2);
+                                                    RESULT=devolver;
+                                                  }else{
+                                                    String var = newVar(); 
+                                                    PLXC.out.println("\t"+var+"="+v1+"+"+v2+";");
+                                                    RESULT=var;}:}
+            | expresion:v1 MAS AL valoresSet:v2 CL {:String t5 = newVar();
+                                                      for(int i = 0; i<v2.size();i++){
+                                                        PLXC.out.println("\t"+t5+"["+i+"]="+v2.get(i)+";");
+                                                      }
+                                                      String devolver = asignarSetSuelto(v1, t5, v2.size());
+                                                      RESULT=devolver;
+                                                :}
+            | AL valoresSet:v2 CL MAS expresion:v1 {:String t5 = newVar();
+                                                      for(int i = 0; i<v2.size();i++){
+                                                        PLXC.out.println("\t"+t5+"["+i+"]="+v2.get(i)+";");
+                                                      }
+                                                      String devolver = asignarSetSuelto(v1, t5, v2.size());
+                                                      RESULT=devolver;
+                                                :}
+            | STRING:v1 POR AL valoresSet:v2 CL {:String t5 = newVar();
+                                                      for(int i = 0; i<v2.size();i++){
+                                                        PLXC.out.println("\t"+t5+"["+i+"]="+v2.get(i)+";");
+                                                      }
+                                                      String devolver = asignarPor(v1, t5, v2.size());
+                                                      RESULT=devolver;
+                                                :}
+            | AL valoresSet:v2 CL POR STRING:v1 {:String t5 = newVar();
+                                                      for(int i = 0; i<v2.size();i++){
+                                                        PLXC.out.println("\t"+t5+"["+i+"]="+v2.get(i)+";");
+                                                      }
+                                                      String devolver = asignarPor(v1, t5, v2.size());
+                                                      RESULT=devolver;
+                                                :}
+            | expresion:v1 MENOS expresion:v2   {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"-"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 POR expresion:v2     {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"*"+v2+";");
+                                                  RESULT=var;:}
+            | expresion:v1 DIV expresion:v2     {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"="+v1+"/"+v2+";");
+                                                  RESULT=var;:}
+            | MENOS expresion:v2                {:String var = newVar(); 
+                                                  PLXC.out.println("\t"+var+"=0-"+v2+";");
+                                                  RESULT=var;:} %prec UMINUS 
+            | AP expresion:v CP                 {:RESULT=v;:}
+            | STRING:s MIGUAL NUM:v {:String var5 = newVar();
+                                                  String salto6 = newSalt();
+                                                  PLXC.out.println("\t"+var5+"=0;");
+                                                  PLXC.out.println(salto6+":");
+                                                  String salto7 = newSalt(), salto8=newSalt();
+                                                  String var6 = newVar();
+                                                  PLXC.out.println("\tif ("+var5+"==$"+s+"_length) goto "+salto7+";");
+                                                  PLXC.out.println("\t"+var6+"="+s+"["+var5+"];");
+                                                  PLXC.out.println("\tif ("+var6+"=="+v+") goto "+salto8+";");
+                                                  PLXC.out.println("\t"+var5+"="+var5+"+1;");
+                                                  PLXC.out.println("\tgoto "+salto6+";");
+                                                  PLXC.out.println(salto7+":");
+                                                  PLXC.out.println("\t"+s+"[$"+s+"_length]="+v+";");
+                                                  PLXC.out.println("\t$"+s+"_length=$"+s+"_length+1;");
+                                                  PLXC.out.println(salto8+":");
+                                                  RESULT=s;
+                                                :}
+            | STRING:s MIGUAL AL valoresSet:v CL {:String var5 = newVar();
+                                                    for(int i = 0; i<v.size(); i++){
+                                                      PLXC.out.println("\t"+var5+"["+i+"]="+v.get(i)+";");
+                                                    }
+                                                  String salto6 = newSalt();
+                                                  String var6 = newVar();
+                                                  PLXC.out.println("\t"+var6+"=0;");
+                                                  PLXC.out.println(salto6+":");
+                                                  String salto7 = newSalt(), salto8=newSalt();
+                                                  PLXC.out.println("\tif ("+var6+"<"+v.size()+") goto "+salto7+";");
+                                                  PLXC.out.println("\tgoto "+salto8+";");
+                                                  PLXC.out.println(salto7+":");
+                                                  String var7 = newVar(), var8 = newVar();
+                                                  PLXC.out.println("\t"+var7+"="+var5+"["+var6+"];");
+                                                  PLXC.out.println("\t"+var8+"=0;");
+                                                  String salto9 = newSalt();
+                                                  PLXC.out.println(salto9+":");
+                                                  String salto10 = newSalt(), salto11 = newSalt();
+                                                  PLXC.out.println("\tif ("+var8+"==$"+s+"_length) goto "+salto10+";");
+                                                  String var9 = newVar();
+                                                  PLXC.out.println("\t"+var9+"="+s+"["+var8+"];");
+                                                  PLXC.out.println("\tif ("+var9+"=="+var7+") goto "+salto11+";");
+                                                  PLXC.out.println("\t"+var8+"="+var8+"+1;");
+                                                  PLXC.out.println("\tgoto "+var9+";");
+                                                  PLXC.out.println(salto10+":");
+                                                  PLXC.out.println("\t"+s+"[$"+s+"_length]="+var7+";");
+                                                  PLXC.out.println("\t$"+s+"_length=$"+s+"_length+1;");
+                                                  PLXC.out.println(salto11+":");
+                                                  PLXC.out.println("\t"+var6+"="+var6+"+1;");
+                                                  PLXC.out.println("goto "+salto6+";");
+                                                  PLXC.out.println(salto8+":");
+                                                  RESULT=s;
+                                                :}
+            | STRING:s RIGUAL AL valoresSet:v CL {:String var5 = newVar();
+                                                    Collections.reverse(v);
+                                                    for(int i = 0; i<v.size(); i++){
+                                                      PLXC.out.println("\t"+var5+"["+i+"]="+v.get(i)+";");
+                                                    }
+                                                    String salto6=newSalt(), salto7=newSalt(), salto8=newSalt(), salto9=newSalt(), salto10=newSalt(), salto11=newSalt(), salto12=newSalt();
+                                                    String var6=newVar(), var7=newVar(), var8=newVar(), var9=newVar(), var10=newVar();
+                                                    PLXC.out.println(salto6+":");
+                                                    PLXC.out.println("\tif ("+var6+"<"+v.size()+") goto "+salto7+";");
+                                                    PLXC.out.println("\tgoto "+salto8+";");
+                                                    PLXC.out.println(salto7+":");
+                                                    PLXC.out.println("\t"+var7+"="+var5+"["+var6+"];");
+                                                    PLXC.out.println("\t"+var8+"=0;");
+                                                    PLXC.out.println(salto9+":");
+                                                    PLXC.out.println("\tif ($"+s+"_length=="+var8+") goto "+salto11+";");
+                                                    PLXC.out.println("\t"+var10+"="+s+"["+var8+"];");
+                                                    PLXC.out.println("\tif ("+var10+"=="+var7+") goto "+salto12+";");
+                                                    PLXC.out.println("\t"+var8+"="+var8+"+1;");
+                                                    PLXC.out.println("\tgoto "+salto9+";");
+                                                    PLXC.out.println(salto12+":");
+                                                    PLXC.out.println("\t$"+s+"_length=$"+s+"_length-1;");
+                                                    PLXC.out.println(salto10+":");
+                                                    PLXC.out.println("\tif ($"+s+"_length=="+var8+") goto "+salto11+";");
+                                                    PLXC.out.println("\t"+var9+"="+var8+";");
+                                                    PLXC.out.println("\t"+var8+"="+var8+"+1;");
+                                                    PLXC.out.println("\t"+var10+"="+s+"["+var8+"];");
+                                                    PLXC.out.println("\t"+s+"["+var9+"]="+var10+";");
+                                                    PLXC.out.println("\tgoto "+salto10+";");
+                                                    PLXC.out.println(salto11+":");
+                                                    PLXC.out.println("\t"+var6+"="+var6+"+1;");
+                                                    PLXC.out.println("\tgoto "+salto6+";");
+                                                    PLXC.out.println(salto8+":");
+
+                                                  
+                                                  RESULT=s;
+                                                :}
+            | STRING:s PIGUAL AL valoresSet:v CL {:String var5 = newVar();
+                                                    Collections.reverse(v);
+                                                    for(int i = 0; i<v.size(); i++){
+                                                      PLXC.out.println("\t"+var5+"["+i+"]="+v.get(i)+";");
+                                                    }
+                                                  String salto6=newSalt(), salto7=newSalt(), salto8=newSalt(), salto9=newSalt(), salto10=newSalt(), salto11=newSalt(), salto12=newSalt(), salto13=newSalt(), salto14=newSalt(), salto15=newSalt(), salto16=newSalt(), salto17=newSalt();
+                                                  String var6=newVar(), var7=newVar(), var8=newVar(), var9=newVar(), var10=newVar(), var11=newVar(), var12=newVar(), var13=newVar(), var14=newVar();
+                                                  PLXC.out.println(salto6+":");
+                                                  PLXC.out.println("\tif ("+var7+"==$"+s+"_length) goto "+salto11+";");
+                                                  PLXC.out.println("\t"+var9+"="+s+"["+var7+"];");
+                                                  PLXC.out.println("\t"+var8+"=0;");
+                                                  PLXC.out.println(salto8+":");
+                                                  PLXC.out.println("\tif ("+var8+"=="+v.size()+") goto "+salto10+";");
+                                                  PLXC.out.println("\t"+var10+"="+var5+"["+var8+"];");
+                                                  PLXC.out.println("\tif ("+var9+"=="+var10+") goto "+salto9+";");
+                                                  PLXC.out.println("\t"+var8+"="+var8+"+1;");
+                                                  PLXC.out.println("\tgoto "+salto8+";");
+                                                  PLXC.out.println(salto9+":");
+                                                  PLXC.out.println("\t"+var6+"[$"+var6+"_length]="+var9+";");
+                                                  PLXC.out.println("\t$"+var6+"_length="+"$"+var6+"_length+1;");
+                                                  PLXC.out.println(salto10+":");
+                                                  PLXC.out.println("\t"+var7+"="+var7+"+1;");
+                                                  PLXC.out.println("\tgoto "+salto6+";");
+                                                  PLXC.out.println(salto11+":");
+                                                  PLXC.out.println("\t$"+s+"_length=0;");
+                                                  PLXC.out.println("\t"+var11+"=0;");
+                                                  PLXC.out.println(salto12+":");
+                                                  PLXC.out.println("\tif ("+var11+"<$"+var6+"_length) goto "+salto13+";");
+                                                  PLXC.out.println("\tgoto "+salto14+";");
+                                                  PLXC.out.println(salto13+":");
+                                                  PLXC.out.println("\t"+var12+"="+var6+"["+var11+"];");
+                                                  PLXC.out.println("\t"+var13+"=0;");
+                                                  PLXC.out.println(salto15+":");
+                                                  PLXC.out.println("\tif ("+var13+"==$"+s+"_length) goto "+salto16+";");
+                                                  PLXC.out.println("\t"+var14+"="+s+"["+var13+"];");
+                                                  PLXC.out.println("\tif ("+var14+"=="+var12+") goto "+salto17+";");
+                                                  PLXC.out.println("\t"+var13+"="+var13+"+1;");
+                                                  PLXC.out.println("\tgoto "+salto15+";");
+                                                  PLXC.out.println(salto16+":");
+                                                  PLXC.out.println("\t"+s+"[$"+s+"_length]="+var12+";");
+                                                  PLXC.out.println("\t$"+s+"_length=$"+s+"_length+1;");
+                                                  PLXC.out.println(salto17+":");
+                                                  PLXC.out.println("\t"+var11+"="+var11+"+1;");
+                                                  PLXC.out.println("\tgoto "+salto12+";");
+                                                  PLXC.out.println(salto14+":");
+                                                  RESULT=s;
+                                                :}                                    
+            | STRING:v1 ASIG expresion:v2       {:try{
+                                                    PLXC.out.println("\t"+v1+"="+Integer.valueOf(v2)+";");
+                                                  }catch(Exception e){
+                                                    if(variables.contiene(v1)&&variables.getTipo(v1).contains("set")&&v2.substring(0,1).equals("$")){
+                                                      PLXC.out.println("\t$"+v1+"_length=$"+v2+"_length;");
+                                                      PLXC.out.println("\t"+v1+"="+v2+";");
+                                                    }else
+                                                    if(v2.substring(0,1).equals("$")){
+                                                      PLXC.out.println("\t"+v1+"="+v2+";");
+                                                    }else{
+                                                      if(!variables.getTipo(v1).equalsIgnoreCase(variables.getTipo(v2))){
+                                                        System.exit(1);
+                                                      }else{
+                                                        if(variables.contiene(v1) && !variables.getTipo(v1).contains("set")){
+                                                          PLXC.out.println("\t"+v1+"="+v2+";");
+                                                        }else{
+                                                          PLXC.out.println("\t$"+v1+"_length=$"+v2+"_length;");
+                                                          PLXC.out.println("\t"+v1+"="+v2+";");
+                                                        }
+                                                      }
+                                                  }}
+                                                  RESULT=v1;:}
+            | STRING:v1 ASIG AL valoresSet:vs CL  {:Collections.reverse(vs);
+                                                    if(variables.getTipo(v1).contains("int")||variables.getTipo(v1).contains("char")){
+                                                        try{
+                                                          for(int i = 0; i<vs.size();i++){
+                                                            Integer.parseInt(vs.get(i));
+                                                          }
+                                                        }catch(Exception e){
+                                                          PLXC.out.println("\terror;");
+                                                          System.exit(1);
+                                                        }
+                                                      }else{
+                                                          try{
+                                                          for(int i = 0; i<vs.size();i++){
+                                                            Float.parseFloat(vs.get(i));
+                                                          }
+                                                        }catch(Exception e){
+                                                          PLXC.out.println("\terror;");
+                                                          System.exit(1);
+                                                        }
+                                                      }
+                                                    String varTemp = newVar();
+                                                    for(int i=0; i<vs.size();i++){
+                                                      PLXC.out.println("\t"+varTemp+"["+i+"]= "+vs.get(i)+";");
+                                                    }
+                                                    PLXC.out.println("\t$"+v1+"_length=0;");
+                                                    String iterador = newVar();
+                                                    PLXC.out.println("\t"+iterador+"=0;");
+                                                    String saltoInicial = newSalt();
+                                                    PLXC.out.println(saltoInicial+":");
+                                                    String sv1 = newSalt();
+                                                    String sf1 = newSalt();
+                                                    PLXC.out.println("\tif ("+iterador+"<"+vs.size()+") goto "+sv1+";");
+                                                    PLXC.out.println("\tgoto "+sf1+";");
+                                                    PLXC.out.println(sv1+":");
+                                                    String varTemp2 = newVar();
+                                                    String varTemp3 = newVar();
+                                                    PLXC.out.println("\t"+varTemp2+"="+varTemp+"["+iterador+"];");
+                                                    PLXC.out.println("\t"+varTemp3+"=0;");
+                                                    String salto3 = newSalt();
+                                                    String salto4 = newSalt();
+                                                    PLXC.out.println(salto3+":");
+                                                    PLXC.out.println("\tif ("+varTemp3+"==$"+v1+"_length) goto "+salto4+";");
+                                                    String varTemp4 = newVar();
+                                                    PLXC.out.println("\t"+varTemp4+"="+v1+"["+varTemp3+"];");
+                                                    String salto5 = newSalt();
+                                                    PLXC.out.println("\tif ("+varTemp4+"=="+varTemp2+") goto "+salto5+";");
+                                                    PLXC.out.println("\t"+varTemp3+"="+varTemp3+"+1;");
+                                                    PLXC.out.println("\tgoto "+salto3+";");
+                                                    PLXC.out.println(salto4+":");
+                                                    PLXC.out.println("\t"+v1+"[$"+v1+"_length]="+varTemp2+";");
+                                                    PLXC.out.println("\t$"+v1+"_length=$"+v1+"_length+1;");
+                                                    PLXC.out.println(salto5+":");
+                                                    PLXC.out.println("\t"+iterador+"="+iterador+"+1;");
+                                                    PLXC.out.println("\tgoto "+saltoInicial+";");
+                                                    PLXC.out.println(sf1+":");
+                                            
+                                                  RESULT=v1;:}
+            | STRING:v                          {:RESULT=v;:}
+            | NUM:v                             {:RESULT=v;:}
+            | APOSTROFE STRING:v APOSTROFE       {:RESULT=Integer.toString(v.codePointAt(0));:}
+            | DEC:v {:RESULT=v;:}
+            ;
+
+valoresSet ::= expresion:e COMA valoresSet:v {:v.add(e); RESULT=v;:}
+             | expresion:e {:ArrayList<String> l = new ArrayList<String>();
+                             l.add(e);
+                             RESULT=l;:};
+
+condicion ::= expresion:v1 IGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"=="+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 DISTINTO expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"!="+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"<"+v2+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MENORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v2+"<"+v1+") goto "+slt.sf+";");
+                                                PLXC.out.println("\tgoto "+slt.sv+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYOR expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v2+"<"+v1+") goto "+slt.sv+";");
+                                                PLXC.out.println("\tgoto "+slt.sf+";");
+                                                RESULT=slt;:}
+            | expresion:v1 MAYORIGUAL expresion:v2 {:saltosCond slt = new saltosCond(newSalt(), newSalt());
+                                                PLXC.out.println("\tif("+v1+"<"+v2+") goto "+slt.sf+";");
+                                                PLXC.out.println("\tgoto "+slt.sv+";");
+                                                RESULT=slt;:}
+            | NEGADO condicion:v {:RESULT=new saltosCond(v.sf, v.sv);:}
+            | condicion:v1 Y {:PLXC.out.println(v1.sv+":");:}
+              condicion:v2 {:PLXC.out.println(v1.sf+":");
+                             PLXC.out.println("\tgoto "+v2.sf+";");
+                             RESULT=v2;:}
+            | condicion:v1 OR {:PLXC.out.println(v1.sf+":");:}
+              condicion:v2 {:PLXC.out.println(v1.sv+":");
+                             PLXC.out.println("\tgoto "+v2.sv+";");
+                             RESULT=v2;:}
+            | AP condicion:v CP {:RESULT=v;:}
+            ;
