@@ -12,7 +12,7 @@ target/
 *.java~
 *.jar
 *.pem
-
+*/node_modules/*
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

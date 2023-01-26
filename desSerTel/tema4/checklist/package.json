@@ -16,5 +16,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "swr": "^2.0.0"
-  }
+  },
+  "main": "next.config.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
