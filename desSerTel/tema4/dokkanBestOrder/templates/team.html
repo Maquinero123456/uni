@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', path='team.css') }}" rel="stylesheet">
+    <title>Team</title>
+    <style>
+        body {
+            --color-bg: rgb(26, 24, 24);
+            --color-text: rgb(255, 255, 255);
+        }
+
+        body {
+            background-color: var(--color-bg);
+        }
+
+        h1 {
+            color: var(--color-text);
+        }
+
+        ol {
+            color: var(--color-text);
+        }
+
+        li {
+            color: var(--color-text);
+        }
+
+        a {
+            color: var(--color-text);
+        }
+    </style>
+</head>
+<body>
+    <h1>Equipo introducido:</h1>
+    <ol>
+        <li>{{id1}}</li>
+        <li>{{id2}}</li>
+        <li>{{id3}}</li>
+        <li>{{id4}}</li>
+        <li>{{id5}}</li>
+        <li>{{id6}}</li>
+        <li>{{id7}}</li>
+    </ol>
+    <hr>
+    <h1>Equipo ordenado:</h1>
+    <ol>
+        <li>{{id8}}</li>
+        <li>{{id9}}</li>
+        <li>{{id10}}</li>
+        <li>{{id11}}</li>
+        <li>{{id12}}</li>
+        <li>{{id13}}</li>
+        <li>{{id14}}</li>
+    </ol>
+    <a href="./home">Home</a><br>
+    <a href="https://github.com/Maquinero123456/dokkanBestOrderWeb">GitHub</a>
+</body>
+</html>

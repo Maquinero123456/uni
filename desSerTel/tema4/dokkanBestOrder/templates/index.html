@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="{{ url_for('static', path='index.css') }}" rel="stylesheet">
+    <style>     
+        body {
+            --color-bg: rgb(26, 24, 24);
+            --color-text: rgb(255, 255, 255);
+        }
+
+        body {
+            background-color: var(--color-bg);
+        }
+
+        h1 {
+            color: var(--color-text);
+        }
+
+        ol {
+            color: var(--color-text);
+        }
+
+        li {
+            color: var(--color-text);
+        }
+
+        label {
+            color: var(--color-text);
+        }
+
+        a {
+            color: var(--color-text);
+        }
+
+        p {
+            color: var(--color-text);
+        }
+
+        h4 {
+            color: var(--color-text);
+        }
+    </style>
+
+</head>
+<body>
+    <h1>DokkanBestOrder</h1>
+    <h4>Busca los codigos de personajes en <a href="https://dokkan.fyi/characters">https://dokkan.fyi/characters</a></h4>
+    <form action="./team" method="post" enctype="aplication/x-www-form-urlencoded">
+        <label for="leader">Lider:</label>
+        <input type="number" id="leader" name="leader" value="0" required ><br><br>
+        <label for="char2">Segundo personaje:</label>
+        <input type="number" id="char2" name="char2" value="0" required><br><br>
+        <label for="char3">Tercer personaje:</label>
+        <input type="number" id="char3" name="char3" value="0" required><br><br>
+        <label for="char4">Cuarto personaje:</label>
+        <input type="number" id="char4" name="char4" value="0" required><br><br>
+        <label for="char5">Quinto personaje:</label>
+        <input type="number" id="char5" name="char5" value="0" required><br><br>
+        <label for="char6">Sexto personaje:</label>
+        <input type="number" id="char6" name="char6" value="0" required><br><br>
+        <label for="friend">Amigo:</label>
+        <input type="number" id="friend" name="friend" value="0"><br><br>
+        <input type="submit" id="submit" value="Submit">
+    </form>
+    <p>(Puede tardar unos segundos tras pulsar submit)</p>
+    <a href="https://github.com/Maquinero123456/dokkanBestOrderWeb">GitHub</a>
+</body>
+</html>
