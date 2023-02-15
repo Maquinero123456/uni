@@ -1,0 +1,21 @@
++--------------------------------------+---------------------------------------+
+|                                   LICENSE                                    |
++------------------------------------------------------------------------------+
+
+*	Matlab toolbox for simulation and control of the Scorbot ER-V is released 
+	under a GPLv3 license. 
+	Read license-GPLv3,	or if not present, <http://www.gnu.org/licenses/>.
+
+*	For a closed-source version of Matlab toolbox for simulation and control of 
+	the Scorbot ER-V For commercial purposes, please contact the authors.
+
+*	If you use Matlab library for simulation and control of the Scorbot ER-V in 
+	an academic work, please cite the most relevant publication associated by 
+	visiting:
+	<http://babel.isa.uma.es/jafma/index.php/software/>, 
+	or if any, please cite Dr. Juan-Antonio Fernández-Madrigal 
+	(http://babel.isa.uma.es/jafma) directly.
+
+
+
+                              --- END OF FILE ---
