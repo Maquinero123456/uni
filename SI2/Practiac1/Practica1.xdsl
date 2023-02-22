@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This network was created in GeNIe Academic, which can be used for educational and research purposes only -->
+<smile version="1.0" id="Network3" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="Animal">
+			<state id="Wacka" />
+			<state id="Hobexa" />
+			<state id="Wurro" />
+			<probabilities>0.33 0.33 0.3399999999999999</probabilities>
+		</cpt>
+		<cpt id="Color">
+			<state id="Rojo" />
+			<state id="Azul" />
+			<parents>Animal</parents>
+			<probabilities>0.2 0.8 0.5 0.5 1 0</probabilities>
+		</cpt>
+		<cpt id="Piel">
+			<state id="Escamosa" />
+			<state id="Peluda" />
+			<parents>Animal</parents>
+			<probabilities>0.5 0.5 1 0 0 1</probabilities>
+		</cpt>
+		<cpt id="Patas">
+			<state id="p4" />
+			<state id="p5" />
+			<state id="p6" />
+			<parents>Animal</parents>
+			<probabilities>0.5 0.5 0 0.33 0.33 0.3399999999999999 0 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="Cojea">
+			<state id="Cojea" />
+			<state id="No_Cojea" />
+			<parents>Patas</parents>
+			<probabilities>0.1 0.9 1 0 0.2 0.8</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.2.2601.0 ACADEMIC" name="Eje3" faultnameformat="nodestate">
+			<node id="Animal">
+				<name>Animal</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>284 72 333 102</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Color">
+				<name>Color</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>59 216 102 242</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Piel">
+				<name>Piel</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>292 225 330 248</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Patas">
+				<name>Patas</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>504 211 549 239</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Cojea">
+				<name>Cojea</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>512 380 557 408</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
