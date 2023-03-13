@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network2" numsamples="1000">
+	<nodes>
+		<cpt id="Animal" diagtype="target" ranked="true">
+			<state id="Animal_Wurros" fault="true" />
+			<state id="Animal_Hobexas" fault="true" />
+			<state id="Animal_Wackas" fault="true" />
+			<probabilities>0.333 0.333 0.334</probabilities>
+		</cpt>
+		<cpt id="NumPatas">
+			<state id="NumPatas4" />
+			<state id="NumPatas5" />
+			<state id="NumPatas6" />
+			<parents>Animal</parents>
+			<probabilities>0 0.5 0.5 0.3333333333333333 0.3333333333333333 0.3333333333333333 0.5 0.5 0</probabilities>
+		</cpt>
+		<cpt id="Anomalia">
+			<state id="Anomalia_si" />
+			<state id="Anomalia_no" />
+			<parents>NumPatas</parents>
+			<probabilities>0.1 0.9 0.5 0.5 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="Piel">
+			<state id="PielEscamosa" />
+			<state id="PielSuavePelo" />
+			<parents>Animal</parents>
+			<probabilities>0 1 1 0 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="Color">
+			<state id="Color_Rojizo" />
+			<state id="Color_Azulado" />
+			<parents>Animal</parents>
+			<probabilities>1 0 0.5 0.5 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="Cojea">
+			<state id="Cojea_si" />
+			<state id="Cojea_no" />
+			<parents>Anomalia NumPatas</parents>
+			<probabilities>1 0 1 0 1 0 0 1 1 0 0 1</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.2603.0" name="Network2" faultnameformat="nodestate">
+			<node id="Anomalia">
+				<name>Anomalia</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>37 153 116 183</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="NumPatas">
+				<name>NumPatas</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>210 159 295 189</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="Piel">
+				<name>Piel</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>394 159 442 189</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Color">
+				<name>Color</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>549 160 597 190</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Cojea">
+				<name>Cojea</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>157 276 205 306</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Animal">
+				<name>Animal</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>357 70 405 100</position>
+				<barchart active="true" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
