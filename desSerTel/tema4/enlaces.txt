@@ -1,0 +1,2 @@
+Nextjs: https://github.com/Maquinero123456/checklistMusic
+FastAPI: https://github.com/Maquinero123456/dokkanBestOrderWeb
