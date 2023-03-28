@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network3" numsamples="1000">
+	<nodes>
+		<cpt id="Clase">
+			<state id="Wurro" />
+			<state id="Hobexa" />
+			<state id="Wacka" />
+			<probabilities>0.3333333333333333 0.3333333333333333 0.3333333333333334</probabilities>
+		</cpt>
+		<cpt id="Piel">
+			<state id="Escamosa" />
+			<state id="Peluda" />
+			<parents>Clase</parents>
+			<probabilities>0 1 1 0 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="Patas">
+			<state id="Patas4" />
+			<state id="Patas5" />
+			<state id="Patas6" />
+			<parents>Clase</parents>
+			<probabilities>0 0.4999999999999999 0.5000000000000001 0.3333333333333333 0.3333333333333333 0.3333333333333334 0.5 0.5 0</probabilities>
+		</cpt>
+		<cpt id="Cojea">
+			<state id="Si" />
+			<state id="No" />
+			<parents>Patas</parents>
+			<probabilities>0.1 0.9 1 0 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="Color">
+			<state id="Azulado" />
+			<state id="Rojizo" />
+			<parents>Clase</parents>
+			<probabilities>0 1 0.5 0.5 0.8 0.2</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.2603.0" name="Ejercicio 3" faultnameformat="nodestate">
+			<node id="Piel">
+				<name>Piel</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>198 199 244 227</position>
+			</node>
+			<node id="Patas">
+				<name>Patas</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>314 182 359 210</position>
+			</node>
+			<node id="Cojea">
+				<name>Cojea</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>314 289 359 317</position>
+			</node>
+			<node id="Color">
+				<name>Color</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>82 183 125 209</position>
+			</node>
+			<node id="Clase">
+				<name>Clase</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>198 88 243 116</position>
+			</node>
+		</genie>
+	</extensions>
+</smile>
