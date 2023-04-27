@@ -13,6 +13,8 @@ target/
 *.jar
 *.pem
 */node_modules/*
+*/.RData
+*/.Rproj.user/*
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
