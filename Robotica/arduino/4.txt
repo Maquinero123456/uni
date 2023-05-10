@@ -1,0 +1,57 @@
+#include <Servo.h>
+
+Servo myservo;
+
+int pos = 0;
+
+long readUltrasonicDistance(int triggerPin, int echoPin){
+  pinMode(triggerPin, OUTPUT);
+    digitalWrite(triggerPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(triggerPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(triggerPin, LOW);
+    pinMode(echoPin, INPUT);
+    return pulseIn(echoPin, HIGH);
+}
+
+
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+  myservo.attach(9);
+  Serial.begin(9600);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  int inches = (0.01723*readUltrasonicDistance(2,3)/2.54);
+  Serial.println(inches);
+  if(inches<39.37){
+  	giro(0,180);
+  }else if(inches<39.37*2){
+     giro(0,120);
+  }else if(inches<39.37*3){
+     giro(0,80); 
+  }else{
+     giro(0,40); 
+  }
+}
+
+void blink(int espera) {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(espera);
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(espera);
+}
+
+void giro(int inicio, int fin){
+	for(pos = inicio; pos <=fin; pos += 1){
+      myservo.write(pos);
+      delay(7);
+    }
+    for(pos = fin; pos >=inicio; pos -= 1){
+      myservo.write(pos);
+      delay(7);
+    }
+}
