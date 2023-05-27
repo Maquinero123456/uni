@@ -1,0 +1,27 @@
+int ledpin = 13;
+
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(ledpin, OUTPUT);
+  pinMode(A0, INPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  if(analogRead(A0)<256){
+    blink(1000); 
+  }else if(analogRead(A0)<512){
+     blink(750); 
+  }else if(analogRead(A0)<512){
+     blink(500); 
+  }else{
+     blink(250); 
+  }
+}
+
+void blink(int espera) {
+  digitalWrite(ledpin, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(espera);
+  digitalWrite(ledpin, LOW);    // turn the LED off by making the voltage LOW
+  delay(espera);
+}

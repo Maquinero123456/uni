@@ -1,0 +1,40 @@
+#include <Ultrasonic.h>
+long readUltrasonicDistance(int triggerPin, int echoPin){
+  pinMode(triggerPin, OUTPUT);
+    digitalWrite(triggerPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(triggerPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(triggerPin, LOW);
+    pinMode(echoPin, INPUT);
+    return pulseIn(echoPin, HIGH);
+}
+
+
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  int inches = (0.01723*readUltrasonicDistance(2,3)/2.54);
+  Serial.print(inches);
+  if(inches<39.37){
+    blink(100); 
+  }else if(inches<39.37*2){
+     blink(500); 
+  }else if(inches<39.37*3){
+     blink(1000); 
+  }else{
+     blink(2000); 
+  }
+}
+
+void blink(int espera) {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(espera);
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(espera);
+}
