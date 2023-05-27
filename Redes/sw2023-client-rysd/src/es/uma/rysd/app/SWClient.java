@@ -54,7 +54,6 @@ public class SWClient {
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
         return count;
 	}
@@ -72,14 +71,12 @@ public class SWClient {
 				System.out.println("Codigo correcto "+conexion.getResponseCode());
 				Gson parser = new Gson();
 				InputStream in=conexion.getInputStream();
-				Person c = parser.fromJson(new InputStreamReader(in), Person.class);
-				c.homeworld = getWorld(c.homeworld).toString();
-				p = c;
+				p = parser.fromJson(new InputStreamReader(in), Person.class);
+				p.homeplanet = getWorld(p.homeworld);
 			}else{
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
 		}
 		return p;
 	}
@@ -103,7 +100,6 @@ public class SWClient {
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
 		}
         return p;
 	}
@@ -121,14 +117,13 @@ public class SWClient {
 				Gson parser = new Gson();
 				InputStream in=conexion.getInputStream();
 				QueryResponse query = parser.fromJson(new InputStreamReader(in), QueryResponse.class);
-				Person c = query.results[0];
-				c.homeworld = getWorld(c.homeworld).toString();
-				p = c;
+				p = query.results[0];
+				p.homeplanet = getWorld(p.homeworld);
 			}else{
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
+		}catch(ArrayIndexOutOfBoundsException e){
 		}
         return p;
     }

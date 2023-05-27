@@ -19,11 +19,11 @@ public class Main {
     	// System.setProperty("https.proxyHost",proxy); 
     	// System.setProperty("https.proxyPort",proxy_port);
         SWClient sw = new SWClient();
+		System.out.println(sw.search("luke"));
         String response = null;
     	rand = new Random();
 		System.out.print("> ");
-        sc = new Scanner(System.in);
-
+		sc = new Scanner(System.in);
         do{
 			whoBornIn1(sw);
 	       	System.out.println("Desea otra ronda (s/n)?");
