@@ -41,7 +41,7 @@ public class SWClient {
 			HttpsURLConnection conexion = null;
 			conexion = (HttpsURLConnection) url.openConnection();
 			conexion.addRequestProperty("Accept", "application/json");
-			conexion.setRequestProperty("User-Agent", app_name);
+			conexion.setRequestProperty("User-Agent", app_name+"-"+year);
 			conexion.setRequestMethod("GET");
 			if(conexion.getResponseCode()>=200 && conexion.getResponseCode()<300){
 				System.out.println("Codigo correcto "+conexion.getResponseCode());
@@ -128,4 +128,25 @@ public class SWClient {
         return p;
     }
 
+	public SpaceShip getStarship(String urlname) {
+    	SpaceShip p = null;
+    	urlname = urlname.replaceAll("http:", "https:");
+		try{
+			URL url = new URL(urlname);
+			HttpsURLConnection conexion = (HttpsURLConnection) url.openConnection();
+			conexion.addRequestProperty("Accept", "application/json");
+			conexion.setRequestProperty("User-Agent", app_name);
+			conexion.setRequestMethod("GET");
+			if(conexion.getResponseCode()>=200 && conexion.getResponseCode()<300){
+				System.out.println("Codigo correcto "+conexion.getResponseCode());
+				Gson parser = new Gson();
+				InputStream in=conexion.getInputStream();
+				p = parser.fromJson(new InputStreamReader(in), SpaceShip.class);
+			}else{
+				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
+			}
+		}catch(IOException e){
+		}
+        return p;
+	}
 }

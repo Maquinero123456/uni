@@ -1,12 +1,12 @@
 package es.uma.rysd.app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import es.uma.rysd.entities.Person;
-import es.uma.rysd.entities.World;
+import es.uma.rysd.entities.*;
 
 public class Main {	
 	private static Random rand; // para nmeros aleatorios
@@ -19,13 +19,14 @@ public class Main {
     	// System.setProperty("https.proxyHost",proxy); 
     	// System.setProperty("https.proxyPort",proxy_port);
         SWClient sw = new SWClient();
-		System.out.println(sw.search("luke"));
-        String response = null;
+		String response = null;
     	rand = new Random();
-		System.out.print("> ");
 		sc = new Scanner(System.in);
         do{
+			tallest(sw);
 			whoBornIn1(sw);
+			whoBornIn2(sw);
+			mostExpensive(sw);
 	       	System.out.println("Desea otra ronda (s/n)?");
 			System.out.print("> ");
 	       	response = sc.nextLine();
@@ -73,8 +74,9 @@ public class Main {
     	// Escribiendo la pregunta y leyendo la opcin
     	Integer n = null;
     	do{
-    		System.out.println("Quin es ms alto? [0] "+ people.get(0).name + " o [1] " + people.get(1).name);
+    		System.out.println("Quien es ms alto? [0] "+ people.get(0).name + " o [1] " + people.get(1).name);
     		try{
+				System.out.print("> ");
     			n = Integer.parseInt(sc.nextLine());
     		}catch(NumberFormatException ex){
     			n = -1;
@@ -121,7 +123,8 @@ public class Main {
 
         // Planteamos la pregunta
         String s = null;
-   		System.out.println("Quin naci o fue creado en " + world.name + "?");
+   		System.out.println("Quien nacio o fue creado en " + world.name + "?");
+		System.out.print("> ");
    		s = sc.nextLine();
    		// Buscamos la persona indicada
    		Person p = sw.search(s);
@@ -197,12 +200,13 @@ public class Main {
     	// Leemos la opcin
     	Integer n = null;
     	do{
-    		System.out.print("Quin naci o fue fabricado en "+ world.name +"?");
+    		System.out.print("Quien nacio o fue fabricado en "+ world.name +"?");
     		for(int i = 0; i < 4; i++){
     			System.out.print(" ["+i+"] "+ people.get(i).name);
     		}
     		System.out.println();
     		try{
+				System.out.print("> ");
     			n = Integer.parseInt(sc.nextLine());
     		}catch(NumberFormatException ex){
     			n = -1;
@@ -220,7 +224,59 @@ public class Main {
     	} else {
     		System.out.println("Fallaste :( " + error[rand.nextInt(error.length)]);
     	}
-    }     
+    }
+	
+	 // Pregunta que obtiene dos recursos iguales (naves en este caso) y los compara
+	 public static void mostExpensive(SWClient sw){
+    	// Obteniendo la cantidad de naves almacenada
+    	int max_ships = sw.getNumberOfResources("starships");
+    	if(max_ships == 0){
+    		System.out.println("No se encontraron naves.");
+    		return;
+    	}
+    	
+    	System.out.println("Generando nueva pregunta...");
+    	// Cogiendo dos naves al azar sin repetir
+        List<Integer> used = new ArrayList<Integer>();
+    	List<SpaceShip> starship = new ArrayList<SpaceShip>();
+    	int counter = 0;
+    	while(counter < 2){
+    		Integer p = getRandomResource(max_ships, used);
+    		SpaceShip nave = sw.getStarship(sw.generateEndpoint("starships", p));
+			//Ignoramos si la naves es nula o no se conoce su precio
+    		if(nave == null || nave.cost_in_credits.equalsIgnoreCase("unknown")){
+    			System.out.println("Hubo un error al encontrar el recurso " + p);
+    		} else {
+    			starship.add(nave);
+    			counter++;
+    		}
+    		used.add(p);
+    	}
+    	
+    	// Escribiendo la pregunta y leyendo la opcin
+    	Integer n = null;
+    	do{
+    		System.out.println("Cual es mas caro? [0] "+ starship.get(0).name + " o [1] " + starship.get(1).name);
+    		try{
+				System.out.print("> ");
+    			n = Integer.parseInt(sc.nextLine());
+    		}catch(NumberFormatException ex){
+    			n = -1;
+    		}
+    	}while(n != 0 && n != 1);
+    	
+    	// Mostrando la informacin de las naves elegidas
+    	for(SpaceShip p: starship){
+    		System.out.println(p.name + " cuesta " + p.cost_in_credits);
+    	}
+    	
+    	// Resultado
+    	if(Double.parseDouble(starship.get(n).cost_in_credits) >= Double.parseDouble(starship.get((n+1)%2).cost_in_credits)){
+    		System.out.println("Enhorabuena!!! "+ success[rand.nextInt(success.length)]);
+    	} else {
+    		System.out.println("Fallaste :( " + error[rand.nextInt(error.length)]);
+    	}
+    }
   
 	private static String [] success = {"This is the way",
 			"Eres uno con la Fuerza. La Fuerza esta contigo",
