@@ -10,4 +10,17 @@ public class SpaceShip {
 	public String length;
 	public String[] pilots;
 
+
+	@Override
+	public String toString() {
+		return "{" +
+			" name='" +  name + "'" +
+			", model='" +  model + "'" +
+			", starship_class='" +  starship_class + "'" +
+			", cost_in_credits='" +  cost_in_credits + "'" +
+			", length='" +  length + "'" +
+			", pilots='" +  pilots + "'" +
+			"}";
+	}
+	
 }

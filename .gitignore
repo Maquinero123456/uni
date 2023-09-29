@@ -10,7 +10,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 *.java~
-*.jar
 *.pem
 */node_modules/*
 */.RData

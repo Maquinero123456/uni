@@ -41,7 +41,7 @@ public class SWClient {
 			HttpsURLConnection conexion = null;
 			conexion = (HttpsURLConnection) url.openConnection();
 			conexion.addRequestProperty("Accept", "application/json");
-			conexion.setRequestProperty("User-Agent", app_name);
+			conexion.setRequestProperty("User-Agent", app_name+"-"+year);
 			conexion.setRequestMethod("GET");
 			if(conexion.getResponseCode()>=200 && conexion.getResponseCode()<300){
 				System.out.println("Codigo correcto "+conexion.getResponseCode());
@@ -54,7 +54,6 @@ public class SWClient {
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
         return count;
 	}
@@ -72,14 +71,12 @@ public class SWClient {
 				System.out.println("Codigo correcto "+conexion.getResponseCode());
 				Gson parser = new Gson();
 				InputStream in=conexion.getInputStream();
-				Person c = parser.fromJson(new InputStreamReader(in), Person.class);
-				c.homeworld = getWorld(c.homeworld).toString();
-				p = c;
+				p = parser.fromJson(new InputStreamReader(in), Person.class);
+				p.homeplanet = getWorld(p.homeworld);
 			}else{
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
 		}
 		return p;
 	}
@@ -103,7 +100,6 @@ public class SWClient {
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
 		}
         return p;
 	}
@@ -121,16 +117,36 @@ public class SWClient {
 				Gson parser = new Gson();
 				InputStream in=conexion.getInputStream();
 				QueryResponse query = parser.fromJson(new InputStreamReader(in), QueryResponse.class);
-				Person c = query.results[0];
-				c.homeworld = getWorld(c.homeworld).toString();
-				p = c;
+				p = query.results[0];
+				p.homeplanet = getWorld(p.homeworld);
 			}else{
 				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
 			}
 		}catch(IOException e){
-			e.printStackTrace();
+		}catch(ArrayIndexOutOfBoundsException e){
 		}
         return p;
     }
 
+	public SpaceShip getStarship(String urlname) {
+    	SpaceShip p = null;
+    	urlname = urlname.replaceAll("http:", "https:");
+		try{
+			URL url = new URL(urlname);
+			HttpsURLConnection conexion = (HttpsURLConnection) url.openConnection();
+			conexion.addRequestProperty("Accept", "application/json");
+			conexion.setRequestProperty("User-Agent", app_name);
+			conexion.setRequestMethod("GET");
+			if(conexion.getResponseCode()>=200 && conexion.getResponseCode()<300){
+				System.out.println("Codigo correcto "+conexion.getResponseCode());
+				Gson parser = new Gson();
+				InputStream in=conexion.getInputStream();
+				p = parser.fromJson(new InputStreamReader(in), SpaceShip.class);
+			}else{
+				System.out.println("Codigo incorrecto "+conexion.getResponseCode());
+			}
+		}catch(IOException e){
+		}
+        return p;
+	}
 }
