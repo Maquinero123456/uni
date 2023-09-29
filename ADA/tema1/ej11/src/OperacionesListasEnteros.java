@@ -3,7 +3,10 @@ import java.util.List;
 public class OperacionesListasEnteros {
 
 	public static void rotarLista(List<Integer> lista, int e) {
-		for(int i = 0;i<=e; i++){
+		if(e>lista.size()){
+			e += e%lista.size();
+		}
+		for(int i = 0;i<=e%lista.size(); i++){
 			if(e>0){
 				int aux = lista.get(lista.size()-1);
 				for(int j = lista.size()-1; j>0; j--){
