@@ -5,6 +5,7 @@ __pycache__/
 *.zip
 */.vscode/
 */.metadata/
+./*/README.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
