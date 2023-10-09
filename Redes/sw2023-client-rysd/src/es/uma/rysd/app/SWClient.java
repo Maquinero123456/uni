@@ -35,7 +35,7 @@ public class SWClient {
 	
 	// Consulta un recurso y devuelve cuntos elementos tiene
 	public int getNumberOfResources(String resource){    	
-		int count = -1;
+		int count = 0;
 		try {
 			URL url = new URL(url_api+resource);
 			HttpsURLConnection conexion = null;

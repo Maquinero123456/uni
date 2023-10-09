@@ -1,0 +1,22 @@
+Circuit: * C:\Users\david\Desktop\uni\Electronica\practica2\1.1.1\Draft1.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Mon Oct  9 07:11:18 2023
+Total elapsed time: 0.114 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2202
+traniter = 2195
+tranpoints = 1088
+accept = 1084
+rejected = 4
+matrix size = 4
+fillins = 0
+solver = Normal
+Avg thread counts: 1.6/2.2/2.2/1.6
+Matrix Compiler1:       7 opcodes  0.2/[0.2]/0.2
+Matrix Compiler2: off  [0.1]/0.2/0.2
+
