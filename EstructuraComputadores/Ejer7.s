@@ -1,13 +1,19 @@
 	.include "inter.inc"
 .text
-	ADDEXC  0x18, irq_handler
+
+        /* Cosa de raspberry pi 3 */
         mrs r0, cpsr
         mov r0, #0b11010011 @Modo SVC, FIQ&IRQ desact
         msr spsr_cxsf, r0
         add r0, pc, #4
         msr ELR_hyp, r0
         eret
-	
+
+        /* Inicializo vector de irq*/
+	mov r0, #0 @Vector table base = 0
+        ADDEXC 0x18, irq_handler
+
+        /* Activar modo IRQ y SVC */
 	mov     r0, #0b11010010   @ Modo IRQ, FIQ&IRQ desact
         msr     cpsr_c, r0
         mov     sp, #0x8000
@@ -16,6 +22,7 @@
         mov     sp, #0x8000000
 	
 	ldr r0, =GPBASE
+        /* Configuro GPIO9 como salida */
 /* guia bits       xx999888777666555444333222111000*/
 	ldr r1, =0b00001000000000000000000000000000
 	str r1, [r0, #GPFSEL0]

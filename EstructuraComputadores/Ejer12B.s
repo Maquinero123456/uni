@@ -82,21 +82,22 @@
 	str r1, [r0, #GPFSEL2]
 	ldr r3, =0b00000000000000000000000000000001
 	ldr r0, =STBASE
-        ldr r1, [r0, #STCLO]
-        add r1, #2
-        str r1, [r0, #STC3]
-        str r1, [r0, #STC1]
+    ldr r1, [r0, #STCLO]
+    add r1, #2
+    str r1, [r0, #STC3]
+    str r1, [r0, #STC1]
 	ldr r0, =INTBASE
-        mov r1, #0b1000
-        str r1, [r0, #INTENIRQ1]
+    mov r1, #0b1000
+    str r1, [r0, #INTENIRQ1]
 	mov r1, #0b10000001
 	str r1, [r0, #INTFIQCON]
 	mov r2, #0b00010011   @ Modo SVC, IRQ activo
-        msr cpsr_c, r2
+    msr cpsr_c, r2
 	b tes
 	mov r2, #0b11010011   @ Modo SVC, IRQ desactivo
-        msr cpsr_c, r2
-tes:	ldr r0, =GPBASE
+	msr cpsr_c, r2
+tes:	
+	ldr r0, =GPBASE
 	ldr r1, [r0, #GPLEV0]
 /* guia bits      	   xx999888777666555444333222111000*/
 	ands	r2, r1, #0b00000000000000000000000000000100

@@ -82,10 +82,26 @@
 	/* Add C1 a FIQ */
 	mov r1, #0b10000001
 	str r1, [r0, #INTFIQCON]
-    mov r0, #0b00010011   @ Modo SVC, IRQ y FIQ activo
-    msr cpsr_c, r0
+    mov r2, #0b00010011   @ Modo SVC, IRQ y FIQ activo
+    msr cpsr_c, r2
 
-infi:   b infi
+tes:	
+    ldr r0, =GPBASE
+	ldr r1, [r0, #GPLEV0]
+/* guia bits      	   xx999888777666555444333222111000*/
+	ands	r2, r1, #0b00000000000000000000000000000100
+	beq activ
+	ands	r2, r1, #0b00000000000000000000000000001000
+	beq nacti
+	b tes
+    /* Activo el modo IRQ, FIQ y SVC */
+activ:  
+    mov r2, #0b00010011   @ Modo SVC, IRQ y FIQ activo
+    msr cpsr_c, r2
+    /* Lo desactivo */
+nacti: 	
+    mov r2, #0b11010011    @ Modo SVC, IRQ y FIQ no activo
+    msr cpsr_c, r2
 
 irq_handler: 
 	push {r0, r1, r2, r3}
