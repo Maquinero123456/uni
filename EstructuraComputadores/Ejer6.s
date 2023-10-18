@@ -45,7 +45,7 @@ bucle:
 	str r2, [r4, #GPSET0]
 	bl espera
 	str r2, [r4, #GPCLR0]
-	b tes
+	b bucle
 
 espera: 
 	push {r4, r5}

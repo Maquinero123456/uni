@@ -1,4 +1,5 @@
 	.include "inter.inc"
+.data
 	onoff:  .word 0
 	cuenta: .word 1
 	secuen: .word 0b1000000000000000000000000000

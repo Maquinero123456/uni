@@ -1,4 +1,5 @@
 	.include "inter.inc"
+.data
 	cuenta: .word 1
 	secuen: .word 0b1000000000000000000000000000
 		.word 0b0000010000000000000000000000
@@ -65,7 +66,6 @@ irq_handler:
 	moveq r3, #6
 	/* Avanzo por la secuencia*/
 	str r3, [r2]
-	ldr r2, =secuen
 	ldr r3, [r2, +r3, LSL #2]
 	str r3, [r1, #GPSET0]
 	/* Reinicio la interrupcion por reloj y el comparador */

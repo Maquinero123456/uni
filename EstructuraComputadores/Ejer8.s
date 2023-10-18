@@ -1,4 +1,5 @@
 	.include "inter.inc"
+.data
 	onoff: .word 0
 .text
 	/* Cosa de raspberry pi 3 */
