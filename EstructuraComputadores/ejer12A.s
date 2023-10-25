@@ -1,6 +1,6 @@
 	.include "inter.inc"
-	
 .text
+
 	/* Inicializo vector de irq y fiq*/
 	ADDEXC 0x18, irq_handler
 	ADDEXC 0x1c, fiq_handler
@@ -14,6 +14,8 @@
     mov r0, #0b11010011   @ Modo SVC, FIQ&IRQ desact
     msr cpsr_c, r0
     mov sp, #0x8000000
+
+	/* Configuro leds y altavoz como salida */
 	ldr r0, =GPBASE
 /* guia bits       xx999888777666555444333222111000*/
 	ldr r1, =0b00001000000000000001000000000000
@@ -24,48 +26,27 @@
 /* guia bits       xx999888777666555444333222111000*/
 	ldr r1, =0b00000000001000000000000001000000
 	str r1, [r0, #GPFSEL2]
-	ldr r3, =0b00000000000000000000000000000001
+	/* Add un valor base al reloj para que se activen las interrupciones */
 	ldr r0, =STBASE
     ldr r1, [r0, #STCLO]
     add r1, #2
     str r1, [r0, #STC3]
     str r1, [r0, #STC1]
+	/* Add C3 a IRQ */
 	ldr r0, =INTBASE
     mov r1, #0b1000
     str r1, [r0, #INTENIRQ1]
+	/* Add C1 a FIQ */
 	mov r1, #0b10000001
 	str r1, [r0, #INTFIQCON]
-	mov r2, #0b00010011   @ Modo SVC, IRQ activo
-    msr cpsr_c, r2
-tes:	
-	ldr r0, =GPBASE
-	ldr r1, [r0, #GPLEV0]
-/* guia bits      	   xx999888777666555444333222111000*/
-	ands	r2, r1, #0b00000000000000000000000000000100
-	beq activ
-	ands	r2, r1, #0b00000000000000000000000000001000
-	beq nacti
-	b tes
-activ:  ldr r2, =estado
-	mov r3, #1
-	str r3, [r2]
-	b tes
-nacti: 	ldr r2, =estado
-	mov r3, #2
-	str r3, [r2]
-	b tes
+    mov r0, #0b00010011   @ Modo SVC, IRQ y FIQ activo
+    msr cpsr_c, r0
+
+infi:   b infi
+
 irq_handler: 
-	push {r0, r1, r2, r3, r4}
-	ldr r0, =STBASE
-	ldr r1, =GPBASE
-	ldr r3, =estado
-	ldr r4, [r3]
-	cmp r4, #2
-	beq apa
-	cmp r4, #1
-	beq encendi
-	b salir
-encendi:
+	push {r0, r1, r2, r3}
+	/* Apago todos los leds */
 	ldr r0, =STBASE
 	ldr r1, =GPBASE
 	ldr r3, =0b00001000010000100000111000000000
@@ -80,43 +61,24 @@ encendi:
 	str r3, [r2]
 	ldr r3, [r2, +r3, LSL #2]
 	str r3, [r1, #GPSET0]
-	/*Avanzo el siguiente del altavoz*/
-	ldr r3, =cuenta
-	ldr r2, [r3]
-	subs r2, #1
-	moveq r2, #25
-	str r2, [r3]
-	b salir
-apa:    ldr r3, =0b00001000010000100000111000000000
-	str r3, [r1, #GPCLR0]
-salir:	ldr r0, =STBASE
+	/* Reinicio la interrupcion y el timer */
 	mov r3, #0b1000
 	str r3, [r0, #STCS]
 	ldr r3, [r0, #STCLO]
 	ldr r2, =500000
 	add r3, r2
 	str r3, [r0, #STC3]
-	pop     {r0, r1, r2, r3, r4}          @ Recupero registros
-	subs    pc, lr, #4        @ Salgo de la RTI
-	
+	/*Avanzo el siguiente del altavoz*/
+	ldr r3, =cuenta
+	ldr r2, [r3]
+	subs r2, #1
+	moveq r2, #25
+	str r2, [r3]
+	/* Salgo */
+	pop     {r0, r1, r2, r3}          @ Recupero registros
+    subs    pc, lr, #4        @ Salgo de la RTI
+
 fiq_handler :
-	push {r3, r4}
-	ldr r8, = GPBASE
-	ldr r9, = onoff
-	ldr r3, =estado
-	ldr r4, [r3]
-	cmp r4, #2
-	beq apag
-	cmp r4, #1
-	beq encen
-	b exit
-apag:   mov r10, #0
-	str r10, [r9]
-	mov r10, #0b10000
-	str r10, [r8, #GPCLR0]
-	b exit
-	
-encen:	
 	ldr r8, =GPBASE
 	ldr r9, =onoff
 	ldr r10, [r9]
@@ -130,17 +92,15 @@ encen:
 	mov r10, #0b10000
 	streq r10, [r8, #GPSET0 ]
 	strne r10, [r8, #GPCLR0 ]
-	
-exit:	/* Reinicio la interrupcion */
+	/* Reinicio la interrupcion */
 	ldr r8, =STBASE
 	mov r10, #0b0010
 	str r10, [r8, #STCS ]
 	ldr r10, [r8, #STCLO ]
 	add r10, r12
 	str r10, [r8, #STC1 ]
-	pop {r3, r4}
     subs pc, lr, #4 
-		
+	
 	onoff:  .word 0
 	cuenta2: .word 1
 	secuen2: 
@@ -177,4 +137,4 @@ exit:	/* Reinicio la interrupcion */
 		.word 1515 @ Retardo para nota 3
 		.word 1706 @ Retardo para nota 2
 		.word 1706 @ Retardo para nota 1
-	estado: .word 1
+	
