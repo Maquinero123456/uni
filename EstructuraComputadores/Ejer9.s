@@ -72,7 +72,7 @@ irq_handler:
 	mov r3, #0b0010
 	str r3, [r0, #STCS]
 	ldr r3, [r0, #STCLO]
-	ldr r2, =0x61A80
+	ldr r2, =0x40000
 	add r3, r2
 	str r3, [r0, #STC1]
 	/* Salgo */
