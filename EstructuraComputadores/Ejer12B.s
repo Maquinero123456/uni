@@ -34,9 +34,11 @@
     mov r1, #0b1000
     str r1, [r0, #INTENIRQ1]
 	mov r1, #0b10000001
+	/* Activo ambas interrupciones */
 	str r1, [r0, #INTFIQCON]
 	mov r2, #0b00010011   @ Modo SVC, IRQ activo
     msr cpsr_c, r2
+	/* Sondeo botones */
 tes:	
 	ldr r0, =GPBASE
 	ldr r1, [r0, #GPLEV0]
@@ -46,14 +48,17 @@ tes:
 	ands	r2, r1, #0b00000000000000000000000000001000
 	beq nacti
 	b tes
+	/* Activo */
 activ:  ldr r2, =estado
 	mov r3, #1
 	str r3, [r2]
 	b tes
+	/* Desactivo */
 nacti: 	ldr r2, =estado
 	mov r3, #2
 	str r3, [r2]
 	b tes
+	/* Hago lo mismo que en el 12A */
 irq_handler: 
 	push {r0, r1, r2, r3, r4}
 	ldr r0, =STBASE
@@ -65,6 +70,7 @@ irq_handler:
 	cmp r4, #1
 	beq encendi
 	b salir
+	/* Si esta activado actuo normal */
 encendi:
 	ldr r0, =STBASE
 	ldr r1, =GPBASE
@@ -87,6 +93,7 @@ encendi:
 	moveq r2, #25
 	str r2, [r3]
 	b salir
+	/* Si esta desactivado apago los leds */
 apa:    ldr r3, =0b00001000010000100000111000000000
 	str r3, [r1, #GPCLR0]
 salir:	ldr r0, =STBASE
@@ -99,6 +106,7 @@ salir:	ldr r0, =STBASE
 	pop     {r0, r1, r2, r3, r4}          @ Recupero registros
 	subs    pc, lr, #4        @ Salgo de la RTI
 	
+	/* Igua que 12A */
 fiq_handler :
 	push {r3, r4}
 	ldr r8, = GPBASE
@@ -110,12 +118,13 @@ fiq_handler :
 	cmp r4, #1
 	beq encen
 	b exit
+	/* Si esta desactivado apago el altavoz */
 apag:   mov r10, #0
 	str r10, [r9]
 	mov r10, #0b10000
 	str r10, [r8, #GPCLR0]
 	b exit
-	
+	/* Si esta activado actuo normal */
 encen:	
 	ldr r8, =GPBASE
 	ldr r9, =onoff
@@ -140,7 +149,8 @@ exit:	/* Reinicio la interrupcion */
 	str r10, [r8, #STC1 ]
 	pop {r3, r4}
     subs pc, lr, #4 
-		
+
+	/* Variables */
 	onoff:  .word 0
 	cuenta2: .word 1
 	secuen2: 
