@@ -1,6 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class ProblemaInversiones {
 	
 	public static int numInversiones(int[] v) {
@@ -27,12 +24,13 @@ public class ProblemaInversiones {
 				b[k] = a[i];
 				i++;
 			}else{
+				res += (medio - i + 1);
 				b[k] = a[j];
-				res++;
 				j++;
 			} 
 			k++;
 		}
+	
 		while (i<=medio){
 			b[k] = a[i];
 			i++; 
@@ -49,20 +47,5 @@ public class ProblemaInversiones {
 			k++;
 		}
 		return res;
-	}
-
-	public static void main(String[] args) {
-		System.out.println("Expected: 6");
-		int[] a = {1, 8, 8, 7, -6};
-		System.out.println(numInversiones(a));
-		System.out.println(Arrays.toString(a));
-		System.out.println("Expected: 1");
-		int[] b = {5, -7};
-		System.out.println(numInversiones(b));
-		System.out.println(Arrays.toString(b));
-		System.out.println("Expected: 1");
-		int[] c = {1,2,3,4,5,7,6};
-		System.out.println(numInversiones(c));
-		System.out.println(Arrays.toString(c));
 	}
 }
