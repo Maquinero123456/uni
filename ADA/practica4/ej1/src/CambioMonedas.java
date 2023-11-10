@@ -26,17 +26,22 @@ public class CambioMonedas {
 					tabla[i][j] = 0;
 					opcion[i][j] = 0;
 				}else if (i == 0) {
-					
-					//***Completar***
-				
+					if(j%d[i]!=0){
+						tabla[i][j] = -1;
+						opcion[i][j] = -1;
+					}else{
+						tabla[i][j] = j/d[i];
+						opcion[i][j] = j/d[i];
+					}
 				}else {//i> 0
 					//En tabla[i,j] vamos a ir guardando el mínimo encontrado
 					tabla[i][j] = tabla[i-1][j]; //0+M(i-1,j-0)
 					opcion[i][j] = 0;
 					for(int k = 1; k <= j / d[i]; k++) {
-						
-						//***Completar***
-						
+						if(menorInf(sumaInf(k, tabla[i-1][j-k*d[i]]), tabla[i][j])){
+							tabla[i][j] = sumaInf(k, tabla[i-1][j-k*d[i]]);
+							opcion[i][j] = k;
+						}
 						
 					}//for k
 				}//else
@@ -74,15 +79,17 @@ public class CambioMonedas {
 	 * Reconstruimos la solución utilizando la información en la tabla "opcion"
 	 * @return una lista s que para cada moneda de tipo i devuelve el número de monedas de ese tipo utilizadas s[i] 
 	 */
-	public int [] reconstruirSol() {
+	public int [] reconstruirSol(int valor) {
 		if (opcion == null) {
 			throw new RuntimeException("Se debe resolver el problema primero");
 		}
-		
 		int []s = new int[d.length]; //Inicialmente 0 monedas de cada tipo
-		
-		//***Completar la implementación****
-		
+		int i = d.length-1;
+		while(i>=0 && valor>0){
+			s[i]=opcion[i][valor];
+			valor = valor-s[i]*d[i];
+			i--;
+		}
 		return s;
 	}
 

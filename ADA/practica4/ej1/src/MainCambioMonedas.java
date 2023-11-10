@@ -8,7 +8,7 @@ public class MainCambioMonedas {
 		CambioMonedas p = new CambioMonedas(m,d);
 		int numeroMinimoMonedas = p.resolverBottomUp();
 		p.mostrarDatos();
-		System.out.println("Solución: " + Arrays.toString(p.reconstruirSol()));
+		System.out.println("Solucion para problema 5: " + Arrays.toString(p.reconstruirSol(5)));
 		System.out.println("Número de monedas: " + numeroMinimoMonedas);
 	}
 }
