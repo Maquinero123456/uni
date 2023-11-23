@@ -14,8 +14,7 @@ public class Cobertura {
 		Grafo aux = new Grafo(grafo);
 		Set<Integer> nodosAmirar=grafo.nodosConectados();
 		int maxNodos = aux.nodos().size();
-		int maxi = 20;
-		while(aux.numAristas()>0 && maxi>0){
+		while(aux.numAristas()>0){
 			int max=0;
 			for(Integer i : nodosAmirar){
 				if(grafo.grado(i)>grafo.grado(max)){
