@@ -140,7 +140,7 @@ public class Laberinto {
 	 */
 	private void encontrarCaminos(List<Posicion> sol, List<List<Posicion>> todas) {
 		if(esCompleta(sol)){
-			todas.add(new ArrayList<>(sol));
+			todas.add(sol);
 		}else{
 			List<Posicion> posibles = new ArrayList<>();
 			int i = 1;
@@ -171,9 +171,28 @@ public class Laberinto {
 	 * Algoritmo de Vuelta Atrás que devuelve la mejor solución encontrada
 	 */
 	private List<Posicion> encontrarCaminoMasCortoVA(List<Posicion> sol, List<Posicion> mejor) {
-
-		//***Completar la implementación****
-		return null;
+		if(esCompleta(sol)){
+			if(mejor==null || (mejor.size()>sol.size() && sol!=null)){
+				mejor = sol;
+			}
+		}else{
+			List<Posicion> posibles = new ArrayList<>();
+			int i = 1;
+			while(i<5){
+				if(valida(siguiente(sol.get(sol.size()-1), i), sol)){
+					posibles.add(siguiente(sol.get(sol.size()-1), i));
+				}
+				i++;
+			}
+			List<Posicion> aux = new ArrayList<>(sol);
+			for(Posicion j:posibles){
+				aux.add(j);
+				mejor = encontrarCaminoMasCortoVA(aux, mejor);
+			}
+			
+			
+		}
+		return mejor;
 	}
 
 	/**
@@ -219,7 +238,6 @@ public class Laberinto {
 					{-1,	0,	-1	,0,	-1,	0},
 					{0,	0,	0	,0,	0	,0}};
 		Laberinto lab = new Laberinto(Laberinto, Entrada, Salida);
-		System.out.println(lab.encontrarCaminos());
-		System.out.println(lab.encontrarCamino());
-	}*/
+		System.out.println(lab.encontrarCaminoMasCortoVA());
+	} */
 }
