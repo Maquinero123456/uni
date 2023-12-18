@@ -1,0 +1,26 @@
+Circuit: * C:\Users\david\Desktop\uni\Electronica\practica3\1.2\Draft1.asc
+
+Warning: Multiple definitions of model "2scr375p" Type: BJT
+Warning: Multiple definitions of model "bc857b" Type: BJT
+Warning: Multiple definitions of model "bc847c" Type: BJT
+Warning: Multiple definitions of model "bc847b" Type: BJT
+Direct Newton iteration for .op point succeeded.
+
+Date: Mon Nov 27 08:51:27 2023
+Total elapsed time: 0.113 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2591
+traniter = 2586
+tranpoints = 1194
+accept = 1148
+rejected = 46
+matrix size = 9
+fillins = 0
+solver = Normal
+Avg thread counts: 1.5/2.0/2.1/1.5
+Matrix Compiler1: 474 bytes object code size  0.3/0.3/[0.2]
+Matrix Compiler2: off  [0.2]/0.3/0.2
+
