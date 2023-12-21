@@ -45,28 +45,15 @@ public class Laberinto {
 		if(esCompleta(sol)){
 			return true;
 		}else{
-			boolean haySol = false;
-			List<Posicion> candidatos = new ArrayList<>();
-			do{
-				int i = 1;
-				while(i<5){
-					if(valida(siguiente(sol.get(sol.size()-1), i), sol)){
-						candidatos.add(siguiente(sol.get(sol.size()-1), i));
+			for(int i=1; i<5; i++){
+				if(valida(siguiente(sol.get(sol.size()-1), i), sol)){
+					sol.add(siguiente(sol.get(sol.size()-1), i));
+					if(encontrarCamino(sol)){
+						return true;
 					}
-				i++;
+					sol.remove(sol.size()-1);
 				}
-				int j = candidatos.size()-1;
-				while(!haySol && !candidatos.isEmpty() && j>=0){
-					sol.add(candidatos.get(j));
-					haySol = encontrarCamino(sol);
-					if(!haySol){
-						sol.remove(candidatos.get(j));
-						candidatos.remove(j);
-					}
-					j--;
-				}
-				
-			}while(!haySol && !candidatos.isEmpty());
+			}
 			
 		}
 		return esCompleta(sol);
@@ -76,7 +63,7 @@ public class Laberinto {
 	 * Comprueba si una solución es completa.
 	 */
 	private boolean esCompleta(List<Posicion> sol) {
-		return salida.getX()==sol.get(sol.size()-1).getX() && salida.getY()==sol.get(sol.size()-1).getY();
+		return sol.get(sol.size()-1).equals(salida);
 	}
 
 	/**
@@ -140,7 +127,7 @@ public class Laberinto {
 	 */
 	private void encontrarCaminos(List<Posicion> sol, List<List<Posicion>> todas) {
 		if(esCompleta(sol)){
-			todas.add(sol);
+			todas.add(new ArrayList<>(sol));
 		}else{
 			List<Posicion> posibles = new ArrayList<>();
 			int i = 1;
@@ -154,6 +141,7 @@ public class Laberinto {
 			for(Posicion j:posibles){
 				aux.add(j);
 				encontrarCaminos(aux, todas);
+				aux.remove(aux.size()-1);
 			}
 			
 			
@@ -173,7 +161,7 @@ public class Laberinto {
 	private List<Posicion> encontrarCaminoMasCortoVA(List<Posicion> sol, List<Posicion> mejor) {
 		if(esCompleta(sol)){
 			if(mejor==null || (mejor.size()>sol.size() && sol!=null)){
-				mejor = sol;
+				mejor = new ArrayList<>(sol);
 			}
 		}else{
 			List<Posicion> posibles = new ArrayList<>();
@@ -188,6 +176,7 @@ public class Laberinto {
 			for(Posicion j:posibles){
 				aux.add(j);
 				mejor = encontrarCaminoMasCortoVA(aux, mejor);
+				aux.remove(aux.size()-1);
 			}
 			
 			
@@ -199,8 +188,7 @@ public class Laberinto {
 	 * Devuelve la calidad de la solución indicada
 	 */
 	private int calidad(List<Posicion> sol) {
-		//***Completar la implementación****
-		return 0;
+		return sol.size();
 	}
 
 	public List<Posicion> encontrarCaminoMasCortoBB() {
@@ -213,7 +201,28 @@ public class Laberinto {
 		List<Posicion> mejor = null;	//
 		int cotaMejor = Integer.MAX_VALUE; // infinito
 
-		//***Completar la implementación****
+		c.insertar(inicial);
+
+		while(!c.estaVacia()){
+			Estado actual = c.extraer();
+			if(actual.cota()<cotaMejor){
+				if(esCompleta(actual.getCamino())){
+					mejor = actual.getCamino();
+					cotaMejor = actual.cota();
+				}else{
+					for(int i = 1; i<5; i++){
+						Posicion candidata = siguiente(actual.getCamino().get(actual.getCamino().size()-1), i);
+						if(valida(candidata, actual.getCamino())){
+							List<Posicion> nuevoCamino = new ArrayList<>(actual.getCamino());
+							nuevoCamino.add(candidata);
+							if(funcionCota(nuevoCamino)<cotaMejor){
+								c.insertar(new Estado(nuevoCamino, funcionCota(nuevoCamino)));
+							}
+						}
+					}
+				}	
+			}
+		}
 		
 		return mejor;
 	}
@@ -222,8 +231,7 @@ public class Laberinto {
 	 *  Devuelve el valor de cota de la solución indicada. 
 	 */
 	private int funcionCota(List<Posicion> sol) {
-		//***Completar la implementación****
-		return 0;
+		return calidad(sol)+(salida.getX()-sol.get(sol.size()-1).getX())+(salida.getY()-sol.get(sol.size()-1).getY());
 	}
 
 	/*public static void main(String[] args) {
