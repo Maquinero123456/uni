@@ -8,6 +8,5 @@ fil, col  = e10.shape
 for i in range(fil):
     for j in range(col):
         e10[i,j] = (e10[i,j]-media[j])/std[j]
-
 print("Matriz normalizada:")
 print(e10)
