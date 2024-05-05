@@ -6,7 +6,6 @@ import numpy as np
 df = pd.read_csv('bmw.csv')
 
 plt.xlabel("Price")
-frecuencia = df['price'].value_counts()
-frecuencia.plot(kind='bar')
+plt.hist(df["price"])
 plt.tight_layout()
-plt.show()
+plt.savefig('ej5.png')

@@ -7,5 +7,7 @@ df = pd.read_csv('bmw.csv')
 
 x = np.linspace(0, 2*np.pi, 100)
 
-plt.plot(x, np.sin(x) + np.sin(x))
-plt.show()
+plt.plot(x, np.sin(x), label= "f(x)")
+plt.plot(x, np.log(1+x), label= "g(x)")
+plt.legend()
+plt.savefig('ej2.png')
