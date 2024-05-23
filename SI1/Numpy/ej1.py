@@ -1,3 +1,3 @@
 import numpy as np
-ejercicio1 = np.arange(4, 1000, 4)
+ejercicio1 = np.arange(0, 100, 4)
 print(ejercicio1)
