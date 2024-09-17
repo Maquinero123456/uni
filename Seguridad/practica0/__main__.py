@@ -143,6 +143,7 @@ def main():
     cifradoMayusculas = cifradoCesarAlfabetoInglesMAY(palabra)
     print(cifradoMayusculas)
     print(descifradoCesarAlfabetoInglesMAY(cifradoMayusculas))
+    palabra = "hOlA"
     cifradoNormal = cifradoCesarAlfabetoIngles(palabra)
     print(cifradoNormal)
     print(descifradoCesarAlfabetoIngles(cifradoNormal))
