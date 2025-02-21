@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 int boton = 3;
-int valorActual = 0;
+bool valorActual = 0;
 
 void setup() {
   pinMode(boton, INPUT);
@@ -10,7 +10,7 @@ void setup() {
 
 void loop() {
   while(digitalRead(boton)!=valorActual){
-    valorActual = digitalRead(boton);
+    valorActual = !valorActual;
     Serial.print("Valor actual:");
     Serial.println(valorActual);
   }
