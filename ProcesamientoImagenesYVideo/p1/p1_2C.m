@@ -1,4 +1,4 @@
-I=imread('arquitectura-en-leeds-uk.jpg');
+I=imread('../Imagenes/arquitectura-en-leeds-uk.jpg');
 %imresize nos permite reducir la imagen aplicandole una escala y un
 %algoritmo
 J=imresize(I,0.5,'nearest');

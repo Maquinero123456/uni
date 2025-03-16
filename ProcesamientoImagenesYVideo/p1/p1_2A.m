@@ -1,4 +1,4 @@
-I=imread('cameraman.tif');
+I=imread('../Imagenes/cameraman.tif');
 %Cuanto mas se multplica la imagen, cuando mayor sea el valor original,
 %mayor sera el crecimiento, aumentando el contraste
 figure
