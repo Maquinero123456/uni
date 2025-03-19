@@ -260,7 +260,7 @@ public class P02_ElDom_MainWindow {
 		});
 		comboBox.setToolTipText("Practica 1 Apartado 1\r\nPractica 1 Apartado 2\r\nPractica 1 Apartado 3\\r\\nPractica3\\r\\nPractica 4 Apartado 2\\\\r\\\\nPractica 4 Apartado 3\\\\r\\\\nPractica 4 Apartado 4\\\\r\\\\nPractica 4 Apartado 5");
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Practica 1 Apartado 1", "Practica 1 Apartado 2", "Practica 1 Apartado 1", "Practica 3", "Practica 4 Apartado 2", "Practica 4 Apartado 3", "Practica 4 Apartado 4", "Practica 4 Apartado 5"}));
-		comboBox.setSelectedIndex(0);
+		comboBox.setSelectedIndex(4);
 		comboBox.setBounds(68, 103, 150, 20);
 		panel_1.add(comboBox);
 		
