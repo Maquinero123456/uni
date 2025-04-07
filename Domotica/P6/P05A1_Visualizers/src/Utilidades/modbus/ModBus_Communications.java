@@ -18,9 +18,18 @@ public class ModBus_Communications {
 		InitModbusComunication(args, sn_Transport);	
 	}
 	
-	public static int[] readCoilInput(int SlaveAddress, int numeroDeSensores, CommTransport sn_Transport) {
+	public static int[] readCoil(int SlaveAddress, int numeroDeSensores, CommTransport sn_Transport) {
 		
 		String[] args = {Integer.toString(SlaveAddress), String.valueOf(Const_Modbus.READ_COILS), String.valueOf(0), String.valueOf(numeroDeSensores)};
+		int[] salidas = new int[3];
+		//Iniciamos Comunicación
+		InitModbusComunication(args, sn_Transport, salidas);
+		return salidas;
+	}
+	
+	public static int[] readCoilInput(int SlaveAddress, int numeroDeSensores, CommTransport sn_Transport) {
+		
+		String[] args = {Integer.toString(SlaveAddress), String.valueOf(Const_Modbus.READ_INPUT_DISCRETES), String.valueOf(0), String.valueOf(numeroDeSensores)};
 		int[] salidas = new int[3];
 		//Iniciamos Comunicación
 		InitModbusComunication(args, sn_Transport, salidas);

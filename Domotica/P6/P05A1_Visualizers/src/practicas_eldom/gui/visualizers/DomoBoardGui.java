@@ -70,6 +70,9 @@ public class DomoBoardGui extends JPanel implements Visualizer {
                 	ledBoton1.setLedOn(MB_Registers.ModBusDiscreteInputRegisters.MB_BOTON_1.getEstado());
                 	ledBoton2.setLedOn(MB_Registers.ModBusDiscreteInputRegisters.MB_BOTON_2.getEstado());
                 	ledBtnOpt.setLedOn(MB_Registers.ModBusDiscreteInputRegisters.MB_BTN_OPT.getEstado());
+                	valores = ModBus_Communications.readCoil(1, 2, sn_Transport);
+                	lightBulb1.setOn(valores[0]==1);
+                	lightBulb2.setOn(valores[1]==1);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

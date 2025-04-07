@@ -741,11 +741,11 @@ int ModbusSlave::update()
 
 	switch (query[FUNC]) {
 	case FC_READ_COILS:
-//		return read_discrete_registers(FC_READ_COILS, start_addr,query[REGS_L],C_Regs);
+		return read_discrete_registers(FC_READ_COILS, start_addr,query[REGS_L],C_Regs);
 		break;
 
 	case FC_READ_REG_DI:
-		return read_discrete_registers(FC_READ_REG_DI, start_addr, query,ICRegs);
+		return read_discrete_registers(FC_READ_REG_DI, start_addr, query[REGS_L],ICRegs);
 		break;
 
 	case FC_READ_REG_AO:
