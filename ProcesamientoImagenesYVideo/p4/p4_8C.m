@@ -1,5 +1,5 @@
 I=imread('../Imagenes/WAFER1.TIF');
-%Una matriz kernel para detectar bordes horizontales
+%Una matriz kernel para detectar bordes verticales
 g=[1 0 -1;
    1 0 -1; 
    1 0 -1];

@@ -1,4 +1,8 @@
 I=imread('../Imagenes/BUG.TIF');
+figure 
+subplot(1,2,1)
+imshow(I)
+I=histeq(I);
 %Le aplicamos un filtro para resaltar los bordes
 h=fspecial('unsharp');
 J=abs(filter2(h,I));
@@ -7,10 +11,6 @@ gh=[ 1  1  1;
      0  0  0; 
     -1 -1 -1];
 B=abs(filter2(gh,J))/255;
-R=double(J)/255+0.1*double(B);
-figure 
-subplot(1,2,1)
-imshow(I)
 subplot(1,2,2)
 imshow(R)
 
